@@ -8,7 +8,6 @@ public class User {
 //    private List<Scorecard> scorecardHistory;
     private UUID userID;
 
-
     public User(String username) {
         this.username = username;
         this.userID = UUID.randomUUID();
@@ -27,7 +26,7 @@ public class User {
         return username;
     }
 
-    public int getUserID() {
+    public UUID getUserID() {
         return userID;
     }
 }
