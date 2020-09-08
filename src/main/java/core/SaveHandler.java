@@ -9,6 +9,15 @@ public class SaveHandler {
 
   // TODO: Change to something more meaningful or a different path
   private static final Path filename = Path.of("userdata.json");
+  private final FilesWrapper files;
+
+  public SaveHandler() {
+    files = new FilesWrapper();
+  }
+
+  SaveHandler(FilesWrapper files) {
+    this.files = files;
+  }
 
   /**
    * Saves a user to file.
@@ -19,8 +28,8 @@ public class SaveHandler {
     try {
       var gson = new Gson();
       var json = gson.toJson(user);
-      var file = Files.createFile(filename);
-      Files.writeString(file, json);
+      var file = files.createFile(filename);
+      files.writeString(file, json);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -34,13 +43,27 @@ public class SaveHandler {
   public User load() {
     try {
       var gson = new Gson();
-      var json = Files.readString(filename);
-      var user = gson.fromJson(json, User.class);
-      return user;
+      var json = files.readString(filename);
+      return gson.fromJson(json, User.class);
     } catch (IOException e) {
       e.printStackTrace();
     }
 
     return null;
+  }
+}
+
+class FilesWrapper {
+
+  public Path createFile(Path path) throws IOException {
+    return Files.createFile(path);
+  }
+
+  public void writeString(Path path, CharSequence csq) throws IOException {
+    Files.writeString(path, csq);
+  }
+
+  public String readString(Path path) throws IOException {
+    return Files.readString(path);
   }
 }
