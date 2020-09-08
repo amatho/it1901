@@ -1,26 +1,25 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Course {
 
-    List<Hole> holes;
+  List<Hole> holes;
 
-    public Course(Hole... holes) {
-        this.holes = Arrays.asList(holes);
-    }
+  public Course(Hole... holes) {
+    this.holes = Arrays.asList(holes);
+  }
 
-    public int getCourseLength() {
-        return holes.size();
-    }
+  public int getCourseLength() {
+    return holes.size();
+  }
 
-    public List<Hole> getHoles() {
-        return holes;
-    }
+  public List<Hole> getHoles() {
+    return holes;
+  }
 
-    public Hole getHole(int index) {
-        return holes.get(index);
-    }
+  public Hole getHole(int index) {
+    return holes.get(index);
+  }
 }
