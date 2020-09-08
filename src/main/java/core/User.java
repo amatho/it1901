@@ -1,15 +1,17 @@
 package core;
 
+import java.util.UUID;
+
 public class User {
 
     private String username;
-    private List<Scorecard> scorecardHistory;
-    private int userID = 0;
+//    private List<Scorecard> scorecardHistory;
+    private UUID userID;
 
 
     public User(String username) {
         this.username = username;
-        this.userID += 1;
+        this.userID = UUID.randomUUID();
     }
 
     @Override
@@ -17,9 +19,9 @@ public class User {
         return username;
     }
 
-    public List<Scorecard> getScorecardHistory(){
-        return scorecardHistory;
-    }
+//    public List<Scorecard> getScorecardHistory(){
+//        return scorecardHistory;
+//    }
 
     public String getUsername() {
         return username;
