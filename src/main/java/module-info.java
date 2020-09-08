@@ -3,7 +3,7 @@ module app {
     requires transitive javafx.graphics;
     requires javafx.controls;
 
-    exports app;
+    exports gui;
 
-    opens app to javafx.fxml;
+    opens gui to javafx.fxml;
 }

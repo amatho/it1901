@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.Circle?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.AppController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AppController">
    <children>
       <Circle fill="WHITE" layoutX="289.0" layoutY="191.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
       <TextField layoutX="215.0" layoutY="320.0" text="First Golf Ball" />
