@@ -22,5 +22,6 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setTitle("Golf App");
+        primaryStage.setMaximized(true);
     }
 }
