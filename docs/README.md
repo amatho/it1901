@@ -6,3 +6,4 @@ A user should be able to track his score while playing, and should also be able 
 As a player I want to track my points while playing.
 
 ## Screenshot
+![Image 1](./img/img_1.jpg "Image 1")
