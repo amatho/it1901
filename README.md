@@ -3,3 +3,13 @@
 # Golf app!
 
 We are implementing a simple golf app with a functional schedule for booking and scoreboard.
+
+
+
+
+
+## Maven
+To build and run the project, use the command `mvn javafx:run`
+
+## Testing
+To test our project, use the command `mvn javafx:test`
