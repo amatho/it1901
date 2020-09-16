@@ -8,45 +8,44 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AppController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AppController">
   <children>
-    <BorderPane prefHeight="400.0" prefWidth="600.0">
-      <center>
-        <ToolBar id="1" fx:id="toolbar" prefHeight="55.0" prefWidth="329.0"
-          BorderPane.alignment="CENTER">
-          <items>
-            <TextField id="1" fx:id="playerName" editable="false"/>
-            <Button id="1" fx:id="plus" mnemonicParsing="false" onAction="#handleClick" text="+"/>
-            <TextField fx:id="textField" prefHeight="25.0" prefWidth="49.0"/>
-            <Button id="1" fx:id="minus" mnemonicParsing="false" onAction="#handleClick" text="-"/>
-          </items>
-        </ToolBar>
-      </center>
-      <top>
-        <MenuBar prefHeight="27.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-          <menus>
-            <Menu mnemonicParsing="false" text="New Game">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Create Game"/>
-                <MenuItem mnemonicParsing="false" text="Load Game"/>
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Holes">
-              <items>
-                <MenuItem mnemonicParsing="false" text="View Hole"/>
-                <MenuItem mnemonicParsing="false" text="Hole History"/>
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Create Scorecard">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Create Scorecard"/>
-                <MenuItem mnemonicParsing="false" text="Your Scorecards"/>
-              </items>
-            </Menu>
-          </menus>
-        </MenuBar>
-      </top>
-    </BorderPane>
+      <BorderPane prefHeight="400.0" prefWidth="600.0">
+         <center>
+          <ToolBar id="1" fx:id="toolbar" prefHeight="55.0" prefWidth="329.0" BorderPane.alignment="CENTER">
+            <items>
+                  <TextField id="1" fx:id="playerName" editable="false" />
+              <Button id="1" fx:id="plus" mnemonicParsing="false" onAction="#handleClick" text="+" />
+              <TextField fx:id="textField" prefHeight="25.0" prefWidth="49.0" editable="false"/>
+              <Button id="1" fx:id="minus" mnemonicParsing="false" onAction="#handleClick" text="-" />
+            </items>
+          </ToolBar>
+         </center>
+         <top>
+            <MenuBar prefHeight="27.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="New Game">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Create Game" />
+                        <MenuItem mnemonicParsing="false" text="Load Game" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Holes">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="View Hole" />
+                        <MenuItem mnemonicParsing="false" text="Hole History" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Create Scorecard">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Create Scorecard" />
+                        <MenuItem mnemonicParsing="false" text="Your Scorecards" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
   </children>
 </AnchorPane>
