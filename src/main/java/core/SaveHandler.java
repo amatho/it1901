@@ -56,6 +56,7 @@ public class SaveHandler {
 class FilesWrapper {
 
   public Path createFile(Path path) throws IOException {
+    var score = new Scorecard(null, null);
     return Files.createFile(path);
   }
 

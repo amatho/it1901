@@ -22,4 +22,7 @@ public class Course {
   public Hole getHole(int index) {
     return holes.get(index);
   }
+  public int getHoleNumber(Hole hole) {
+    return 0;
+  }
 }
