@@ -4,9 +4,8 @@ import java.util.HashMap;
 
 public class Scorecard {
 
-
   private Course course;
-  private HashMap<User, int[]> scorecard;
+  private HashMap<User, int[]> scorecard = new HashMap<>();
 
   /**
    * @param course
@@ -29,5 +28,9 @@ public class Scorecard {
 
   public int getScore(User user, Hole hole) {
     return 0;
+  }
+
+  public Course getCourse() {
+    return course;
   }
 }
