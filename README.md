@@ -13,7 +13,7 @@
 Run `mvn javafx:run` to build and run the project
 
 ## Testing
-Run `mvn javafx:test` to test the project
+Run `mvn test` to test the project
 
 ## Documentation
 For further documentation, visit [Developer documentation](./docs/README.md)
