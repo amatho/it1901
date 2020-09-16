@@ -9,9 +9,8 @@ public class Scorecard {
   private HashMap<User, int[]> scorecard;
 
   /**
-   *
    * @param course
-   * @param users the users to play
+   * @param users  the users to play
    * @throws IllegalArgumentException if it´s more then 4 players
    */
   public Scorecard(Course course, User... users) {
@@ -28,6 +27,7 @@ public class Scorecard {
   public void setScore(User user, Hole hole, int Score) {
   }
 
-  public int getScore(User user, Hole hole){
+  public int getScore(User user, Hole hole) {
+    return 0;
   }
 }
