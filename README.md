@@ -2,13 +2,14 @@
 
 # Golf app
 
-We decided to focus on implementing a simple golf app with a functional schedule for booking (scoreboard included).
+## Structure
+* **src/main/java/core** core project (logic)
+* **src/main/java/gui** gui-files (controller)
+* **src/main/resources/gui** FXML-file
+* **src/test/java/core** test file for save
+* **src/test/java/gui** test file for application
 
-
-
-
-
-## Maven
+## Build
 Run `mvn javafx:run` to build and run the project
 
 ## Testing
