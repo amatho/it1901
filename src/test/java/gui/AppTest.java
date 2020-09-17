@@ -1,21 +1,25 @@
 package gui;
 
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
-import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
 
 @Isolated
-public class AppTest extends ApplicationTest {
+@ExtendWith(ApplicationExtension.class)
+public class AppTest {
 
   private AppController controller;
 
-  @Override
-  public void start(final Stage stage) throws Exception {
+  @Start
+  void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("App.fxml"));
     final Parent root = loader.load();
     controller = loader.getController();
@@ -25,7 +29,7 @@ public class AppTest extends ApplicationTest {
   }
 
   @Test
-  public void testController() {
+  void testController() {
     Assertions.assertNotNull(controller);
   }
 }
