@@ -1,5 +1,6 @@
 package core;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Scorecard {
@@ -12,8 +13,8 @@ public class Scorecard {
    * @param users  the users to play
    * @throws IllegalArgumentException if it´s more then 4 players
    */
-  public Scorecard(Course course, User... users) {
-    if (users.length > 4) {
+  public Scorecard(Course course, Collection<User> users) {
+    if (users.size() > 4) {
       throw new IllegalArgumentException("Cannot have more than four users.");
     }
     this.course = course;
@@ -23,12 +24,13 @@ public class Scorecard {
     }
   }
 
-  public void setScore(User user, Hole hole, int Score) {
+  /* TODO: Implement
+  public void setScore(User user, Hole hole, int score) {
   }
 
   public int getScore(User user, Hole hole) {
     return 0;
-  }
+  }*/
 
   public Course getCourse() {
     return course;
