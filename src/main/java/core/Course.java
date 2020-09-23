@@ -23,10 +23,12 @@ public class Course {
     return holes.get(index);
   }
 
-
- /* Not implemented yet
-
   public int getHoleNumber(Hole hole) {
+    for (Hole h : holes){
+      if (h == hole){
+        return holes.indexOf(h)+ 1;
+      }
+    }
     return 0;
-  }*/
+  }
 }
