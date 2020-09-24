@@ -1,4 +1,4 @@
-package gui;
+package golfapp.gui;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -8,11 +8,9 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.parallel.Isolated;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
-@Isolated
 @ExtendWith(ApplicationExtension.class)
 public class AppTest {
 
