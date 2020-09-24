@@ -7,8 +7,8 @@ public class Course {
 
   List<Hole> holes;
 
-  public Course(Hole... holes) {
-    this.holes = Arrays.asList(holes);
+  public Course(List<Hole> holes) {
+    this.holes = (holes);
   }
 
   public int getCourseLength() {
@@ -23,12 +23,7 @@ public class Course {
     return holes.get(index);
   }
 
-  public int getHoleNumber(Hole hole) {
-    for (Hole h : holes){
-      if (h == hole){
-        return holes.indexOf(h)+ 1;
-      }
-    }
-    return 0;
+  public int getHoleIndex(Hole hole) {
+    return holes.indexOf(hole);
   }
 }
