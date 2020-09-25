@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,10 @@ public class ScorecardTest {
 
   @Test
   public void testConstructor() {
-    var course = new Course(new Hole(42, 3, 42));
+    List<Hole> holes = new ArrayList<>();
+    Hole hole = new Hole(42, 3, 42);
+    holes.add(hole);
+    var course = new Course(holes);
     var users = new ArrayList<User>();
     for (var i = 0; i < 5; i++) {
       users.add(new User("User " + i));
