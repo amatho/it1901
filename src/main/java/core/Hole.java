@@ -14,6 +14,7 @@ public class Hole {
    * @param height the hole's height
    */
   public Hole(double length, int par, double height) {
+
     this.length = length;
     this.par = par;
     this.height = height;
