@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 public class SaveHandlerTest {
 
   @Test
-  public void testSave() throws IOException {
-    var files = mock(FilesWrapper.class);
+  public void save_callsFilesWrapperMethods() throws IOException {
+    var files = mock(SaveHandler.FilesWrapper.class);
     var saveHandler = new SaveHandler(files);
     var user = new User("foobar");
 
@@ -25,15 +25,15 @@ public class SaveHandlerTest {
   }
 
   @Test
-  public void testLoad() throws IOException {
-    var json = "{\"username\":\"foobar\",\"userID\":\"cd7c149e-74d6-451a-a811-097a9e2b491f\"}";
-    var files = mock(FilesWrapper.class);
+  public void load_parsesJsonCorrectly() throws IOException {
+    var json = "{\"username\":\"foobar\",\"userId\":\"cd7c149e-74d6-451a-a811-097a9e2b491f\"}";
+    var files = mock(SaveHandler.FilesWrapper.class);
     when(files.readString(any())).thenReturn(json);
     var saveHandler = new SaveHandler(files);
 
     var user = saveHandler.load();
 
     assertEquals("foobar", user.getUsername());
-    assertEquals(UUID.fromString("cd7c149e-74d6-451a-a811-097a9e2b491f"), user.getUserID());
+    assertEquals(UUID.fromString("cd7c149e-74d6-451a-a811-097a9e2b491f"), user.getUserId());
   }
 }

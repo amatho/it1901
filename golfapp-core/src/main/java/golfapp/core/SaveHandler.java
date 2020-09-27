@@ -7,6 +7,21 @@ import java.nio.file.Path;
 
 public class SaveHandler {
 
+  static class FilesWrapper {
+
+    public Path createFile(Path path) throws IOException {
+      return Files.createFile(path);
+    }
+
+    public void writeString(Path path, CharSequence csq) throws IOException {
+      Files.writeString(path, csq);
+    }
+
+    public String readString(Path path) throws IOException {
+      return Files.readString(path);
+    }
+  }
+
   // TODO: Change to something more meaningful or a different path
   private static final Path filename = Path.of("userdata.json");
   private final FilesWrapper files;
@@ -50,20 +65,5 @@ public class SaveHandler {
     }
 
     return null;
-  }
-}
-
-class FilesWrapper {
-
-  public Path createFile(Path path) throws IOException {
-    return Files.createFile(path);
-  }
-
-  public void writeString(Path path, CharSequence csq) throws IOException {
-    Files.writeString(path, csq);
-  }
-
-  public String readString(Path path) throws IOException {
-    return Files.readString(path);
   }
 }

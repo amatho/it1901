@@ -9,12 +9,14 @@ public class CourseController {
 
   @FXML
   ToolBar toolbar;
-
   @FXML
-  Button plus, minus;
-
+  Button plus;
   @FXML
-  TextField textField, playerName;
+  Button minus;
+  @FXML
+  TextField textField;
+  @FXML
+  TextField playerName;
 
   @FXML
   void initialize() {
@@ -33,6 +35,5 @@ public class CourseController {
         textField.setText(Integer.toString(value - 1));
       }
     }
-
   }
 }

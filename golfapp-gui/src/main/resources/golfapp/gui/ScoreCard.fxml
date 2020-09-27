@@ -25,7 +25,7 @@
                   <TableView fx:id="tableView" prefHeight="296.0" prefWidth="400.0">
                     <columns>
                       <TableColumn fx:id="usernameColumn" prefWidth="200.0" text="Player" />
-                        <TableColumn fx:id="userIDColumn" prefWidth="199.0" text="User ID" />
+                        <TableColumn fx:id="userIdColumn" prefWidth="199.0" text="User ID" />
                     </columns>
                   </TableView>
                   <AnchorPane prefHeight="138.0" prefWidth="346.0">
