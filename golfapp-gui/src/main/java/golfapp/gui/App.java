@@ -1,4 +1,4 @@
-package gui;
+package golfapp.gui;
 
 import java.io.IOException;
 import javafx.application.Application;

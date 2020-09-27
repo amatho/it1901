@@ -1,4 +1,4 @@
-package core;
+package golfapp.core;
 
 import java.util.UUID;
 

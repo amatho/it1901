@@ -1,4 +1,4 @@
-package core;
+package golfapp.core;
 
 import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import java.util.ArrayList;

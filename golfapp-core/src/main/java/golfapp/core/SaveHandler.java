@@ -1,4 +1,4 @@
-package core;
+package golfapp.core;
 
 import com.google.gson.Gson;
 import java.io.IOException;

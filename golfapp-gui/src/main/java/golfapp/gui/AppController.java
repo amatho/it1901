@@ -1,4 +1,4 @@
-package gui;
+package golfapp.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
