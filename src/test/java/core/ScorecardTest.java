@@ -10,7 +10,9 @@ public class ScorecardTest {
 
   @Test
   public void testConstructor() {
-    var holes = List.of(new Hole(42, 3, 42));
+    List<Hole> holes = new ArrayList<>();
+    Hole hole = new Hole(42, 3, 42);
+    holes.add(hole);
     var course = new Course(holes);
     var users = new ArrayList<User>();
     for (var i = 0; i < 5; i++) {
