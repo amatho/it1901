@@ -14,11 +14,11 @@ import org.testfx.framework.junit5.Start;
 @ExtendWith(ApplicationExtension.class)
 public class AppTest {
 
-  private AppController controller;
+  private CourseController controller;
 
   @Start
   void start(final Stage stage) throws IOException {
-    final var loader = new FXMLLoader(getClass().getResource("App.fxml"));
+    final var loader = new FXMLLoader(getClass().getResource("Course.fxml"));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);

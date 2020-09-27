@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 
-public class AppController {
+public class CourseController {
 
   @FXML
   ToolBar toolbar;
