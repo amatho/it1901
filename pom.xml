@@ -4,149 +4,138 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>it1901</groupId>
-  <artifactId>gr2009</artifactId>
+  <groupId>no.ntnu.it1901.gr2009</groupId>
+  <artifactId>golfapp-parent</artifactId>
+  <packaging>pom</packaging>
   <version>0.1.0-SNAPSHOT</version>
 
-  <dependencies>
-    <!-- JavaFX -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>14.0.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.6</version>
-    </dependency>
+  <modules>
+    <module>golfapp-core</module>
+    <module>golfapp-gui</module>
+  </modules>
 
-    <!-- JUnit Jupiter -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>5.7.0</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- Testing JavaFX with TestFX -->
-    <dependency>
-      <groupId>org.testfx</groupId>
-      <artifactId>testfx-junit5</artifactId>
-      <version>4.0.16-alpha</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>3.5.10</version>
-    </dependency>
-  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <!-- JavaFX -->
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>14.0.2.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.8.6</version>
+      </dependency>
+
+      <!-- JUnit Jupiter -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.7.0</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Testing JavaFX with TestFX -->
+      <dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-junit5</artifactId>
+        <version>4.0.16-alpha</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>3.5.10</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <build>
-    <plugins>
-      <!-- Compiling code with Java release target -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-          <release>14</release>
-        </configuration>
-      </plugin>
-      <!-- Running tests -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M5</version>
-        <configuration>
-          <properties>
-            <configurationParameters>
-              junit.jupiter.execution.parallel.enabled = true
-              junit.jupiter.execution.parallel.mode.default = concurrent
-            </configurationParameters>
-          </properties>
-          <!--suppress UnresolvedMavenProperty -->
-          <argLine>
-            ${argLine} --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-          </argLine>
-        </configuration>
-      </plugin>
-      <!-- Running JavaFX with the given main class -->
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.4</version>
-        <configuration>
-          <mainClass>gui.App</mainClass>
-        </configuration>
-      </plugin>
-      <!-- Checkstyle Maven plugin for checking code style -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.1</version>
-        <configuration>
-          <configLocation>google_checks.xml</configLocation>
-          <encoding>UTF-8</encoding>
-          <consoleOutput>true</consoleOutput>
-          <failsOnError>true</failsOnError>
-          <linkXRef>false</linkXRef>
-        </configuration>
-        <executions>
-          <execution>
-            <id>checkstyle-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- SpotBugs Maven plugin -->
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.0.4</version>
-        <configuration>
-          <xmlOutput>false</xmlOutput>
-        </configuration>
-        <executions>
-          <execution>
-            <id>spotbugs-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Jacoco test coverage -->
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.5</version>
-        <executions>
-          <execution>
-            <id>jacoco-prepare-agent</id>
-            <phase>process-test-classes</phase>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>jacoco-report</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <!-- Compiling code with Java release target -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+            <release>14</release>
+          </configuration>
+        </plugin>
+        <!-- Running tests -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M5</version>
+        </plugin>
+        <!-- Checkstyle Maven plugin for checking code style -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.1.1</version>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+            <encoding>UTF-8</encoding>
+            <consoleOutput>true</consoleOutput>
+            <failsOnError>true</failsOnError>
+            <linkXRef>false</linkXRef>
+          </configuration>
+          <executions>
+            <execution>
+              <id>checkstyle-check</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- SpotBugs Maven plugin -->
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>4.0.4</version>
+          <configuration>
+            <xmlOutput>false</xmlOutput>
+          </configuration>
+          <executions>
+            <execution>
+              <id>spotbugs-check</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- Jacoco test coverage -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.6</version>
+          <executions>
+            <execution>
+              <id>jacoco-prepare-agent</id>
+              <phase>process-test-classes</phase>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>jacoco-report</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
