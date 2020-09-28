@@ -1,6 +1,6 @@
 package golfapp.core;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,8 +41,8 @@ public class SaveHandler {
    */
   public void save(User user) {
     try {
-      var gson = new Gson();
-      var json = gson.toJson(user);
+      var mapper = new ObjectMapper();
+      var json = mapper.writeValueAsString(user);
       var file = files.createFile(filename);
       files.writeString(file, json);
     } catch (IOException e) {
@@ -53,13 +53,13 @@ public class SaveHandler {
   /**
    * Load a user from file.
    *
-   * @return the loaded user. Returns null if the file was not found or the JSON is invalid
+   * @return the loaded user. Returns null if the file was not found
    */
   public User load() {
     try {
-      var gson = new Gson();
+      var mapper = new ObjectMapper();
       var json = files.readString(filename);
-      return gson.fromJson(json, User.class);
+      return mapper.readValue(json, User.class);
     } catch (IOException e) {
       e.printStackTrace();
     }

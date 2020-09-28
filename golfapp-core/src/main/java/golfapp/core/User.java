@@ -1,5 +1,7 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 public class User {
@@ -10,6 +12,12 @@ public class User {
   public User(String username) {
     this.username = username;
     this.userId = UUID.randomUUID();
+  }
+
+  @JsonCreator
+  User(@JsonProperty("username") String username, @JsonProperty("userId") UUID userId) {
+    this.username = username;
+    this.userId = userId;
   }
 
   @Override
