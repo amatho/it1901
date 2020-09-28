@@ -4,13 +4,12 @@ import java.util.UUID;
 
 public class User {
 
-  private String username;
-  // private List<Scorecard> scorecardHistory;
-  private UUID userID;
+  private final String username;
+  private final UUID userId;
 
   public User(String username) {
     this.username = username;
-    this.userID = UUID.randomUUID();
+    this.userId = UUID.randomUUID();
   }
 
   @Override
@@ -18,15 +17,11 @@ public class User {
     return username;
   }
 
-  // public List<Scorecard> getScorecardHistory(){
-  //   return scorecardHistory;
-  // }
-
   public String getUsername() {
     return username;
   }
 
-  public UUID getUserID() {
-    return userID;
+  public UUID getUserId() {
+    return userId;
   }
 }

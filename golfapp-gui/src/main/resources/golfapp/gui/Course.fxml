@@ -1,24 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.CourseController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.CourseController">
   <children>
-      <BorderPane prefHeight="400.0" prefWidth="600.0">
-         <center>
-          <ToolBar id="1" fx:id="toolbar" prefHeight="55.0" prefWidth="329.0" BorderPane.alignment="CENTER">
-            <items>
-                  <TextField id="1" fx:id="playerName" editable="false" />
-              <Button id="1" fx:id="plus" mnemonicParsing="false" onAction="#handleClick" text="+" />
-              <TextField fx:id="textField" editable="false" prefHeight="25.0" prefWidth="49.0" />
-              <Button id="1" fx:id="minus" mnemonicParsing="false" onAction="#handleClick" text="-" />
-            </items>
-          </ToolBar>
-         </center>
-      </BorderPane>
+      <HBox layoutY="83.0" prefHeight="517.0" prefWidth="800.0">
+         <children>
+            <AnchorPane prefHeight="234.0" prefWidth="89.0">
+               <children>
+                  <Button layoutX="15.0" layoutY="478.0" mnemonicParsing="false" onAction="#changeSceneButtonPushed" text="Go back" />
+               </children>
+            </AnchorPane>
+            <VBox prefHeight="448.0" prefWidth="710.0">
+               <children>
+                  <AnchorPane prefHeight="449.0" prefWidth="710.0">
+                     <children>
+                      <ToolBar id="1" fx:id="toolbar" layoutX="62.0" layoutY="49.0" prefHeight="58.0" prefWidth="359.0">
+                        <items>
+                              <TextField id="1" fx:id="playerName" editable="false" prefHeight="25.0" prefWidth="160.0" />
+                          <Button id="1" fx:id="plus" mnemonicParsing="false" onAction="#handlePlusPressed" prefHeight="25.0" prefWidth="40.0" text="+" />
+                          <TextField fx:id="textField" editable="false" prefHeight="25.0" prefWidth="90.0" text="3" />
+                          <Button id="1" fx:id="minus" mnemonicParsing="false" onAction="#handleMinusPressed" prefHeight="25.0" prefWidth="40.0" text="-" />
+                        </items>
+                      </ToolBar>
+                        <ToolBar id="1" fx:id="toolbar1" layoutX="62.0" layoutY="124.0" prefHeight="58.0" prefWidth="359.0">
+                           <items>
+                              <TextField id="1" fx:id="playerName1" editable="false" prefHeight="25.0" prefWidth="160.0" />
+                              <Button id="1" fx:id="plus1" mnemonicParsing="false" onAction="#handlePlusPressed" prefHeight="25.0" prefWidth="40.0" text="+" />
+                              <TextField fx:id="textField1" editable="false" prefHeight="25.0" prefWidth="90.0" text="3" />
+                              <Button id="1" fx:id="minus1" mnemonicParsing="false" onAction="#handleMinusPressed" prefHeight="25.0" prefWidth="40.0" text="-" />
+                           </items>
+                        </ToolBar>
+                        <ToolBar id="1" fx:id="toolbar2" layoutX="62.0" layoutY="196.0" prefHeight="58.0" prefWidth="359.0">
+                           <items>
+                              <TextField id="1" fx:id="playerName2" editable="false" prefHeight="25.0" prefWidth="160.0" />
+                              <Button id="1" fx:id="plus2" mnemonicParsing="false" onAction="#handlePlusPressed" prefHeight="25.0" prefWidth="40.0" text="+" />
+                              <TextField fx:id="textField2" editable="false" prefHeight="25.0" prefWidth="90.0" text="3" />
+                              <Button id="1" fx:id="minus2" mnemonicParsing="false" onAction="#handleMinusPressed" prefHeight="25.0" prefWidth="40.0" text="-" />
+                           </items>
+                        </ToolBar>
+                        <ToolBar id="1" fx:id="toolbar3" layoutX="62.0" layoutY="268.0" prefHeight="58.0" prefWidth="359.0">
+                           <items>
+                              <TextField id="1" fx:id="playerName3" editable="false" prefHeight="25.0" prefWidth="160.0" />
+                              <Button id="1" fx:id="plus3" mnemonicParsing="false" onAction="#handlePlusPressed" prefHeight="25.0" prefWidth="40.0" text="+" />
+                              <TextField fx:id="textField3" editable="false" prefHeight="25.0" prefWidth="90.0" text="3" />
+                              <Button id="1" fx:id="minus3" mnemonicParsing="false" onAction="#handleMinusPressed" prefHeight="25.0" prefWidth="40.0" text="-" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label layoutX="262.0" layoutY="14.0" text="Current course">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
   </children>
 </AnchorPane>

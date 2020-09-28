@@ -2,7 +2,6 @@ package golfapp.gui;
 
 import golfapp.core.User;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,48 +19,54 @@ import javafx.stage.Stage;
 public class ScoreCardController {
 
   @FXML
-  Button addButton, createButton, deleteButton;
-
+  Button addButton;
+  @FXML
+  Button createButton;
+  @FXML
+  Button deleteButton;
   @FXML
   TableView<User> tableView;
-
   @FXML
-  TableColumn<User, String> usernameColumn, userIDColumn;
-
+  TableColumn<User, String> usernameColumn;
+  //@FXML
+  //TableColumn<User, ColorPicker> colorColumn;
   @FXML
   TextField usernameField;
 
-
   @FXML
-  public void initialize() {
-    usernameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-    userIDColumn.setCellValueFactory(new PropertyValueFactory<User, String>("userID"));
+  void initialize() {
+    usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+    //colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
   }
 
   @FXML
-  public void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    Parent CourseParent = FXMLLoader.load(getClass().getResource("Course.fxml"));
-    Scene CourseScene = new Scene(CourseParent);
-    Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    window.setScene(CourseScene);
+  void changeSceneButtonPushed(ActionEvent event) throws IOException {
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("Course.fxml"));
+    Parent courseParent = loader.load();
+    Scene courseScene = new Scene(courseParent);
+
+    CourseController controller = loader.getController();
+    controller.initData((tableView.getItems()));
+
+    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    window.setScene(courseScene);
     window.show();
   }
 
   @FXML
-  public void newUserButtonPushed() {
-    User User = new User(usernameField.getText());
-    tableView.getItems().add(User);
-  }
-
-  @FXML
-  public void deleteUserButtonPushed() {
-    ObservableList<User> Users = tableView.getItems();
-    var selectedUser = tableView.getSelectionModel().getSelectedItem();
-
-    try{
-        Users.remove(selectedUser);
-      } catch (NoSuchElementException e) {
+  void newUserButtonPushed() {
+    if (tableView.getItems().size() < 4) {
+      User user = new User(usernameField.getText());
+      tableView.getItems().add(user);
     }
   }
 
+  @FXML
+  void deleteUserButtonPushed() {
+    ObservableList<User> users = tableView.getItems();
+    var selectedUser = tableView.getSelectionModel().getSelectedItem();
+
+    users.remove(selectedUser);
+  }
 }

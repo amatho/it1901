@@ -34,6 +34,6 @@ public class SaveHandlerTest {
     var user = saveHandler.load();
 
     assertEquals("foobar", user.getUsername());
-    assertEquals(UUID.fromString("cd7c149e-74d6-451a-a811-097a9e2b491f"), user.getUserID());
+    assertEquals(UUID.fromString("cd7c149e-74d6-451a-a811-097a9e2b491f"), user.getUserId());
   }
 }
