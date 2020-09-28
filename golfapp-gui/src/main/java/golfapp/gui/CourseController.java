@@ -86,22 +86,24 @@ public class CourseController {
   @FXML
   void handlePlusPressed(ActionEvent event) {
     var button = (Button) event.getSource();
-    var textField = playerScores.get(plusButtons.indexOf(button));
-    var value = Integer.parseInt(textField.getText());
+    var textFieldValue = playerScores.get(plusButtons.indexOf(button));
+    var textFieldName = playerNames.get(plusButtons.indexOf(button));
+    var value = Integer.parseInt(textFieldValue.getText());
 
-    if (value > 0) {
-      textField.setText(Integer.toString(value + 1));
+    if (value < 100 && !textFieldName.getText().isEmpty()) {
+      textFieldValue.setText(Integer.toString(value + 1));
     }
   }
 
   @FXML
   void handleMinusPressed(ActionEvent event) {
     var button = (Button) event.getSource();
-    var textField = playerScores.get(minusButtons.indexOf(button));
-    var value = Integer.parseInt(textField.getText());
+    var textFieldValue = playerScores.get(minusButtons.indexOf(button));
+    var textFieldName = playerNames.get(minusButtons.indexOf(button));
+    var value = Integer.parseInt(textFieldValue.getText());
 
-    if (value > 1) {
-      textField.setText(Integer.toString(value - 1));
+    if (value > 1 && !textFieldName.getText().isEmpty()) {
+      textFieldValue.setText(Integer.toString(value - 1));
     }
   }
 
