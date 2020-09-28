@@ -1,36 +1,21 @@
-package golfapp.core;
+package golfapp.data;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import golfapp.core.User;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class SaveHandler {
-
-  static class FilesWrapper {
-
-    public Path createFile(Path path) throws IOException {
-      return Files.createFile(path);
-    }
-
-    public void writeString(Path path, CharSequence csq) throws IOException {
-      Files.writeString(path, csq);
-    }
-
-    public String readString(Path path) throws IOException {
-      return Files.readString(path);
-    }
-  }
+public class FileUserDao implements UserDao {
 
   // TODO: Change to something more meaningful or a different path
   private static final Path filename = Path.of("userdata.json");
   private final FilesWrapper files;
 
-  public SaveHandler() {
+  public FileUserDao() {
     files = new FilesWrapper();
   }
 
-  SaveHandler(FilesWrapper files) {
+  FileUserDao(FilesWrapper files) {
     this.files = files;
   }
 
@@ -39,10 +24,11 @@ public class SaveHandler {
    *
    * @param user the user to save
    */
+  @Override
   public void save(User user) {
     try {
-      var gson = new Gson();
-      var json = gson.toJson(user);
+      var mapper = new ObjectMapper();
+      var json = mapper.writeValueAsString(user);
       var file = files.createFile(filename);
       files.writeString(file, json);
     } catch (IOException e) {
@@ -53,13 +39,14 @@ public class SaveHandler {
   /**
    * Load a user from file.
    *
-   * @return the loaded user. Returns null if the file was not found or the JSON is invalid
+   * @return the loaded user. Returns null if the file was not found
    */
+  @Override
   public User load() {
     try {
-      var gson = new Gson();
+      var mapper = new ObjectMapper();
       var json = files.readString(filename);
-      return gson.fromJson(json, User.class);
+      return mapper.readValue(json, User.class);
     } catch (IOException e) {
       e.printStackTrace();
     }
