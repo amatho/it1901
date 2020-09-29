@@ -28,21 +28,27 @@ public class ScoreCardController {
   TableView<User> tableView;
   @FXML
   TableColumn<User, String> usernameColumn;
-  @FXML
-  TableColumn<User, String> userIdColumn;
+  //@FXML
+  //TableColumn<User, ColorPicker> colorColumn;
   @FXML
   TextField usernameField;
 
   @FXML
   void initialize() {
     usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-    userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+    //colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
   }
 
   @FXML
   void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("Course.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("Course.fxml"));
+    Parent courseParent = loader.load();
     Scene courseScene = new Scene(courseParent);
+
+    CourseController controller = loader.getController();
+    controller.initData((tableView.getItems()));
+
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     window.setScene(courseScene);
     window.show();
@@ -50,8 +56,10 @@ public class ScoreCardController {
 
   @FXML
   void newUserButtonPushed() {
-    User user = new User(usernameField.getText());
-    tableView.getItems().add(user);
+    if (tableView.getItems().size() < 4) {
+      User user = new User(usernameField.getText());
+      tableView.getItems().add(user);
+    }
   }
 
   @FXML
