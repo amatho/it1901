@@ -1,6 +1,5 @@
-module golfapp.core {
-  requires com.google.gson;
+open module golfapp.core {
+  requires com.fasterxml.jackson.databind;
 
   exports golfapp.core;
-  opens golfapp.core to com.google.gson;
 }
