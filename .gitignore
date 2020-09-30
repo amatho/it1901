@@ -39,3 +39,8 @@
 
 # IntelliJ
 target/
+
+# VSCode / Eclipse
+.classpath
+.project
+.settings
