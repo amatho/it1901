@@ -4,10 +4,8 @@ import java.util.List;
 
 public class Course {
 
-
   private final List<Hole> holes;
-
-
+  
   public Course(List<Hole> holes) {
     this.holes = holes;
   }
