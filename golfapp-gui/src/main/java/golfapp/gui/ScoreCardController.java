@@ -59,6 +59,7 @@ public class ScoreCardController {
     if (tableView.getItems().size() < 4) {
       User user = new User(usernameField.getText());
       tableView.getItems().add(user);
+      usernameField.clear();
     }
   }
 
