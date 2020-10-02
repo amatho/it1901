@@ -27,6 +27,12 @@ cache:
     - .m2/repository
     - target/
 
+deps:
+  stage: .pre
+  script:
+    - apt-get update -qq
+    - apt-get install -y libpangoft2-1.0
+
 build:
   stage: build
   script:
