@@ -16,7 +16,8 @@ variables:
   # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
   # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
-  MAVEN_CLI_OPTS: "--batch-mode --show-version"
+  # Exclude GUI module until we can get the tests running in CI
+  MAVEN_CLI_OPTS: "--batch-mode --show-version -Dgitlab-ci=true -pl -golfapp-gui"
 
 image: maven:3-openjdk-15
 
@@ -25,13 +26,6 @@ image: maven:3-openjdk-15
 cache:
   paths:
     - .m2/repository
-    - target/
-
-deps:
-  stage: .pre
-  script:
-    - apt-get update -qq
-    - apt-get install -y libpangoft2-1.0
 
 build:
   stage: build
@@ -41,7 +35,7 @@ build:
 verify:
   stage: verify
   script:
-    - mvn $MAVEN_CLI_OPTS -Dgitlab-ci=true verify
+    - mvn $MAVEN_CLI_OPTS verify
 
 workflow:
   rules:
