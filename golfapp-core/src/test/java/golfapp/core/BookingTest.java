@@ -45,7 +45,7 @@ public class BookingTest {
 
   @Test
   public void bookTime_addsDateToBookedTimes() {
-    Course course = new Course(List.of());
+    Course course = new Course("course", List.of());
     final User user = new User("Ola");
     LocalDate localDate = LocalDate.now();
     LocalTime localTime = LocalTime.of(8, 30);
@@ -62,7 +62,7 @@ public class BookingTest {
 
   @Test
   public void bookTime_deletesDateFromAvailableTimes() {
-    Course course = new Course(List.of());
+    Course course = new Course("course",List.of());
     final User user = new User("Ola");
     LocalDate localDate = LocalDate.now();
     LocalTime localTime = LocalTime.of(8, 30);
@@ -79,7 +79,7 @@ public class BookingTest {
 
   @Test
   public void bookTime_throwsWhenBooking15DaysAhead() {
-    Course course = new Course(List.of());
+    Course course = new Course("course",List.of());
     User user = new User("Ola");
     LocalDate localDate = LocalDate.now();
     LocalTime localTime = LocalTime.of(8, 30);
@@ -92,7 +92,7 @@ public class BookingTest {
 
   @Test
   public void bookTime_throwsExceptionWhenTryToBookDateInThePast() {
-    Course course = new Course(List.of());
+    Course course = new Course("course",List.of());
     User user = new User("Ola");
     LocalDate localDate = LocalDate.now();
     LocalTime localTime = LocalTime.of(8, 30);
@@ -105,7 +105,7 @@ public class BookingTest {
 
   @Test
   public void getBookingUser_returnsBookingUser() {
-    Course course = new Course(List.of());
+    Course course = new Course("course",List.of());
     User user = new User("Ola");
     LocalDate localDate = LocalDate.now();
     LocalTime localTime = LocalTime.of(8, 30);
@@ -118,7 +118,7 @@ public class BookingTest {
 
   @Test
   public void getBookingUser_returnNullIfNotBooked() {
-    Course course = new Course(List.of());
+    Course course = new Course("course",List.of());
     LocalDate localDate = LocalDate.now();
     LocalTime localTime = LocalTime.of(8, 30);
     LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);

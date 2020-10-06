@@ -14,7 +14,7 @@ public class BookingSystemTest {
 
   @Test
   public void addBooking_addsNewBookingWithKeyCourse() {
-    Course course = new Course(List.of());
+    Course course = new Course("course", List.of());
     BookingSystem bookingSystem = new BookingSystem();
     bookingSystem.addBooking(course);
     Assertions.assertTrue(bookingSystem.getBookings().containsKey(course));
@@ -24,7 +24,7 @@ public class BookingSystemTest {
 
   @Test
   public void removeBooking_removesBookingFromBookings() {
-    Course course = new Course(List.of());
+    Course course = new Course("course", List.of());
     BookingSystem bookingSystem = new BookingSystem();
     bookingSystem.addBooking(course);
     bookingSystem.addBooking(course);
@@ -36,7 +36,7 @@ public class BookingSystemTest {
 
   @Test
   public void getBooking_doesNotReturnNull() {
-    Course course = new Course(List.of());
+    Course course = new Course("course", List.of());
     BookingSystem bookingSystem = new BookingSystem();
     bookingSystem.addBooking(course);
     Booking booking = bookingSystem.getBooking(course);

@@ -42,12 +42,10 @@ public class ScoreCardController {
   @FXML
   void changeSceneButtonPushed(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader();
+    loader.setControllerFactory(c -> new CourseController(tableView.getItems()));
     loader.setLocation(getClass().getResource("Course.fxml"));
     Parent courseParent = loader.load();
     Scene courseScene = new Scene(courseParent);
-
-    CourseController controller = loader.getController();
-    controller.initData((tableView.getItems()));
 
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     window.setScene(courseScene);
