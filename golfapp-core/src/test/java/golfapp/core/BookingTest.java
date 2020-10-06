@@ -21,6 +21,29 @@ public class BookingTest {
   }
 
   @Test
+  public void getAvailableDates_returnsNonEmptyList() {
+    Booking booking = new Booking();
+    List<LocalDate> localDates = booking.getAvailableDates();
+    assertFalse(localDates.isEmpty());
+  }
+
+  @Test
+  public void getAvailableDates_containsToday() {
+    Booking booking = new Booking();
+    LocalDate today = LocalDate.now();
+    List<LocalDate> localDates = booking.getAvailableDates();
+    assertEquals(true, localDates.contains(today));
+  }
+
+  @Test
+  public void getAvailableDates_containsLastDay() {
+    Booking booking = new Booking();
+    LocalDate lastDay = LocalDate.now().plusDays(14);
+    List<LocalDate> localDates = booking.getAvailableDates();
+    assertEquals(true, localDates.contains(lastDay));
+  }
+
+  @Test
   public void bookTime_addsDateToBookedTimes() {
     Course course = new Course(List.of());
     final User user = new User("Ola");

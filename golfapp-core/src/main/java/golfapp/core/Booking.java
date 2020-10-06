@@ -28,6 +28,19 @@ public class Booking {
     }
   }
 
+  /**
+   *
+   * @return available dates for Booking of a course
+   */
+  public List<LocalDate> getAvailableDates() {
+    List<LocalDate> availableDates = new ArrayList<>();
+    for (int i = 0; i < 14; i++) {
+      LocalDate localDate = LocalDate.now().plusDays(i);
+      availableDates.add(localDate);
+    }
+    return availableDates;
+  }
+
   private static List<LocalTime> createValidTimes() {
     var result = new ArrayList<LocalTime>();
     for (int h = 8; h < 20; h++) {
@@ -50,10 +63,11 @@ public class Booking {
    * Gets the available times for a specified date.
    *
    * @param date the specified date
-   * @return list with available dates
+   * @return list with available times as LocalDateTime
    */
-  public List<LocalDateTime> getAvailableTimes(LocalDate date) {
+  public List<LocalTime> getAvailableTimes(LocalDate date) {
     return availableTimes.stream().filter(dateTime -> dateTime.toLocalDate().equals(date))
+        .map(d -> d.toLocalTime())
         .collect(Collectors.toList());
   }
 
