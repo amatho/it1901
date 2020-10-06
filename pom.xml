@@ -30,7 +30,7 @@
   </profiles>
 
   <properties>
-    <project.build.release>14</project.build.release>
+    <project.build.release>15</project.build.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.skipVerify>false</project.build.skipVerify>
   </properties>
