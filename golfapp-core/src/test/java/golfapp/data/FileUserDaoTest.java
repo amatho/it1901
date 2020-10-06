@@ -1,6 +1,7 @@
 package golfapp.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -8,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import golfapp.core.User;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +23,7 @@ public class FileUserDaoTest {
 
     saveHandler.save(user);
 
-    verify(files).createFile(any());
-    verify(files).writeString(any(), any());
+    verify(files).writeString(any(Path.class), anyString());
   }
 
   @Test
@@ -34,7 +35,7 @@ public class FileUserDaoTest {
         }
         """;
     var files = mock(FilesWrapper.class);
-    when(files.readString(any())).thenReturn(json);
+    when(files.readString(any(Path.class))).thenReturn(json);
     var saveHandler = new FileUserDao(files);
 
     var user = saveHandler.load();
