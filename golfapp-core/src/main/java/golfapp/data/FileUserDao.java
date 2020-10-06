@@ -35,7 +35,13 @@ public class FileUserDao implements UserDao {
   // Create the user data folder if it does not exist
   private void createUserDataDir() {
     try {
-      files.createDirectories(userDataPath.getParent());
+      var userDataFolder = userDataPath.getParent();
+
+      if (userDataFolder == null) {
+        throw new IllegalStateException("User data path was not set to a valid path");
+      }
+
+      files.createDirectories(userDataFolder);
     } catch (IOException e) {
       throw new IllegalStateException("Could create directory in user data", e);
     }
