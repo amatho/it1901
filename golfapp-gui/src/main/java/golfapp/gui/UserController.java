@@ -38,7 +38,7 @@ public class UserController {
   void initialize() {
     username.setText("Username: " + user.getUsername());
     courseColumn.setCellValueFactory(
-        sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getCourseName()));
+        sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getName()));
     timeColumn
         .setCellValueFactory(sc -> new ReadOnlyStringWrapper(sc.getValue().getDate().toString()));
     updateView();

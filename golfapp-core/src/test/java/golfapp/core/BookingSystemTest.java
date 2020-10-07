@@ -1,14 +1,12 @@
 package golfapp.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
@@ -27,10 +25,8 @@ public class BookingSystemTest {
   @Test
   public void addBooking_addsNewBookingWithKeyCourse() {
     BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Foo");
-    Course course = new Course("course", List.of());
     LocalDateTime dateTime = dateTimeOfToday(10, 15);
-    Booking booking = new Booking(user, course, dateTime);
+    Booking booking = new Booking(UUID.randomUUID(), dateTime);
 
     bookingSystem.addBooking(booking);
 
@@ -40,10 +36,8 @@ public class BookingSystemTest {
   @Test
   public void removeBooking_removesBookingFromBookings() {
     BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Foo Bar");
-    Course course = new Course("course", List.of());
-    Booking booking1 = new Booking(user, course, dateTimeOfToday(11, 30));
-    Booking booking2 = new Booking(user, course, dateTimeOfToday(10, 45));
+    Booking booking1 = new Booking(UUID.randomUUID(), dateTimeOfToday(11, 30));
+    Booking booking2 = new Booking(UUID.randomUUID(), dateTimeOfToday(10, 45));
 
     bookingSystem.addBooking(booking1);
     bookingSystem.addBooking(booking2);
@@ -56,10 +50,8 @@ public class BookingSystemTest {
   @Test
   public void addBooking_addsDateToBookedTimes() {
     BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Ola");
-    Course course = new Course("course", List.of());
     LocalDateTime dateTime = dateTimeOfToday(8, 30);
-    Booking booking = new Booking(user, course, dateTime);
+    Booking booking = new Booking(UUID.randomUUID(), dateTime);
 
     assertFalse(bookingSystem.getBookedTimes(dateTime.toLocalDate()).collect(Collectors.toList())
         .contains(dateTime));
@@ -75,10 +67,8 @@ public class BookingSystemTest {
   @Test
   public void addBooking_deletesDateFromAvailableTimes() {
     BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Ola");
-    Course course = new Course("course", List.of());
     LocalDateTime dateTime = dateTimeOfToday(9, 15);
-    Booking booking = new Booking(user, course, dateTime);
+    Booking booking = new Booking(UUID.randomUUID(), dateTime);
 
     assertTrue(bookingSystem.getAvailableTimes(dateTime.toLocalDate()).collect(Collectors.toList())
         .contains(dateTime));
@@ -93,10 +83,8 @@ public class BookingSystemTest {
   @Test
   public void addBooking_throwsWhenBooking15DaysAhead() {
     BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Ola");
-    Course course = new Course("course", List.of());
     LocalDateTime dateTimeIn15Days = dateTimeOfToday(8, 30).plusDays(15);
-    Booking booking = new Booking(user, course, dateTimeIn15Days);
+    Booking booking = new Booking(UUID.randomUUID(), dateTimeIn15Days);
 
     assertThrows(IllegalArgumentException.class, () -> bookingSystem.addBooking(booking));
   }
@@ -104,37 +92,9 @@ public class BookingSystemTest {
   @Test
   public void addBooking_throwsExceptionWhenTryToBookDateInThePast() {
     BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Ola");
-    Course course = new Course("course", List.of());
     LocalDateTime dateTime5DaysAgo = dateTimeOfToday(8, 30).minusDays(5);
-    Booking booking = new Booking(user, course, dateTime5DaysAgo);
+    Booking booking = new Booking(UUID.randomUUID(), dateTime5DaysAgo);
 
     assertThrows(IllegalArgumentException.class, () -> bookingSystem.addBooking(booking));
-  }
-
-  @Test
-  public void getBookingUser_returnsBookingUser() {
-    BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Ola");
-    Course course = new Course("course", List.of());
-    LocalDateTime dateTime = dateTimeOfToday(8, 30);
-    Booking booking = new Booking(user, course, dateTime);
-
-    bookingSystem.addBooking(booking);
-
-    assertEquals(user, bookingSystem.getBookingUser(dateTime));
-  }
-
-  @Test
-  public void getBookingUser_returnNullIfNotBooked() {
-    BookingSystem bookingSystem = new BookingSystem();
-    User user = new User("Ola");
-    Course course = new Course("course", List.of());
-    LocalDateTime dateTime = dateTimeOfToday(8, 30);
-    Booking booking = new Booking(user, course, dateTime);
-
-    bookingSystem.addBooking(booking);
-
-    assertNull(bookingSystem.getBookingUser(dateTimeOfToday(9, 30)));
   }
 }

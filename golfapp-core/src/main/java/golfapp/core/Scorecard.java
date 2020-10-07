@@ -32,6 +32,15 @@ public class Scorecard {
     }
   }
 
+  /**
+   * Sets the score of a given user for a given hole.
+   *
+   * @param user  the user
+   * @param hole  the hole
+   * @param score the score to set
+   * @throws IllegalArgumentException if the score is less than 1 or the given hole is not in the
+   *                                  course
+   */
   public void setScore(User user, Hole hole, int score) {
     int holeIndex = course.getHoleIndex(hole);
 
@@ -44,6 +53,13 @@ public class Scorecard {
     scorecard.get(user)[holeIndex] = score;
   }
 
+  /**
+   * Gets the score for a given user and hole.
+   *
+   * @param user the user
+   * @param hole the hole
+   * @return the user's score for this hole
+   */
   public int getScore(User user, Hole hole) {
     int holeIndex = course.getHoleIndex(hole);
 
