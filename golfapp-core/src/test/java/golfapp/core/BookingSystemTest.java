@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ public class BookingSystemTest {
   public void addBooking_addsNewBookingWithKeyCourse() {
     BookingSystem bookingSystem = new BookingSystem();
     LocalDateTime dateTime = dateTimeOfToday(10, 15);
-    Booking booking = new Booking(UUID.randomUUID(), dateTime);
+    Booking booking = new Booking("foo@example.com", dateTime);
 
     bookingSystem.addBooking(booking);
 
@@ -36,8 +35,8 @@ public class BookingSystemTest {
   @Test
   public void removeBooking_removesBookingFromBookings() {
     BookingSystem bookingSystem = new BookingSystem();
-    Booking booking1 = new Booking(UUID.randomUUID(), dateTimeOfToday(11, 30));
-    Booking booking2 = new Booking(UUID.randomUUID(), dateTimeOfToday(10, 45));
+    Booking booking1 = new Booking("foo@example.com", dateTimeOfToday(11, 30));
+    Booking booking2 = new Booking("bar@example.com", dateTimeOfToday(10, 45));
 
     bookingSystem.addBooking(booking1);
     bookingSystem.addBooking(booking2);
@@ -51,7 +50,7 @@ public class BookingSystemTest {
   public void addBooking_addsDateToBookedTimes() {
     BookingSystem bookingSystem = new BookingSystem();
     LocalDateTime dateTime = dateTimeOfToday(8, 30);
-    Booking booking = new Booking(UUID.randomUUID(), dateTime);
+    Booking booking = new Booking("baz@example.com", dateTime);
 
     assertFalse(bookingSystem.getBookedTimes(dateTime.toLocalDate()).collect(Collectors.toList())
         .contains(dateTime));
@@ -68,7 +67,7 @@ public class BookingSystemTest {
   public void addBooking_deletesDateFromAvailableTimes() {
     BookingSystem bookingSystem = new BookingSystem();
     LocalDateTime dateTime = dateTimeOfToday(9, 15);
-    Booking booking = new Booking(UUID.randomUUID(), dateTime);
+    Booking booking = new Booking("foo@foo.com", dateTime);
 
     assertTrue(bookingSystem.getAvailableTimes(dateTime.toLocalDate()).collect(Collectors.toList())
         .contains(dateTime));
@@ -84,7 +83,7 @@ public class BookingSystemTest {
   public void addBooking_throwsWhenBooking15DaysAhead() {
     BookingSystem bookingSystem = new BookingSystem();
     LocalDateTime dateTimeIn15Days = dateTimeOfToday(8, 30).plusDays(15);
-    Booking booking = new Booking(UUID.randomUUID(), dateTimeIn15Days);
+    Booking booking = new Booking("foo42@example.com", dateTimeIn15Days);
 
     assertThrows(IllegalArgumentException.class, () -> bookingSystem.addBooking(booking));
   }
@@ -93,7 +92,7 @@ public class BookingSystemTest {
   public void addBooking_throwsExceptionWhenTryToBookDateInThePast() {
     BookingSystem bookingSystem = new BookingSystem();
     LocalDateTime dateTime5DaysAgo = dateTimeOfToday(8, 30).minusDays(5);
-    Booking booking = new Booking(UUID.randomUUID(), dateTime5DaysAgo);
+    Booking booking = new Booking("foobar@example.com", dateTime5DaysAgo);
 
     assertThrows(IllegalArgumentException.class, () -> bookingSystem.addBooking(booking));
   }

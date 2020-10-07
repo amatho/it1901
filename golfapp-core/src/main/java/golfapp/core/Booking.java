@@ -1,26 +1,25 @@
 package golfapp.core;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Booking {
 
-  private final UUID userId;
+  private final String userEmail;
   private final LocalDateTime dateTime;
 
   /**
    * Create a new booking.
    *
-   * @param userId   the {@code UUID} from the {@code User} that created this booking
-   * @param dateTime the {@code LocalDateTime} for this booking
+   * @param userEmail the {@code UUID} from the {@code User} that created this booking
+   * @param dateTime  the {@code LocalDateTime} for this booking
    */
-  public Booking(UUID userId, LocalDateTime dateTime) {
-    this.userId = userId;
+  public Booking(String userEmail, LocalDateTime dateTime) {
+    this.userEmail = userEmail;
     this.dateTime = dateTime;
   }
 
-  public UUID getUserId() {
-    return userId;
+  public String getUserEmail() {
+    return userEmail;
   }
 
   public LocalDateTime getDateTime() {

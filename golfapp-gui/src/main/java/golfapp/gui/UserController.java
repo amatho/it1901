@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class UserController {
 
 
-  private final User user = new User("Amandus");
+  private final User user = new User("ama@example.com", "Amandus");
   @FXML
   Label username;
   @FXML
@@ -36,7 +36,7 @@ public class UserController {
 
   @FXML
   void initialize() {
-    username.setText("Username: " + user.getUsername());
+    username.setText("Name: " + user.getDisplayName());
     courseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getName()));
     timeColumn
@@ -45,7 +45,7 @@ public class UserController {
   }
 
   private void updateView() {
-    Collection<Scorecard> tmp = user.getScoreCardHistory();
+    Collection<Scorecard> tmp = user.getScorecardHistory();
     scorecardTableView.getItems().removeAll();
     if (!tmp.isEmpty()) {
       for (Scorecard sc : tmp) {

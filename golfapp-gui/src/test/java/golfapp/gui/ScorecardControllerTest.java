@@ -70,6 +70,6 @@ public class ScorecardControllerTest {
     TableView<User> table = robot.lookup("#tableView").queryTableView();
     assertEquals(1, table.getItems().size());
     assertEquals("Kari Karianne",
-        table.getItems().stream().findFirst().orElseThrow().getUsername());
+        table.getItems().stream().findFirst().orElseThrow().getDisplayName());
   }
 }
