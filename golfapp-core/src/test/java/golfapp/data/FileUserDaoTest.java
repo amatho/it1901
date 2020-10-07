@@ -26,7 +26,12 @@ public class FileUserDaoTest {
 
   @Test
   public void load_parsesJsonCorrectly() throws IOException {
-    var json = "{\"email\":\"foobar@foo.com\",\"displayName\":\"Foo Bar\"}";
+    var json = """
+        {
+          "email": "foobar@foo.com",
+          "displayName": "Foo Bar"
+        }
+        """;
     var files = mock(FilesWrapper.class);
     when(files.readString(any())).thenReturn(json);
     var saveHandler = new FileUserDao(files);

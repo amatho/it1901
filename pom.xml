@@ -14,6 +14,27 @@
     <module>golfapp-gui</module>
   </modules>
 
+  <profiles>
+    <profile>
+      <id>skip-verify</id>
+      <activation>
+        <property>
+          <name>skipVerify</name>
+        </property>
+      </activation>
+      <properties>
+        <project.build.skipVerify>true</project.build.skipVerify>
+        <maven.test.skip>true</maven.test.skip>
+      </properties>
+    </profile>
+  </profiles>
+
+  <properties>
+    <project.build.release>15</project.build.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.skipVerify>false</project.build.skipVerify>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <!-- JavaFX -->
@@ -64,10 +85,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -77,8 +94,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.1</version>
           <configuration>
-            <encoding>UTF-8</encoding>
-            <release>14</release>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <release>${project.build.release}</release>
           </configuration>
         </plugin>
         <plugin>
@@ -99,10 +116,11 @@
           <version>3.1.1</version>
           <configuration>
             <configLocation>google_checks.xml</configLocation>
-            <encoding>UTF-8</encoding>
+            <encoding>${project.build.sourceEncoding}</encoding>
             <consoleOutput>true</consoleOutput>
             <failsOnError>true</failsOnError>
             <linkXRef>false</linkXRef>
+            <skip>${project.build.skipVerify}</skip>
           </configuration>
           <executions>
             <execution>
@@ -121,6 +139,7 @@
           <version>4.0.4</version>
           <configuration>
             <xmlOutput>false</xmlOutput>
+            <skip>${project.build.skipVerify}</skip>
           </configuration>
           <executions>
             <execution>
@@ -137,6 +156,9 @@
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.6</version>
+          <configuration>
+            <skip>${project.build.skipVerify}</skip>
+          </configuration>
           <executions>
             <execution>
               <id>jacoco-prepare-agent</id>
