@@ -56,7 +56,7 @@ public class ScorecardController {
   @FXML
   void newUserButtonPushed() {
     if (tableView.getItems().size() < 4) {
-      // TODO: Change to email and display name
+      // TODO: Change to support email and display name
       User user = new User(usernameField.getText(), usernameField.getText());
       tableView.getItems().add(user);
       usernameField.clear();
