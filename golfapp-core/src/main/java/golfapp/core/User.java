@@ -11,19 +11,41 @@ public class User {
   private final String username;
   private final UUID userId;
   private final Collection<Scorecard> scoreCardHistory;
+  private final Collection<Booking> bookedTimes;
 
   public User(String username) {
     this.username = username;
     this.userId = UUID.randomUUID();
     scoreCardHistory = new ArrayList<>();
+    bookedTimes = new ArrayList<>();
   }
 
   @JsonCreator
-  User(@JsonProperty("username") String username, @JsonProperty("userId") UUID userId,
-      @JsonProperty("scoreCardHistory") Collection<Scorecard> scoreCardHistory) {
+  User(@JsonProperty String username, @JsonProperty UUID userId,
+      @JsonProperty Collection<Scorecard> scoreCardHistory,
+      @JsonProperty Collection<Booking> bookedTimes) {
     this.username = username;
     this.userId = userId;
     this.scoreCardHistory = scoreCardHistory;
+    this.bookedTimes = bookedTimes;
+  }
+
+  public Collection<Booking> getBookedTimes() {
+    return bookedTimes;
+  }
+
+  public void addBooking(Booking booking) {
+    if (bookedTimes.contains(booking)) {
+      throw new IllegalArgumentException("This booking has already been booked.");
+    }
+    bookedTimes.add(booking);
+  }
+
+  public void removeBooking(Booking booking) {
+    if (!bookedTimes.contains(booking)) {
+      throw new IllegalArgumentException("You have not booked this Booking");
+    }
+    bookedTimes.remove(booking);
   }
 
   public Collection<Scorecard> getScoreCardHistory() {
@@ -37,9 +59,7 @@ public class User {
   }
 
   public void removeScorecard(Scorecard scorecard) {
-    if (scoreCardHistory.contains(scorecard)) {
-      scoreCardHistory.remove(scorecard);
-    }
+    scoreCardHistory.remove(scorecard);
   }
 
   @Override

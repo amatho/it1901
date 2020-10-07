@@ -1,5 +1,6 @@
 package golfapp.gui;
 
+import golfapp.core.Booking;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
@@ -28,30 +29,62 @@ public class UserController {
   @FXML
   Button logOut;
   @FXML
+  Button cancelSelectedBooking;
+  @FXML
+  Button addBooking;
+  @FXML
   TableView<Scorecard> scorecardTableView;
   @FXML
-  TableColumn<Scorecard, String> courseColumn;
+  TableColumn<Scorecard, String> scorecardCourseColumn;
   @FXML
-  TableColumn<Scorecard, String> timeColumn;
+  TableColumn<Scorecard, String> scorecardTimeColumn;
+  @FXML
+  TableView<Booking> bookedTimesTableView;
+  @FXML
+  TableColumn<Booking, String> bookedCourseColumn;
+  @FXML
+  TableColumn<Booking, String> bookedTimeColumn;
 
   @FXML
   void initialize() {
-    username.setText("Username: " + user.getUsername());
-    courseColumn.setCellValueFactory(
+    username.setText(user.getUsername());
+    scorecardCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getCourseName()));
-    timeColumn
+    scorecardTimeColumn
         .setCellValueFactory(sc -> new ReadOnlyStringWrapper(sc.getValue().getDate().toString()));
-    updateView();
+    bookedCourseColumn.setCellValueFactory(
+        sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getCourseName()));
+    bookedTimeColumn
+        .setCellValueFactory(
+            sc -> new ReadOnlyStringWrapper(sc.getValue().getDateTime().toLocalDate().toString()));
+    scorecardTableView.getSelectionModel().selectedItemProperty()
+        .addListener((prop, oldValue, newValue) -> updateButton(
+            scorecardTableView.getSelectionModel().getSelectedItem(), viewSelectedScorecard));
+    bookedTimesTableView.getSelectionModel().selectedItemProperty()
+        .addListener((prop, oldValue, newValue) -> updateButton(
+            bookedTimesTableView.getSelectionModel().getSelectedItem(), cancelSelectedBooking));
+    updateTableView(scorecardTableView, user.getScoreCardHistory(), viewSelectedScorecard);
+    updateTableView(bookedTimesTableView, user.getBookedTimes(), cancelSelectedBooking);
   }
 
-  private void updateView() {
-    Collection<Scorecard> tmp = user.getScoreCardHistory();
-    scorecardTableView.getItems().removeAll();
-    if (!tmp.isEmpty()) {
-      for (Scorecard sc : tmp) {
-        scorecardTableView.getItems().add(sc);
-      }
-    }
+  private <T> void updateTableView(TableView<T> tableView, Collection<T> collection,
+      Button button) {
+    tableView.getItems().clear();
+    tableView.getItems().addAll(collection);
+    updateButton(tableView.getSelectionModel().getSelectedItem(), button);
+  }
+
+  @FXML
+  private void updateButton(Object object, Button button) {
+    boolean disable = object == null;
+    button.setDisable(disable);
+  }
+
+  @FXML
+  void handleCancelSelectedBooking() {
+    Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
+    user.removeBooking(toDelete);
+    updateTableView(bookedTimesTableView, user.getBookedTimes(), cancelSelectedBooking);
   }
 
   @FXML
@@ -67,7 +100,16 @@ public class UserController {
   @FXML
   void handleViewSelectedScorecardButton(ActionEvent event) throws IOException {
     Parent courseParent = FXMLLoader
-        .load(getClass().getResource("ScoreCardView.fxml")); //TODO: Implement ScoreCardView.fxml
+        .load(getClass().getResource("ScorecardView.fxml")); //TODO: Implement ScoreCardView.fxml
+    Scene courseScene = new Scene(courseParent);
+    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    window.setScene(courseScene);
+    window.show();
+  }
+
+  @FXML
+  void handleAddBooking(ActionEvent event) throws IOException {
+    Parent courseParent = FXMLLoader.load(getClass().getResource("Booking.fxml"));
     Scene courseScene = new Scene(courseParent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     window.setScene(courseScene);
