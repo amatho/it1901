@@ -1,5 +1,6 @@
 package golfapp.core;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ public class Scorecard {
 
   private final Course course;
   private final HashMap<User, int[]> scorecard = new HashMap<>();
+  private final LocalDate date;
 
   /**
    * Create a new scorecard.
@@ -17,6 +19,7 @@ public class Scorecard {
    * @throws IllegalArgumentException if there are more than 4 players
    */
   public Scorecard(Course course, Collection<User> users) {
+    date = LocalDate.now();
     if (users.size() > 4) {
       throw new IllegalArgumentException("Cannot have more than four users.");
     }
@@ -29,6 +32,15 @@ public class Scorecard {
     }
   }
 
+  /**
+   * Sets the score of a given user for a given hole.
+   *
+   * @param user  the user
+   * @param hole  the hole
+   * @param score the score to set
+   * @throws IllegalArgumentException if the score is less than 1 or the given hole is not in the
+   *                                  course
+   */
   public void setScore(User user, Hole hole, int score) {
     int holeIndex = course.getHoleIndex(hole);
 
@@ -41,6 +53,13 @@ public class Scorecard {
     scorecard.get(user)[holeIndex] = score;
   }
 
+  /**
+   * Gets the score for a given user and hole.
+   *
+   * @param user the user
+   * @param hole the hole
+   * @return the user's score for this hole
+   */
   public int getScore(User user, Hole hole) {
     int holeIndex = course.getHoleIndex(hole);
 
@@ -58,5 +77,9 @@ public class Scorecard {
 
   public Course getCourse() {
     return course;
+  }
+
+  public LocalDate getDate() {
+    return date;
   }
 }

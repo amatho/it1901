@@ -20,9 +20,9 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class ScoreCardControllerTest {
+public class ScorecardControllerTest {
 
-  private ScoreCardController controller;
+  private ScorecardController controller;
 
   @BeforeAll
   static void headless() {
@@ -37,7 +37,7 @@ public class ScoreCardControllerTest {
 
   @Start
   void start(final Stage stage) throws IOException {
-    final var loader = new FXMLLoader(getClass().getResource("ScoreCard.fxml"));
+    final var loader = new FXMLLoader(getClass().getResource("Scorecard.fxml"));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);
@@ -70,6 +70,6 @@ public class ScoreCardControllerTest {
     TableView<User> table = robot.lookup("#tableView").queryTableView();
     assertEquals(1, table.getItems().size());
     assertEquals("Kari Karianne",
-        table.getItems().stream().findFirst().orElseThrow().getUsername());
+        table.getItems().stream().findFirst().orElseThrow().getDisplayName());
   }
 }

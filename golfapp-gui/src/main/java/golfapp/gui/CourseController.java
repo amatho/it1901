@@ -34,7 +34,7 @@ public class CourseController {
 
   @FXML
   void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("ScoreCard.fxml"));
+    Parent courseParent = FXMLLoader.load(getClass().getResource("Scorecard.fxml"));
     Scene courseScene = new Scene(courseParent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     window.setScene(courseScene);

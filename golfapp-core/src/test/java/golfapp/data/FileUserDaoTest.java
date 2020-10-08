@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 import golfapp.core.User;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 public class FileUserDaoTest {
@@ -19,7 +18,7 @@ public class FileUserDaoTest {
   public void save_callsFilesWrapperMethods() throws IOException {
     var files = mock(FilesWrapper.class);
     var saveHandler = new FileUserDao(files);
-    var user = new User("foobar");
+    var user = new User("foobar@foo.com", "Foo Bar");
 
     saveHandler.save(user);
 
@@ -30,8 +29,8 @@ public class FileUserDaoTest {
   public void load_parsesJsonCorrectly() throws IOException {
     var json = """
         {
-          "username": "foobar",
-          "userId": "cd7c149e-74d6-451a-a811-097a9e2b491f"
+          "email": "foobar@foo.com",
+          "displayName": "Foo Bar"
         }
         """;
     var files = mock(FilesWrapper.class);
@@ -40,7 +39,7 @@ public class FileUserDaoTest {
 
     var user = saveHandler.load();
 
-    assertEquals("foobar", user.getUsername());
-    assertEquals(UUID.fromString("cd7c149e-74d6-451a-a811-097a9e2b491f"), user.getUserId());
+    assertEquals("foobar@foo.com", user.getEmail());
+    assertEquals("Foo Bar", user.getDisplayName());
   }
 }

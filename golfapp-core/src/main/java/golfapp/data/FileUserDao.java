@@ -1,6 +1,5 @@
 package golfapp.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import golfapp.core.User;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -53,7 +52,7 @@ public class FileUserDao implements UserDao {
   @Override
   public void save(User user) {
     try {
-      var mapper = new ObjectMapper();
+      var mapper = MapperInstance.getInstance();
       var json = mapper.writeValueAsString(user);
       createUserDataDir();
       files.writeString(userDataPath, json);
@@ -70,7 +69,7 @@ public class FileUserDao implements UserDao {
   @Override
   public User load() {
     try {
-      var mapper = new ObjectMapper();
+      var mapper = MapperInstance.getInstance();
       var json = files.readString(userDataPath);
       return mapper.readValue(json, User.class);
     } catch (IOException e) {
