@@ -7,9 +7,9 @@ import java.util.Set;
 
 public class User {
 
-  private final String email;
-  private final String displayName;
-  private final Set<Scorecard> scorecardHistory;
+  private String email;
+  private String displayName;
+  private Set<Scorecard> scorecardHistory;
 
   /**
    * Create a new user.
@@ -24,7 +24,8 @@ public class User {
   }
 
   @JsonCreator
-  User(@JsonProperty("email") String email, @JsonProperty("displayName") String displayName,
+  User(@JsonProperty("email") String email,
+      @JsonProperty("displayName") String displayName,
       @JsonProperty("scorecardHistory") Set<Scorecard> scorecardHistory) {
     this.email = email;
     this.displayName = displayName;
@@ -35,12 +36,24 @@ public class User {
     return email;
   }
 
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
   public String getDisplayName() {
     return displayName;
   }
 
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
   public Set<Scorecard> getScorecardHistory() {
     return scorecardHistory;
+  }
+
+  public void setScorecardHistory(Set<Scorecard> scorecardHistory) {
+    this.scorecardHistory = scorecardHistory;
   }
 
   public void addScorecard(Scorecard scorecard) {
@@ -63,7 +76,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return email.toLowerCase().hashCode();
+    return email.hashCode();
   }
 
   @Override
