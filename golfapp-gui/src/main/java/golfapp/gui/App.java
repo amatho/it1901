@@ -15,7 +15,7 @@ public class App extends Application {
 
   @Override
   public void start(final Stage primaryStage) throws IOException {
-    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Scorecard.fxml"));
+    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ScoreCard.fxml"));
     final Parent root = fxmlLoader.load();
     final Scene scene = new Scene(root);
     primaryStage.setScene(scene);
