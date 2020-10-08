@@ -2,6 +2,7 @@ package golfapp.gui;
 
 import golfapp.core.User;
 import java.io.IOException;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class ScorecardController {
@@ -35,7 +35,8 @@ public class ScorecardController {
 
   @FXML
   void initialize() {
-    usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+    usernameColumn
+        .setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getDisplayName()));
     //colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
   }
 
@@ -55,7 +56,8 @@ public class ScorecardController {
   @FXML
   void newUserButtonPushed() {
     if (tableView.getItems().size() < 4) {
-      User user = new User(usernameField.getText());
+      // TODO: Change to support email and display name
+      User user = new User(usernameField.getText(), usernameField.getText());
       tableView.getItems().add(user);
       usernameField.clear();
     }

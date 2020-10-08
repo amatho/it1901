@@ -1,35 +1,25 @@
 package golfapp.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Booking {
 
-  @JsonIgnore
-  private final User user;
-  private final Course course;
+  private final String userEmail;
   private final LocalDateTime dateTime;
 
   /**
    * Create a new booking.
    *
-   * @param user     the {@code User} for this Booking
-   * @param course   the {@code Course} for this Booking
-   * @param dateTime the {@code LocalDateTime} for this Booking
+   * @param userEmail the {@code UUID} from the {@code User} that created this booking
+   * @param dateTime  the {@code LocalDateTime} for this booking
    */
-  public Booking(User user, Course course, LocalDateTime dateTime) {
-    this.user = user;
-    this.course = course;
+  public Booking(String userEmail, LocalDateTime dateTime) {
+    this.userEmail = userEmail;
     this.dateTime = dateTime;
   }
 
-  public User getUser() {
-    return user;
-  }
-
-  public Course getCourse() {
-    return course;
+  public String getUserEmail() {
+    return userEmail;
   }
 
   public LocalDateTime getDateTime() {
@@ -40,7 +30,7 @@ public class Booking {
   public boolean equals(Object obj) {
     if (obj instanceof Booking) {
       var other = (Booking) obj;
-      return other.course.equals(course) && other.dateTime.equals(dateTime);
+      return other.dateTime.equals(dateTime);
     }
 
     return false;
@@ -48,6 +38,6 @@ public class Booking {
 
   @Override
   public int hashCode() {
-    return Objects.hash(course, dateTime);
+    return dateTime.hashCode();
   }
 }
