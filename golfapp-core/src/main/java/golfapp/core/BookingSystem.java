@@ -81,10 +81,6 @@ public class BookingSystem {
     availableTimes.add(booking.getDateTime());
   }
 
-  public Stream<Booking> getBookingsForCourse(Course course) {
-    return bookings.stream().filter(b -> b.getCourse().equals(course));
-  }
-
   public List<LocalDateTime> getAllAvailableTimes() {
     return availableTimes;
   }
@@ -111,20 +107,5 @@ public class BookingSystem {
    */
   public Stream<LocalDateTime> getBookedTimes(LocalDate date) {
     return getAllBookedTimes().filter(dateTime -> dateTime.toLocalDate().equals(date));
-  }
-
-  /**
-   * Gets the user that has booked a specified time.
-   *
-   * @param time the specified time
-   * @return the booking user or null if no user has booked for this time
-   */
-  public User getBookingUser(LocalDateTime time) {
-    return bookings
-        .stream()
-        .filter(b -> b.getDateTime().equals(time))
-        .map(Booking::getUser)
-        .findAny()
-        .orElse(null);
   }
 }

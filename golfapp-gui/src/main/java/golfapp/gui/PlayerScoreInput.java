@@ -15,7 +15,7 @@ public class PlayerScoreInput extends HBox {
     super();
 
     scoreField = new TextField("" + score);
-    final var name = new TextField(user.getUsername());
+    final var name = new TextField(user.getDisplayName());
     final var plus = new Button("+");
     final var minus = new Button("-");
 

@@ -2,76 +2,85 @@ package golfapp.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
 
-  private final String username;
-  private final UUID userId;
-  private final Collection<Scorecard> scoreCardHistory;
-  private final Collection<Booking> bookedTimes;
+  private String email;
+  private String displayName;
+  private Set<Scorecard> scorecardHistory;
 
-  public User(String username) {
-    this.username = username;
-    this.userId = UUID.randomUUID();
-    scoreCardHistory = new ArrayList<>();
-    bookedTimes = new ArrayList<>();
+  /**
+   * Create a new user.
+   *
+   * @param email       the user's email
+   * @param displayName the name to display for this user
+   */
+  public User(String email, String displayName) {
+    this.email = email;
+    this.displayName = displayName;
+    scorecardHistory = new HashSet<>();
   }
 
   @JsonCreator
-  User(@JsonProperty String username, @JsonProperty UUID userId,
-      @JsonProperty Collection<Scorecard> scoreCardHistory,
-      @JsonProperty Collection<Booking> bookedTimes) {
-    this.username = username;
-    this.userId = userId;
-    this.scoreCardHistory = scoreCardHistory;
-    this.bookedTimes = bookedTimes;
+  User(@JsonProperty("email") String email,
+      @JsonProperty("displayName") String displayName,
+      @JsonProperty("scorecardHistory") Set<Scorecard> scorecardHistory) {
+    this.email = email;
+    this.displayName = displayName;
+    this.scorecardHistory = scorecardHistory;
   }
 
-  public Collection<Booking> getBookedTimes() {
-    return bookedTimes;
+  public String getEmail() {
+    return email;
   }
 
-  public void addBooking(Booking booking) {
-    if (bookedTimes.contains(booking)) {
-      throw new IllegalArgumentException("This booking has already been booked.");
-    }
-    bookedTimes.add(booking);
+  public void setEmail(String email) {
+    this.email = email;
   }
 
-  public void removeBooking(Booking booking) {
-    if (!bookedTimes.contains(booking)) {
-      throw new IllegalArgumentException("You have not booked this Booking");
-    }
-    bookedTimes.remove(booking);
+  public String getDisplayName() {
+    return displayName;
   }
 
-  public Collection<Scorecard> getScoreCardHistory() {
-    return scoreCardHistory;
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+  public Set<Scorecard> getScorecardHistory() {
+    return scorecardHistory;
+  }
+
+  public void setScorecardHistory(Set<Scorecard> scorecardHistory) {
+    this.scorecardHistory = scorecardHistory;
   }
 
   public void addScorecard(Scorecard scorecard) {
-    if (!scoreCardHistory.contains(scorecard)) {
-      scoreCardHistory.add(scorecard);
-    }
+    scorecardHistory.add(scorecard);
   }
 
   public void removeScorecard(Scorecard scorecard) {
-    scoreCardHistory.remove(scorecard);
+    scorecardHistory.remove(scorecard);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof User) {
+      User other = (User) o;
+      return email.equalsIgnoreCase(other.email);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return email.hashCode();
   }
 
   @Override
   public String toString() {
-    return username;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public UUID getUserId() {
-    return userId;
+    return displayName;
   }
 }
