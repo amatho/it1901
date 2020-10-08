@@ -1,26 +1,21 @@
 package golfapp.gui;
 
 import golfapp.core.User;
-import java.io.IOException;
 import java.util.List;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class CourseController {
 
+  private final LoadViewCallback viewCallback;
   private final List<User> users;
 
   @FXML
   private VBox playerInputs;
 
-  public CourseController(ObservableList<User> users) {
+  public CourseController(LoadViewCallback viewCallback, ObservableList<User> users) {
+    this.viewCallback = viewCallback;
     this.users = users;
   }
 
@@ -33,11 +28,7 @@ public class CourseController {
   }
 
   @FXML
-  void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("Scorecard.fxml"));
-    Scene courseScene = new Scene(courseParent);
-    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
-    window.show();
+  void changeSceneButtonPushed() {
+    viewCallback.loadView("Scorecard.fxml");
   }
 }

@@ -1,22 +1,17 @@
 package golfapp.gui;
 
 import golfapp.core.User;
-import java.io.IOException;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class ScorecardController {
+
+  private final LoadViewCallback viewCallback;
 
   @FXML
   Button addButton;
@@ -33,6 +28,10 @@ public class ScorecardController {
   @FXML
   TextField usernameField;
 
+  public ScorecardController(LoadViewCallback viewCallback) {
+    this.viewCallback = viewCallback;
+  }
+
   @FXML
   void initialize() {
     usernameColumn
@@ -41,16 +40,9 @@ public class ScorecardController {
   }
 
   @FXML
-  void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    loader.setControllerFactory(c -> new CourseController(tableView.getItems()));
-    loader.setLocation(getClass().getResource("Course.fxml"));
-    Parent courseParent = loader.load();
-    Scene courseScene = new Scene(courseParent);
-
-    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
-    window.show();
+  void changeSceneButtonPushed() {
+    viewCallback
+        .loadView("Course.fxml", c -> new CourseController(viewCallback, tableView.getItems()));
   }
 
   @FXML

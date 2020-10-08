@@ -21,8 +21,9 @@ import javafx.stage.Stage;
 
 public class UserController {
 
-
   private final User user = new User("ama@example.com", "Amandus");
+  private final LoadViewCallback viewCallback;
+
   @FXML
   Label username;
   @FXML
@@ -45,6 +46,10 @@ public class UserController {
   TableColumn<Booking, String> bookedEmailColumn;
   @FXML
   TableColumn<Booking, String> bookedTimeColumn;
+
+  public UserController(LoadViewCallback viewCallback) {
+    this.viewCallback = viewCallback;
+  }
 
   @FXML
   void initialize() {
@@ -97,7 +102,7 @@ public class UserController {
   @FXML
   void handleLogOutButton(ActionEvent event) throws IOException {
     Parent courseParent = FXMLLoader
-        .load(getClass().getResource("LogIn.fxml")); //TODO: Implement LogIn.fxml
+        .load(getClass().getResource("LogIn.fxml")); // TODO: Implement LogIn.fxml
     Scene courseScene = new Scene(courseParent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     window.setScene(courseScene);
@@ -105,21 +110,12 @@ public class UserController {
   }
 
   @FXML
-  void handleViewSelectedScorecardButton(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader
-        .load(getClass().getResource("ScorecardView.fxml")); //TODO: Implement ScorecardView.fxml
-    Scene courseScene = new Scene(courseParent);
-    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
-    window.show();
+  void handleViewSelectedScorecardButton() {
+    viewCallback.loadView("ScorecardView.fxml"); // TODO: Implement ScorecardView.fxml
   }
 
   @FXML
-  void handleAddBooking(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("Booking.fxml"));
-    Scene courseScene = new Scene(courseParent);
-    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
-    window.show();
+  void handleAddBooking() {
+    viewCallback.loadView("Booking.fxml"); // TODO: Pass information to BookingController
   }
 }
