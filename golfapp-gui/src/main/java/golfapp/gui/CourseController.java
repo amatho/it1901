@@ -8,13 +8,13 @@ import javafx.scene.layout.VBox;
 
 public class CourseController {
 
-  private final LoadViewCallback viewCallback;
+  private final AppManager viewCallback;
   private final List<User> users;
 
   @FXML
   private VBox playerInputs;
 
-  public CourseController(LoadViewCallback viewCallback, ObservableList<User> users) {
+  public CourseController(AppManager viewCallback, ObservableList<User> users) {
     this.viewCallback = viewCallback;
     this.users = users;
   }
@@ -29,6 +29,6 @@ public class CourseController {
 
   @FXML
   void changeSceneButtonPushed() {
-    viewCallback.loadView("Scorecard.fxml");
+    viewCallback.loadView("Scorecard.fxml", ScorecardController::new);
   }
 }

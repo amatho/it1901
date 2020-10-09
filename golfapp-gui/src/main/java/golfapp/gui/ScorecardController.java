@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 
 public class ScorecardController {
 
-  private final LoadViewCallback viewCallback;
+  private final AppManager viewCallback;
 
   @FXML
   Button addButton;
@@ -28,7 +28,7 @@ public class ScorecardController {
   @FXML
   TextField usernameField;
 
-  public ScorecardController(LoadViewCallback viewCallback) {
+  public ScorecardController(AppManager viewCallback) {
     this.viewCallback = viewCallback;
   }
 

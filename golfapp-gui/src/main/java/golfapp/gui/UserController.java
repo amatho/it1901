@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class UserController {
 
   private final User user = new User("ama@example.com", "Amandus");
-  private final LoadViewCallback viewCallback;
+  private final AppManager viewCallback;
 
   @FXML
   Label username;
@@ -47,7 +47,7 @@ public class UserController {
   @FXML
   TableColumn<Booking, String> bookedTimeColumn;
 
-  public UserController(LoadViewCallback viewCallback) {
+  public UserController(AppManager viewCallback) {
     this.viewCallback = viewCallback;
   }
 
@@ -101,21 +101,27 @@ public class UserController {
 
   @FXML
   void handleLogOutButton(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader
-        .load(getClass().getResource("LogIn.fxml")); // TODO: Implement LogIn.fxml
-    Scene courseScene = new Scene(courseParent);
+    Parent parent = FXMLLoader
+        .load(getClass().getResource("LogIn.fxml"));
+    Scene scene = new Scene(parent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
+    window.setScene(scene);
     window.show();
   }
 
   @FXML
   void handleViewSelectedScorecardButton() {
-    viewCallback.loadView("ScorecardView.fxml"); // TODO: Implement ScorecardView.fxml
+    // TODO: Implement ScorecardView.fxml
+    viewCallback.loadView("ScorecardView.fxml", a -> {
+      throw new IllegalStateException("Not implemented");
+    });
   }
 
   @FXML
   void handleAddBooking() {
-    viewCallback.loadView("Booking.fxml"); // TODO: Pass information to BookingController
+    // TODO: Pass information to BookingController
+    viewCallback.loadView("Booking.fxml", a -> {
+      throw new IllegalStateException("Not implemented");
+    });
   }
 }
