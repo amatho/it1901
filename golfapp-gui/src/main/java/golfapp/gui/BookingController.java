@@ -20,7 +20,7 @@ public class BookingController {
 
   private final BookingSystem bookingSystem = new BookingSystem();
   private final List<Course> courses = new ArrayList<>();
-  private final User user1 = new User("ola.nordmann@gmail.com", "OlaN");
+  private final User user1 = new User("ola.nordmann@gmail.com", "OlaNordmann");
 
   @FXML
   private ChoiceBox<LocalDate> dateChoiceBox;
@@ -62,8 +62,6 @@ public class BookingController {
 
   @FXML
   void initialize() {
-    //getAllAvailableTimes = booking.getAllAvailableTimes();
-    //getAllBookedTimes = booking.getAllBookedTimes();
     showBooking(false);
     confirmedBookingLabel.setVisible(false);
     showCourse();
@@ -76,7 +74,6 @@ public class BookingController {
         .collect(Collectors.toList());
     dateChoiceBox.getItems().addAll(availableDates);
     dateChoiceBox.setValue(availableDates.get(0));
-
   }
 
   @FXML
@@ -113,14 +110,13 @@ public class BookingController {
       yourCourseText.setText(courseChoiceBox.getValue());
       yourDateText.setText(String.valueOf(dateChoiceBox.getValue()));
       dateChoiceBox.getValue();
-      mail.textProperty().addListener((mail, oldText, newText)  -> {
+      mail.textProperty().addListener((mail, oldText, newText) -> {
         yourMailText.setText("");
         yourMailText.setText(newText);
       });
       availableTimesChoiceBox.getSelectionModel().selectedItemProperty()
           .addListener((availableTimesChoiceBox,
-          oldValue, newValue) -> yourTimeText.setText(String.valueOf(newValue)));
-
+              oldValue, newValue) -> yourTimeText.setText(String.valueOf(newValue)));
     }
   }
 
@@ -151,9 +147,7 @@ public class BookingController {
       onCourse.getBookingSystem().addBooking(new Booking(yourMailText.getText(), bookingTime));
       cleanBooking();
       showBooking(false);
-
     }
-
   }
 
   @FXML
@@ -180,6 +174,5 @@ public class BookingController {
     window.setScene(courseScene);
     window.show();
   }
-
    */
 }
