@@ -5,21 +5,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.LogInController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.LogInController">
   <children>
-    <TextField fx:id="eMail" layoutX="194.0" layoutY="238.0"/>
-    <Label layoutX="74.0" layoutY="25.0" prefHeight="137.0" prefWidth="453.0"
-      text="THE BEST GOLF APP">
+    <TextField fx:id="email" layoutX="194.0" layoutY="238.0" />
+    <Label layoutX="74.0" layoutY="25.0" prefHeight="137.0" prefWidth="453.0" text="THE BEST GOLF APP">
       <font>
-        <Font size="48.0"/>
+        <Font size="48.0" />
       </font>
     </Label>
-    <Button fx:id="logIn" layoutX="355.0" layoutY="238.0" mnemonicParsing="false"
-      onAction="#handleLogIn" text="Log in"/>
-    <TextField fx:id="nameField" layoutX="194.0" layoutY="200.0"/>
-    <Button fx:id="newUser" layoutX="194.0" layoutY="276.0" mnemonicParsing="false"
-      onAction="#handleNewUserButton" text="New User"/>
-    <Label layoutX="156.0" layoutY="238.0" prefHeight="27.0" prefWidth="38.0" text="e-mail"/>
+    <Button fx:id="logIn" layoutX="355.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleLogIn" text="Log in" />
+    <TextField fx:id="nameField" layoutX="194.0" layoutY="200.0" />
+    <Button fx:id="newUser" layoutX="194.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleNewUserButton" text="New User" />
+    <Label layoutX="156.0" layoutY="238.0" prefHeight="27.0" prefWidth="38.0" text="e-mail" />
+      <Label fx:id="nameLabel" layoutX="156.0" layoutY="200.0" prefHeight="27.0" prefWidth="38.0" text="Name:" />
   </children>
 </AnchorPane>
