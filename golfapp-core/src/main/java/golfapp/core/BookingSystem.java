@@ -99,6 +99,12 @@ public class BookingSystem {
     return availableTimes.stream().filter(dateTime -> dateTime.toLocalDate().equals(date));
   }
 
+  public Stream<LocalDate> getAvailableDates() {
+    return availableTimes.stream()
+        .map(d -> d.toLocalDate())
+        .distinct();
+  }
+
   /**
    * Gets the booked times for a specified date.
    *
