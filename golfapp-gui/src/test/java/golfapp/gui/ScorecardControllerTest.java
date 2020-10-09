@@ -3,6 +3,7 @@ package golfapp.gui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 import golfapp.core.User;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class ScorecardControllerTest {
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("Scorecard.fxml"));
+    loader.setControllerFactory(c -> new ScorecardController(mock(LoadViewCallback.class)));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);
