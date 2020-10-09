@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class LogInController {
 
   @FXML
-  private TextField eMail;
+  private TextField email;
   @FXML
   private TextField nameField;
   @FXML
@@ -25,11 +25,11 @@ public class LogInController {
 
   @FXML
   void initialize() {
-    eMail.setPromptText("e-mail ...");
+    email.setPromptText("e-mail ...");
     nameField.setPromptText("Name ...");
     logIn.setDisable(true);
     nameField.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
-    eMail.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
+    email.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
     nameField.setVisible(false);
     newUserIsActive = false;
   }
@@ -37,9 +37,9 @@ public class LogInController {
   private void updateLogInButton() {
     boolean disable;
     if (newUserIsActive) {
-      disable = eMail.getText().isBlank() || nameField.getText().isBlank();
+      disable = email.getText().isBlank() || nameField.getText().isBlank();
     } else {
-      disable = eMail.getText().isBlank();
+      disable = email.getText().isBlank();
     }
     logIn.setDisable(disable);
   }
