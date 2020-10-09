@@ -8,11 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LogInController {
 
+  @FXML
+  private Label nameLabel;
   @FXML
   private TextField email;
   @FXML
@@ -31,6 +34,8 @@ public class LogInController {
     nameField.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
     email.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
     nameField.setVisible(false);
+    nameLabel.setVisible(false);
+
     newUserIsActive = false;
   }
 
@@ -49,10 +54,12 @@ public class LogInController {
     if (newUserIsActive) {
       nameField.clear();
       nameField.setVisible(false);
+      nameLabel.setVisible(false);
       newUser.setText("New User");
       logIn.setText("Log in");
     } else {
       nameField.setVisible(true);
+      nameLabel.setVisible(true);
       nameField.setPromptText("Name ...");
       newUser.setText("I have a User");
       logIn.setText("Create User");
