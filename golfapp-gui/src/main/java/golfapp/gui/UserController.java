@@ -1,9 +1,16 @@
 package golfapp.gui;
 
 import golfapp.core.Booking;
+import golfapp.core.BookingSystem;
+import golfapp.core.Course;
+import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -49,6 +56,10 @@ public class UserController {
 
   public UserController(LoadViewCallback viewCallback) {
     this.viewCallback = viewCallback;
+  }
+
+  public User getUser() {
+    return user;
   }
 
   @FXML
