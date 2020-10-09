@@ -1,6 +1,8 @@
 package golfapp.gui;
 
+import golfapp.core.BookingSystem;
 import golfapp.core.User;
+import java.util.List;
 import java.util.function.Function;
 
 public interface AppManager {
@@ -19,4 +21,11 @@ public interface AppManager {
    * @return the logged in user
    */
   User getUser();
+
+  /**
+   * Get the booking systems managed by the app.
+   *
+   * @return a list of booking systems
+   */
+  List<BookingSystem> getBookingSystems();
 }

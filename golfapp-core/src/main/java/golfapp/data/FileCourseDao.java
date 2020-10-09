@@ -12,4 +12,9 @@ class FileCourseDao extends AbstractFileDao<Course> {
   String getFilename() {
     return "courses.json";
   }
+
+  @Override
+  Class<?> targetClass() {
+    return Course.class;
+  }
 }

@@ -61,4 +61,9 @@ public class Course {
   public int hashCode() {
     return Objects.hash(name, holes);
   }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

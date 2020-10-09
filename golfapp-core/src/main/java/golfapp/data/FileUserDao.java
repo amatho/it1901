@@ -12,4 +12,9 @@ class FileUserDao extends AbstractFileDao<User> {
   String getFilename() {
     return "users.json";
   }
+
+  @Override
+  Class<?> targetClass() {
+    return User.class;
+  }
 }

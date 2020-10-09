@@ -5,7 +5,7 @@ import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,8 +21,8 @@ import javafx.stage.Stage;
 
 public class UserController {
 
-  private final User user = new User("ama@example.com", "Amandus");
-  private final AppManager viewCallback;
+  private final AppManager appManager;
+  private final User user;
 
   @FXML
   Label username;
@@ -47,8 +47,9 @@ public class UserController {
   @FXML
   TableColumn<Booking, String> bookedTimeColumn;
 
-  public UserController(AppManager viewCallback) {
-    this.viewCallback = viewCallback;
+  public UserController(AppManager appManager) {
+    this.appManager = appManager;
+    user = appManager.getUser();
   }
 
   @FXML
@@ -74,8 +75,12 @@ public class UserController {
             bookedTimesTableView.getSelectionModel().getSelectedItem(), cancelSelectedBooking));
 
     updateTableView(scorecardTableView, user.getScorecardHistory(), viewSelectedScorecard);
-    // TODO: Get bookings from all the BookingSystems and find the bookings for the current user
-    updateTableView(bookedTimesTableView, List.of(), cancelSelectedBooking);
+
+    var bookings = appManager.getBookingSystems().stream()
+        .flatMap(bs -> bs.getBookings().stream())
+        .filter(b -> b.getUserEmail().equalsIgnoreCase(user.getEmail()))
+        .collect(Collectors.toList());
+    updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
   }
 
   private <T> void updateTableView(TableView<T> tableView, Collection<T> collection,
@@ -112,7 +117,7 @@ public class UserController {
   @FXML
   void handleViewSelectedScorecardButton() {
     // TODO: Implement ScorecardView.fxml
-    viewCallback.loadView("ScorecardView.fxml", a -> {
+    appManager.loadView("ScorecardView.fxml", a -> {
       throw new IllegalStateException("Not implemented");
     });
   }
@@ -120,7 +125,7 @@ public class UserController {
   @FXML
   void handleAddBooking() {
     // TODO: Pass information to BookingController
-    viewCallback.loadView("Booking.fxml", a -> {
+    appManager.loadView("Booking.fxml", a -> {
       throw new IllegalStateException("Not implemented");
     });
   }

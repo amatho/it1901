@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 
 public class ScorecardController {
 
-  private final AppManager viewCallback;
+  private final AppManager appManager;
 
   @FXML
   Button addButton;
@@ -28,8 +28,8 @@ public class ScorecardController {
   @FXML
   TextField usernameField;
 
-  public ScorecardController(AppManager viewCallback) {
-    this.viewCallback = viewCallback;
+  public ScorecardController(AppManager appManager) {
+    this.appManager = appManager;
   }
 
   @FXML
@@ -41,8 +41,8 @@ public class ScorecardController {
 
   @FXML
   void changeSceneButtonPushed() {
-    viewCallback
-        .loadView("Course.fxml", c -> new CourseController(viewCallback, tableView.getItems()));
+    appManager
+        .loadView("Course.fxml", c -> new CourseController(appManager, tableView.getItems()));
   }
 
   @FXML
