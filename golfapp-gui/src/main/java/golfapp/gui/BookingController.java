@@ -14,13 +14,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class BookingController {
 
   private final BookingSystem bookingSystem = new BookingSystem();
   private final List<Course> courses = new ArrayList<>();
-  private final User user1 = new User("ola.nordmann@gmail.com", "OlaNordmann");
+  private final User user1 = new User("amandus@gmail.com", "Amandus");
 
   @FXML
   private ChoiceBox<LocalDate> dateChoiceBox;
@@ -32,10 +31,6 @@ public class BookingController {
   private Label outputLabel;
   @FXML
   private ChoiceBox<LocalTime> availableTimesChoiceBox;
-  @FXML
-  private Label mailLabel;
-  @FXML
-  private TextField mail;
   @FXML
   private Label yourBooking;
   @FXML
@@ -110,10 +105,7 @@ public class BookingController {
       yourCourseText.setText(courseChoiceBox.getValue());
       yourDateText.setText(String.valueOf(dateChoiceBox.getValue()));
       dateChoiceBox.getValue();
-      mail.textProperty().addListener((mail, oldText, newText) -> {
-        yourMailText.setText("");
-        yourMailText.setText(newText);
-      });
+      yourMailText.setText(user1.getEmail());
       availableTimesChoiceBox.getSelectionModel().selectedItemProperty()
           .addListener((availableTimesChoiceBox,
               oldValue, newValue) -> yourTimeText.setText(String.valueOf(newValue)));
@@ -126,7 +118,6 @@ public class BookingController {
     showDate();
     availableTimesChoiceBox.setValue(null);
     yourMailText.setText("");
-    mail.setText("");
     yourTimeText.setText("");
   }
 
@@ -134,9 +125,7 @@ public class BookingController {
   void confirmBooking() {
     confirmedBookingLabel.setVisible(true);
     confirmedBookingLabel.setText("");
-    if (!user1.getEmail().equals(yourMailText.getText())) {
-      confirmedBookingLabel.setText("Mailen din stemmer ikke med brukeren sin.");
-    } else if (availableTimesChoiceBox.getValue() == null) {
+    if (availableTimesChoiceBox.getValue() == null) {
       confirmedBookingLabel.setText("Du har ikke valgt et gyldig tidspunkt.");
     } else {
       confirmedBookingLabel.setText("Booking bekreftet");
@@ -153,8 +142,6 @@ public class BookingController {
   @FXML
   void showBooking(Boolean b) {
     availableTimesChoiceBox.setVisible(b);
-    mail.setVisible(b);
-    mailLabel.setVisible(b);
     yourBooking.setVisible(b);
     confirmBooking.setVisible(b);
     yourCourseLabel.setVisible(b);
