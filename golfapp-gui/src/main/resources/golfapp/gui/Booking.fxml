@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.BookingController">
+   <children>
+      <Label layoutX="266.0" layoutY="14.0" prefHeight="36.0" prefWidth="198.0" text="Booking">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font></Label>
+      <Label layoutX="14.0" layoutY="130.0" text="Bane:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="courseChoiceBox" layoutX="14.0" layoutY="158.0" prefHeight="25.0" prefWidth="176.0" />
+      <Label layoutX="14.0" layoutY="198.0" prefHeight="18.0" prefWidth="131.0" text="Dato:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="dateChoiceBox" layoutX="14.0" layoutY="223.0" prefHeight="25.0" prefWidth="176.0" />
+      <Button fx:id="showAvailableTimes" layoutX="14.0" layoutY="293.0" mnemonicParsing="false" onAction="#showAvailableTimes" prefHeight="37.0" prefWidth="176.0" text="Søk etter ledige tider">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="outputLabel" layoutX="208.0" layoutY="125.0" prefHeight="37.0" prefWidth="339.0" text="Velg en bane:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="availableTimesChoiceBox" layoutX="208.0" layoutY="158.0" prefWidth="150.0" />
+      <Label fx:id="yourBooking" layoutX="397.0" layoutY="152.0" prefHeight="37.0" prefWidth="198.0" text="Din booking:">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="confirmBooking" layoutX="450.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="37.0" prefWidth="131.0" text="Bekreft booking">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="yourCourseLabel" layoutX="397.0" layoutY="198.0" prefHeight="25.0" prefWidth="119.0" text="Din bane:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourDateLabel" layoutX="397.0" layoutY="236.0" prefHeight="25.0" prefWidth="119.0" text="Din dato:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourTimeLabel" layoutX="397.0" layoutY="273.0" prefHeight="25.0" prefWidth="119.0" text="Din tid:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourCourseText" layoutX="476.0" layoutY="198.0" prefHeight="25.0" prefWidth="141.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourDateText" layoutX="476.0" layoutY="236.0" prefHeight="25.0" prefWidth="141.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourTimeText" layoutX="476.0" layoutY="273.0" prefHeight="25.0" prefWidth="141.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourMailText" layoutX="476.0" layoutY="312.0" prefHeight="25.0" prefWidth="209.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="yourMailLabel" layoutX="397.0" layoutY="312.0" prefHeight="25.0" prefWidth="119.0" text="Din mail:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="confirmedBookingLabel" layoutX="208.0" layoutY="448.0" prefHeight="45.0" prefWidth="438.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
