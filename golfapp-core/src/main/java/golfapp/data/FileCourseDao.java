@@ -2,7 +2,7 @@ package golfapp.data;
 
 import golfapp.core.Course;
 
-public class FileCourseDao extends AbstractFileDao<Course> {
+class FileCourseDao extends AbstractFileDao<Course> {
 
   public FileCourseDao() {
     super();
