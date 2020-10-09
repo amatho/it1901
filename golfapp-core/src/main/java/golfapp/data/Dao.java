@@ -2,6 +2,7 @@ package golfapp.data;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface Dao<T> {
 
@@ -19,6 +20,15 @@ public interface Dao<T> {
    * @return all objects, or an empty list if none was found
    */
   List<ObjectContainer<T>> getAll();
+
+  /**
+   * Get all the objects, ignoring the IDs.
+   *
+   * @return all objects, or an empty list
+   */
+  default Stream<T> getAllIgnoreId() {
+    return getAll().stream().map(ObjectContainer::getValue);
+  }
 
   /**
    * Save an object.

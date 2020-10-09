@@ -1,15 +1,18 @@
 package golfapp.core;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class Scorecard {
 
-  private final Course course;
-  private final HashMap<User, int[]> scorecard = new HashMap<>();
-  private final LocalDate date;
+  private Course course;
+  // Use the users' emails as key, to avoid cyclic reference in a user's scorecard history
+  private HashMap<String, List<Integer>> scorecard;
+  private LocalDate date;
 
   /**
    * Create a new scorecard.
@@ -19,17 +22,23 @@ public class Scorecard {
    * @throws IllegalArgumentException if there are more than 4 players
    */
   public Scorecard(Course course, Collection<User> users) {
-    date = LocalDate.now();
     if (users.size() > 4) {
       throw new IllegalArgumentException("Cannot have more than four users.");
     }
 
     this.course = course;
+    scorecard = new HashMap<>();
+    date = LocalDate.now();
 
     for (var u : users) {
-      var score = new int[course.getCourseLength()];
-      scorecard.put(u, score);
+      var score = new ArrayList<Integer>(course.getCourseLength());
+      course.getHoles().forEach(h -> score.add(0));
+      scorecard.put(u.getEmail(), score);
     }
+  }
+
+  // Creator for Jackson
+  private Scorecard() {
   }
 
   /**
@@ -50,7 +59,7 @@ public class Scorecard {
       throw new IllegalArgumentException("Score must be 1 or bigger.");
     }
 
-    scorecard.get(user)[holeIndex] = score;
+    scorecard.get(user.getEmail()).set(holeIndex, score);
   }
 
   /**
@@ -67,19 +76,39 @@ public class Scorecard {
       throw new IllegalArgumentException("The given hole is not in the course");
     }
 
-    return scorecard.get(user)[holeIndex];
+    return scorecard.get(user.getEmail()).get(holeIndex);
   }
 
   public int getTotalScore(User user) {
-    var scores = scorecard.get(user);
-    return Arrays.stream(scores).sum();
+    var scores = scorecard.get(user.getEmail());
+    return scores.stream().mapToInt(Integer::intValue).sum();
   }
 
   public Course getCourse() {
     return course;
   }
 
+  HashMap<String, List<Integer>> getScorecard() {
+    return scorecard;
+  }
+
   public LocalDate getDate() {
     return date;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Scorecard) {
+      var other = (Scorecard) o;
+      return course.equals(other.course) && scorecard.equals(other.scorecard) && date
+          .equals(other.date);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(course, scorecard, date);
   }
 }

@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public class BookingSystem {
 
   private static final List<LocalTime> VALID_TIMES = createValidTimes();
+  private final Course course;
   private final List<LocalDateTime> availableTimes = new ArrayList<>();
   private final Set<Booking> bookings = new HashSet<>();
 
@@ -19,7 +20,9 @@ public class BookingSystem {
    * Creates a new booking system, using the current time as a basis for the times available for
    * booking.
    */
-  public BookingSystem() {
+  public BookingSystem(Course course) {
+    this.course = course;
+
     for (int i = 0; i < 14; i++) {
       LocalDate localDate = LocalDate.now().plusDays(i);
       for (LocalTime validTime : VALID_TIMES) {
@@ -36,6 +39,10 @@ public class BookingSystem {
       }
     }
     return result;
+  }
+
+  public Course getCourse() {
+    return course;
   }
 
   public Set<Booking> getBookings() {

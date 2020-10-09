@@ -26,6 +26,11 @@ public class AbstractFileDaoTest {
     String getFilename() {
       return "test.json";
     }
+
+    @Override
+    Class<?> targetClass() {
+      return String.class;
+    }
   }
 
   private static final String testJson = """
