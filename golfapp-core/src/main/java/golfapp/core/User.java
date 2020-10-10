@@ -1,7 +1,5 @@
 package golfapp.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,21 +21,12 @@ public class User {
     scorecardHistory = new HashSet<>();
   }
 
-  @JsonCreator
-  User(@JsonProperty("email") String email,
-      @JsonProperty("displayName") String displayName,
-      @JsonProperty("scorecardHistory") Set<Scorecard> scorecardHistory) {
-    this.email = email;
-    this.displayName = displayName;
-    this.scorecardHistory = scorecardHistory;
+  // Creator for Jackson
+  private User() {
   }
 
   public String getEmail() {
     return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 
   public String getDisplayName() {
@@ -50,10 +39,6 @@ public class User {
 
   public Set<Scorecard> getScorecardHistory() {
     return scorecardHistory;
-  }
-
-  public void setScorecardHistory(Set<Scorecard> scorecardHistory) {
-    this.scorecardHistory = scorecardHistory;
   }
 
   public void addScorecard(Scorecard scorecard) {

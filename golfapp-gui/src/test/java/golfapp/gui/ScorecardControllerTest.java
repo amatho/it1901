@@ -39,7 +39,7 @@ public class ScorecardControllerTest {
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("Scorecard.fxml"));
-    loader.setControllerFactory(c -> new ScorecardController(mock(LoadViewCallback.class)));
+    loader.setControllerFactory(c -> new ScorecardController(mock(AppManager.class)));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);

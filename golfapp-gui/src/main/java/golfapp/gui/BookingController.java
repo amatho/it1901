@@ -3,11 +3,10 @@ package golfapp.gui;
 import golfapp.core.Booking;
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
-import golfapp.core.User;
+import golfapp.data.DaoFactory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
@@ -17,14 +16,14 @@ import javafx.scene.control.Label;
 
 public class BookingController {
 
-  private final BookingSystem bookingSystem = new BookingSystem();
-  private final List<Course> courses = new ArrayList<>();
-  private final User user1 = new User("amandus@gmail.com", "Amandus");
+  private final AppManager appManager;
+  private final List<BookingSystem> bookingSystems;
+  private final List<Course> courses;
 
   @FXML
   private ChoiceBox<LocalDate> dateChoiceBox;
   @FXML
-  private ChoiceBox<String> courseChoiceBox;
+  private ChoiceBox<Course> courseChoiceBox;
   @FXML
   private Button showAvailableTimes;
   @FXML
@@ -54,6 +53,12 @@ public class BookingController {
   @FXML
   private Label confirmedBookingLabel;
 
+  public BookingController(AppManager appManager) {
+    this.appManager = appManager;
+    bookingSystems = appManager.getBookingSystems();
+
+    courses = DaoFactory.courseDao().getAllIgnoreId().collect(Collectors.toList());
+  }
 
   @FXML
   void initialize() {
@@ -65,23 +70,15 @@ public class BookingController {
 
   @FXML
   void showDate() {
-    List<LocalDate> availableDates = bookingSystem.getAvailableDates()
-        .collect(Collectors.toList());
-    dateChoiceBox.getItems().addAll(availableDates);
-    dateChoiceBox.setValue(availableDates.get(0));
+    var dateChoiceBoxItems = dateChoiceBox.getItems();
+    bookingSystems.stream().flatMap(BookingSystem::getAvailableDates).distinct()
+        .forEach(dateChoiceBoxItems::add);
+    dateChoiceBox.getSelectionModel().selectFirst();
   }
 
   @FXML
   void showCourse() {
-    courses.add(new Course("Oslo Golfklubb", List.of(), new BookingSystem()));
-    courses.add(new Course("Trondheim GK", List.of(), new BookingSystem()));
-    courses.add(new Course("Bærum Golfklubb", List.of(), new BookingSystem()));
-    courses.add(new Course("Alta GK", List.of(), new BookingSystem()));
-    List<String> courseNames = new ArrayList<>();
-    for (Course c : courses) {
-      courseNames.add(c.getName());
-    }
-    courseChoiceBox.getItems().addAll(courseNames);
+    courseChoiceBox.getItems().addAll(courses);
   }
 
   @FXML
@@ -92,20 +89,22 @@ public class BookingController {
     } else {
       availableTimesChoiceBox.setValue(null);
       yourTimeText.setText("");
-      Course onCourse = courses.get(courseChoiceBox.getItems()
-          .indexOf(courseChoiceBox.getValue()));
-      LocalDate d = dateChoiceBox.getValue();
-      List<LocalTime> availableTimes = onCourse
-          .getBookingSystem().getAvailableTimes(d)
-          .map(LocalDateTime::toLocalTime)
-          .collect(Collectors.toList());
-      availableTimesChoiceBox.getItems().addAll(availableTimes);
+
+      Course selectedCourse = courseChoiceBox.getValue();
+      LocalDate selectedDate = dateChoiceBox.getValue();
+      var availableTimesChoiceBoxItems = availableTimesChoiceBox.getItems();
+      bookingSystems.stream().filter(b -> b.getCourse().equals(selectedCourse)).findAny()
+          .orElseThrow().getAvailableTimes(selectedDate).map(LocalDateTime::toLocalTime)
+          .forEach(availableTimesChoiceBoxItems::add);
+
       outputLabel.setText("Velg en ledig tid");
       showBooking(true);
-      yourCourseText.setText(courseChoiceBox.getValue());
+
+      yourCourseText.setText(courseChoiceBox.getValue().toString());
       yourDateText.setText(String.valueOf(dateChoiceBox.getValue()));
       dateChoiceBox.getValue();
-      yourMailText.setText(user1.getEmail());
+      yourMailText.setText(appManager.getUser().getEmail());
+
       availableTimesChoiceBox.getSelectionModel().selectedItemProperty()
           .addListener((availableTimesChoiceBox,
               oldValue, newValue) -> yourTimeText.setText(String.valueOf(newValue)));
@@ -129,11 +128,13 @@ public class BookingController {
       confirmedBookingLabel.setText("Du har ikke valgt et gyldig tidspunkt.");
     } else {
       confirmedBookingLabel.setText("Booking bekreftet");
-      Course onCourse = courses.get(courseChoiceBox.getItems()
-          .indexOf(courseChoiceBox.getValue()));
+
+      Course selectedCourse = courseChoiceBox.getValue();
       LocalDateTime bookingTime = dateChoiceBox.getValue()
           .atTime(availableTimesChoiceBox.getValue());
-      onCourse.getBookingSystem().addBooking(new Booking(yourMailText.getText(), bookingTime));
+      bookingSystems.stream().filter(b -> b.getCourse().equals(selectedCourse)).findAny()
+          .orElseThrow().addBooking(new Booking(yourMailText.getText(), bookingTime));
+
       cleanBooking();
       showBooking(false);
     }

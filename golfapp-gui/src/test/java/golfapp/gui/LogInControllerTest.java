@@ -37,7 +37,6 @@ public class LogInControllerTest {
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-    loader.setControllerFactory(c -> new LogInController(mock(LoadViewCallback.class)));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);
@@ -70,17 +69,17 @@ public class LogInControllerTest {
     Button newUserButton = robot.lookup("#newUser").queryButton();
     TextField nameField = robot.lookup("#nameField").query();
     Assertions.assertEquals("New User", newUserButton.getText());
-    Assertions.assertTrue(nameField.isDisable());
-    robot.clickOn("newUser");
+    Assertions.assertFalse(nameField.isVisible());
+    robot.clickOn("#newUser");
     newUserButton = robot.lookup("#newUser").queryButton();
     nameField = robot.lookup("#nameField").query();
     Assertions.assertEquals("I have a User", newUserButton.getText());
-    Assertions.assertFalse(nameField.isDisable());
-    robot.clickOn("newUser");
+    Assertions.assertTrue(nameField.isVisible());
+    robot.clickOn("#newUser");
     newUserButton = robot.lookup("#newUser").queryButton();
     nameField = robot.lookup("#nameField").query();
     Assertions.assertEquals("New User", newUserButton.getText());
-    Assertions.assertTrue(nameField.isDisable());
+    Assertions.assertFalse(nameField.isVisible());
   }
 
   @Test

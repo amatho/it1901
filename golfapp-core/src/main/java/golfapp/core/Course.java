@@ -1,28 +1,15 @@
 package golfapp.core;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Course {
 
-  private final String name;
-  private final List<Hole> holes;
-  private final BookingSystem bookingSystem;
+  private String name;
+  private List<Hole> holes;
 
   /**
    * Create a new course.
-   *
-   * @param name          the course name
-   * @param holes         the holes of this course
-   * @param bookingSystem the booking system for this course
-   */
-  public Course(String name, List<Hole> holes, BookingSystem bookingSystem) {
-    this.name = name;
-    this.holes = holes;
-    this.bookingSystem = bookingSystem;
-  }
-
-  /**
-   * Create a new course, using a new booking system.
    *
    * @param name  the course name
    * @param holes the holes of this course
@@ -30,11 +17,18 @@ public class Course {
   public Course(String name, List<Hole> holes) {
     this.name = name;
     this.holes = holes;
-    bookingSystem = new BookingSystem();
+  }
+
+  // Creator for Jackson
+  private Course() {
   }
 
   public String getName() {
     return name;
+  }
+
+  private void setName(String name) {
+    this.name = name;
   }
 
   public List<Hole> getHoles() {
@@ -53,7 +47,23 @@ public class Course {
     return holes.size();
   }
 
-  public BookingSystem getBookingSystem() {
-    return bookingSystem;
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Course) {
+      var other = (Course) o;
+      return name.equals(other.name) && holes.equals(other.holes);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, holes);
+  }
+
+  @Override
+  public String toString() {
+    return name;
   }
 }
