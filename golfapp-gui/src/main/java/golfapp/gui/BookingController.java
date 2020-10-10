@@ -21,37 +21,37 @@ public class BookingController {
   private final List<Course> courses;
 
   @FXML
-  private ChoiceBox<LocalDate> dateChoiceBox;
+  ChoiceBox<LocalDate> dateChoiceBox;
   @FXML
-  private ChoiceBox<Course> courseChoiceBox;
+  ChoiceBox<Course> courseChoiceBox;
   @FXML
-  private Button showAvailableTimes;
+  Button showAvailableTimes;
   @FXML
-  private Label outputLabel;
+  Label outputLabel;
   @FXML
-  private ChoiceBox<LocalTime> availableTimesChoiceBox;
+  ChoiceBox<LocalTime> availableTimesChoiceBox;
   @FXML
-  private Label yourBooking;
+  Label yourBooking;
   @FXML
-  private Button confirmBooking;
+  Button confirmBooking;
   @FXML
-  private Label yourTimeLabel;
+  Label yourTimeLabel;
   @FXML
-  private Label yourDateLabel;
+  Label yourDateLabel;
   @FXML
-  private Label yourCourseLabel;
+  Label yourCourseLabel;
   @FXML
-  private Label yourMailLabel;
+  Label yourMailLabel;
   @FXML
-  private Label yourTimeText;
+  Label yourTimeText;
   @FXML
-  private Label yourCourseText;
+  Label yourCourseText;
   @FXML
-  private Label yourDateText;
+  Label yourDateText;
   @FXML
-  private Label yourMailText;
+  Label yourMailText;
   @FXML
-  private Label confirmedBookingLabel;
+  Label confirmedBookingLabel;
 
   public BookingController(AppManager appManager) {
     this.appManager = appManager;
@@ -73,6 +73,7 @@ public class BookingController {
     var dateChoiceBoxItems = dateChoiceBox.getItems();
     bookingSystems.stream().flatMap(BookingSystem::getAvailableDates).distinct()
         .forEach(dateChoiceBoxItems::add);
+    dateChoiceBox.setItems(dateChoiceBoxItems);
     dateChoiceBox.getSelectionModel().selectFirst();
   }
 
@@ -94,7 +95,8 @@ public class BookingController {
       LocalDate selectedDate = dateChoiceBox.getValue();
       var availableTimesChoiceBoxItems = availableTimesChoiceBox.getItems();
       bookingSystems.stream().filter(b -> b.getCourse().equals(selectedCourse)).findAny()
-          .orElseThrow().getAvailableTimes(selectedDate).map(LocalDateTime::toLocalTime)
+          .orElseThrow().getAvailableTimes(selectedDate)
+          .map(LocalDateTime::toLocalTime)
           .forEach(availableTimesChoiceBoxItems::add);
 
       outputLabel.setText("Velg en ledig tid");
@@ -113,8 +115,6 @@ public class BookingController {
 
   @FXML
   void cleanBooking() {
-    showCourse();
-    showDate();
     availableTimesChoiceBox.setValue(null);
     yourMailText.setText("");
     yourTimeText.setText("");
