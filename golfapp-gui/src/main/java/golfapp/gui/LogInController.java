@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 public class LogInController {
 
+  private final LoadViewCallback viewCallback;
   @FXML
   private Label nameLabel;
   @FXML
@@ -25,6 +26,10 @@ public class LogInController {
   @FXML
   private Button newUser;
   private boolean newUserIsActive;
+
+  public LogInController(LoadViewCallback viewCallback) {
+    this.viewCallback = viewCallback;
+  }
 
   @FXML
   void initialize() {
