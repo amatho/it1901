@@ -2,8 +2,10 @@ package golfapp.data;
 
 import golfapp.core.Course;
 import golfapp.core.User;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 public final class DaoFactory {
 
@@ -12,8 +14,11 @@ public final class DaoFactory {
     try {
       var courseDao = new FileCourseDao();
 
-      var path = Path.of(DaoFactory.class.getResource("courses.json").toURI());
-      var courseJson = Files.readString(path);
+      var reader = new BufferedReader(
+          new InputStreamReader(DaoFactory.class.getResourceAsStream("courses.json"),
+              StandardCharsets.UTF_8));
+      var courseJson = reader.lines().collect(Collectors.joining("\n"));
+      reader.close();
 
       var courses = MapperInstance.getInstance().readerFor(Course.class).<Course>readValues(
           courseJson).readAll();
