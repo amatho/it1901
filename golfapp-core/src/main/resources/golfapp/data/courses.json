@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Oslo Golfklubb",
+    "holes": [
+      {
+        "length": 40,
+        "par": 3,
+        "height": 30
+      },
+      {
+        "length": 41,
+        "par": 3,
+        "height": 31
+      }
+    ]
+  },
+  {
+    "name": "Trondheim GK",
+    "holes": [
+      {
+        "length": 40,
+        "par": 3,
+        "height": 30
+      },
+      {
+        "length": 41,
+        "par": 3,
+        "height": 31
+      }
+    ]
+  },
+  {
+    "name": "Bærum Golfklubb",
+    "holes": [
+      {
+        "length": 40,
+        "par": 3,
+        "height": 30
+      },
+      {
+        "length": 41,
+        "par": 3,
+        "height": 31
+      }
+    ]
+  },
+  {
+    "name": "Alta GK",
+    "holes": [
+      {
+        "length": 40,
+        "par": 3,
+        "height": 30
+      },
+      {
+        "length": 41,
+        "par": 3,
+        "height": 31
+      }
+    ]
+  }
+]

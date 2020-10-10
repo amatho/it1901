@@ -9,6 +9,7 @@
   xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.AppController">
   <top>
     <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Button fx:id="bookingButton" mnemonicParsing="false" text="Booking"/>
       <Button fx:id="scorecardButton" mnemonicParsing="false" text="Scorecard"/>
       <Button fx:id="userButton" mnemonicParsing="false" text="User"/>
     </ToolBar>

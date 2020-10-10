@@ -1,9 +1,9 @@
 package golfapp.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,11 +15,13 @@ public abstract class AbstractFileDao<T> implements Dao<T> {
   private final FilesWrapper files;
 
   public AbstractFileDao() {
-    files = new FilesWrapper();
+    this(new FilesWrapper());
   }
 
   AbstractFileDao(FilesWrapper files) {
     this.files = files;
+
+    createDataDir();
   }
 
   private static Path getLocalUserDataFolder() {
@@ -39,6 +41,8 @@ public abstract class AbstractFileDao<T> implements Dao<T> {
 
   abstract String getFilename();
 
+  abstract Class<?> targetClass();
+
   private Path getDataPath() {
     return localUserDataFolder.resolve(getFilename());
   }
@@ -52,7 +56,7 @@ public abstract class AbstractFileDao<T> implements Dao<T> {
     }
   }
 
-  private void writeTs(List<T> ts) {
+  void writeTs(List<T> ts) {
     String json;
     try {
       json = MapperInstance.getInstance().writeValueAsString(ts);
@@ -67,20 +71,17 @@ public abstract class AbstractFileDao<T> implements Dao<T> {
     }
   }
 
-  private List<T> readTs() {
+  List<T> readTs() {
     String json;
     try {
       json = files.readString(getDataPath());
     } catch (IOException e) {
       // Assume that nothing has been saved before
-      return List.of();
+      return new ArrayList<>();
     }
 
     try {
-      var typeRef = new TypeReference<T>() {
-      };
-      return MapperInstance.getInstance().readerFor(typeRef).<T>readValues(json)
-          .readAll();
+      return MapperInstance.getInstance().readerFor(targetClass()).<T>readValues(json).readAll();
     } catch (IOException e) {
       throw new IllegalStateException("Could not parse JSON correctly", e);
     }
@@ -116,7 +117,6 @@ public abstract class AbstractFileDao<T> implements Dao<T> {
    */
   @Override
   public long save(T t) {
-    createDataDir();
     var ts = readTs();
     final var id = ts.size();
     ts.add(t);

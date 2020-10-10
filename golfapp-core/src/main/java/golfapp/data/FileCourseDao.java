@@ -2,7 +2,7 @@ package golfapp.data;
 
 import golfapp.core.Course;
 
-public class FileCourseDao extends AbstractFileDao<Course> {
+class FileCourseDao extends AbstractFileDao<Course> {
 
   public FileCourseDao() {
     super();
@@ -11,5 +11,10 @@ public class FileCourseDao extends AbstractFileDao<Course> {
   @Override
   String getFilename() {
     return "courses.json";
+  }
+
+  @Override
+  Class<?> targetClass() {
+    return Course.class;
   }
 }

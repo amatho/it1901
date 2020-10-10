@@ -1,5 +1,7 @@
 package golfapp.core;
 
+import java.util.Objects;
+
 public class Hole {
 
   private double length;
@@ -14,10 +16,13 @@ public class Hole {
    * @param height the hole's height
    */
   public Hole(double length, int par, double height) {
-
     this.length = length;
     this.par = par;
     this.height = height;
+  }
+
+  // Creator for Jackson
+  private Hole() {
   }
 
   public double getLength() {
@@ -42,5 +47,20 @@ public class Hole {
 
   public void setHeight(double height) {
     this.height = height;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Hole) {
+      var other = (Hole) o;
+      return length == other.length && par == other.par && height == other.height;
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(length, par, height);
   }
 }
