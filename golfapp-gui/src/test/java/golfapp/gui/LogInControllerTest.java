@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -65,12 +66,25 @@ public class LogInControllerTest {
   }
 
   @Test
-  void handleNewUserButton_buttonsChangesNameAndNameFieldGetsVisible(){
-    //TODO: write test
+  void handleNewUserButton_buttonsChangesNameAndNameFieldGetsVisible(FxRobot robot) {
+    Button newUserButton = robot.lookup("#newUser").queryButton();
+    TextField nameField = robot.lookup("#nameField").query();
+    Assertions.assertEquals("New User", newUserButton.getText());
+    Assertions.assertTrue(nameField.isDisable());
+    robot.clickOn("newUser");
+    newUserButton = robot.lookup("#newUser").queryButton();
+    nameField = robot.lookup("#nameField").query();
+    Assertions.assertEquals("I have a User", newUserButton.getText());
+    Assertions.assertFalse(nameField.isDisable());
+    robot.clickOn("newUser");
+    newUserButton = robot.lookup("#newUser").queryButton();
+    nameField = robot.lookup("#nameField").query();
+    Assertions.assertEquals("New User", newUserButton.getText());
+    Assertions.assertTrue(nameField.isDisable());
   }
 
   @Test
-  void handleLogIn_givesFeedbackIfEmailIsNotValid(){
+  void handleLogIn_givesFeedbackIfEmailIsNotValid() {
     //TODO: write test
   }
 }
