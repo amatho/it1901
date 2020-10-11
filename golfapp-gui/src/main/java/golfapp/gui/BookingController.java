@@ -84,6 +84,7 @@ public class BookingController {
 
   @FXML
   void showAvailableTimes() {
+    availableTimesChoiceBox.getItems().clear();
     confirmedBookingLabel.setVisible(false);
     if (courseChoiceBox.getValue() == null) {
       outputLabel.setText("Du må velge en bane for å se ledige tider.");
@@ -116,7 +117,6 @@ public class BookingController {
   @FXML
   void cleanBooking() {
     availableTimesChoiceBox.setValue(null);
-    yourMailText.setText("");
     yourTimeText.setText("");
   }
 
