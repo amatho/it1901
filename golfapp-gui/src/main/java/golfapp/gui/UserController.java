@@ -79,7 +79,10 @@ public class UserController {
             bookedTimesTableView.getSelectionModel().getSelectedItem(), cancelSelectedBooking));
 
     updateTableView(scorecardTableView, user.getScorecardHistory(), viewSelectedScorecard);
+    updateBookings();
+  }
 
+  private void updateBookings() {
     var bookings = appManager.getBookingSystems().stream()
         .flatMap(bs -> bs.getBookings().stream())
         .filter(b -> b.getUserEmail().equalsIgnoreCase(user.getEmail()))
@@ -103,11 +106,15 @@ public class UserController {
   @FXML
   void handleCancelSelectedBooking() {
     Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
-    var bookings = appManager.getBookingSystems().stream()
-        .flatMap(bs -> bs.getBookings().stream())
-        .filter(b -> b != toDelete)
-        .collect(Collectors.toList());
-    updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
+    for (var bs : appManager.getBookingSystems()) {
+      for (var b : bs.getBookings()) {
+        if (b == toDelete) {
+          bs.removeBooking(toDelete);
+          updateBookings();
+          return;
+        }
+      }
+    }
   }
 
   @FXML
