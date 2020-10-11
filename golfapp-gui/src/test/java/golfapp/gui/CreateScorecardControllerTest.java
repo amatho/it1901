@@ -21,9 +21,9 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class ScorecardControllerTest {
+public class CreateScorecardControllerTest {
 
-  private ScorecardController controller;
+  private CreateScorecardController controller;
 
   @BeforeAll
   static void headless() {
@@ -38,8 +38,8 @@ public class ScorecardControllerTest {
 
   @Start
   void start(final Stage stage) throws IOException {
-    final var loader = new FXMLLoader(getClass().getResource("Scorecard.fxml"));
-    loader.setControllerFactory(c -> new ScorecardController(mock(AppManager.class)));
+    final var loader = new FXMLLoader(getClass().getResource("CreateScorecard.fxml"));
+    loader.setControllerFactory(c -> new CreateScorecardController(mock(AppManager.class)));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);

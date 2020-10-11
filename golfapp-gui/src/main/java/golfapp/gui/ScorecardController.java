@@ -1,65 +1,34 @@
 package golfapp.gui;
 
 import golfapp.core.User;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 public class ScorecardController {
 
   private final AppManager appManager;
+  private final List<User> users;
 
   @FXML
-  Button addButton;
-  @FXML
-  Button createButton;
-  @FXML
-  Button deleteButton;
-  @FXML
-  TableView<User> tableView;
-  @FXML
-  TableColumn<User, String> usernameColumn;
-  //@FXML
-  //TableColumn<User, ColorPicker> colorColumn;
-  @FXML
-  TextField usernameField;
+  private VBox playerInputs;
 
-  public ScorecardController(AppManager appManager) {
+  public ScorecardController(AppManager appManager, ObservableList<User> users) {
     this.appManager = appManager;
+    this.users = users;
   }
 
   @FXML
   void initialize() {
-    usernameColumn
-        .setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getDisplayName()));
-    //colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
-  }
-
-  @FXML
-  void changeSceneButtonPushed() {
-    appManager
-        .loadView("Course.fxml", c -> new CourseController(appManager, tableView.getItems()));
-  }
-
-  @FXML
-  void newUserButtonPushed() {
-    if (tableView.getItems().size() < 4) {
-      // TODO: Change to support email and display name
-      User user = new User(usernameField.getText(), usernameField.getText());
-      tableView.getItems().add(user);
-      usernameField.clear();
+    for (var user : users) {
+      var playerInput = new PlayerScoreInput(user);
+      playerInputs.getChildren().add(playerInput);
     }
   }
 
   @FXML
-  void deleteUserButtonPushed() {
-    ObservableList<User> users = tableView.getItems();
-    var selectedUser = tableView.getSelectionModel().getSelectedItem();
-
-    users.remove(selectedUser);
+  void changeSceneButtonPushed() {
+    appManager.loadView("CreateScorecard.fxml", CreateScorecardController::new);
   }
 }

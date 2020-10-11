@@ -23,7 +23,7 @@ public class AppController implements AppManager {
   @FXML
   Button bookingButton;
   @FXML
-  Button scorecardButton;
+  Button createScorecardButton;
   @FXML
   Button userButton;
 
@@ -40,8 +40,8 @@ public class AppController implements AppManager {
   void initialize() {
     bookingButton.setOnMouseClicked(e -> loadView("Booking.fxml", BookingController::new));
 
-    scorecardButton
-        .setOnMouseClicked(e -> loadView("Scorecard.fxml", ScorecardController::new));
+    createScorecardButton
+        .setOnMouseClicked(e -> loadView("CreateScorecard.fxml", CreateScorecardController::new));
 
     userButton.setOnMouseClicked(e -> loadView("User.fxml", UserController::new));
   }
