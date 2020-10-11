@@ -1,7 +1,6 @@
 package golfapp.gui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -82,9 +81,8 @@ public class LogInControllerTest {
     Assertions.assertFalse(nameField.isVisible());
   }
 
-  @Test
-  void handleLogIn_givesFeedbackIfEmailIsNotValid() {
-    //TODO: write test
-  }
+  // TODO: write test
+  // @Test
+  // void handleLogIn_givesFeedbackIfEmailIsNotValid() {
+  // }
 }
-

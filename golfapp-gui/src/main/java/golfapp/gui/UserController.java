@@ -1,16 +1,9 @@
 package golfapp.gui;
 
 import golfapp.core.Booking;
-import golfapp.core.BookingSystem;
-import golfapp.core.Course;
-import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -137,9 +130,6 @@ public class UserController {
 
   @FXML
   void handleAddBooking() {
-    // TODO: Pass information to BookingController
-    appManager.loadView("Booking.fxml", a -> {
-      throw new IllegalStateException("Not implemented");
-    });
+    appManager.loadView("Booking.fxml", BookingController::new);
   }
 }
