@@ -1,6 +1,8 @@
 package golfapp.gui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import golfapp.core.Booking;
 import golfapp.core.BookingSystem;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,7 +25,6 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
@@ -46,7 +48,6 @@ public class UserControllerTest {
     }
   }
 
-  @SuppressWarnings("checkstyle:VariableDeclarationUsageDistance")
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("User.fxml"));
@@ -64,13 +65,16 @@ public class UserControllerTest {
     BookingSystem bookingSystemC2 = new BookingSystem(c2);
     bookingSystemC1.addBooking(booking1);
     bookingSystemC2.addBooking(booking2);
-    Scorecard s1 = new Scorecard(c1, Arrays.asList(user));
-    Scorecard s2 = new Scorecard(c2, Arrays.asList(user));
+    Scorecard s1 = new Scorecard(c1, List.of(user));
+    Scorecard s2 = new Scorecard(c2, List.of(user));
     user.addScorecard(s1);
     user.addScorecard(s2);
-    var appController = new AppController(user);
 
-    loader.setControllerFactory(c -> new UserController(appController));
+    var appManager = mock(AppManager.class);
+    when(appManager.getBookingSystems()).thenReturn(List.of(bookingSystemC1, bookingSystemC2));
+    when(appManager.getUser()).thenReturn(user);
+
+    loader.setControllerFactory(c -> new UserController(appManager));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);
