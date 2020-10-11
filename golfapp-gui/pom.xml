@@ -66,6 +66,7 @@
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
         <configuration>
+          <skip>false</skip>
           <mainClass>golfapp.gui/golfapp.gui.App</mainClass>
         </configuration>
       </plugin>

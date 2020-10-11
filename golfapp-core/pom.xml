@@ -34,6 +34,10 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+      </plugin>
       <!-- Compiling code with Java release target -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
