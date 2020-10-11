@@ -2,18 +2,15 @@
 
 # Golf app
 
-## Structure
-* **src/main/java/core** core project (logic)
-* **src/main/java/gui** gui-files (controller)
-* **src/main/resources/gui** FXML-file
-* **src/test/java/core** test file for save
-* **src/test/java/gui** test file for application
-
 ## Build
-Run `mvn javafx:run` to build and run the project
+To build the project, run `mvn install` from the root directory. <br/>
+To run the built project: <br/>
+first `cd golfapp-gui` <br/>
+then `mvn javafx:run`
 
 ## Testing
-Run `mvn test` to test the project
+To test, run `mvn verify` <br/>
+Testing the project will utilize different systems made for testing (Jacoco, Spotbugs, Checkstyle).
 
 ## Documentation
 For further documentation, visit [Developer documentation](./docs/README.md)
