@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,8 +28,8 @@ import javafx.stage.Stage;
 
 public class UserController {
 
-  private final User user = new User("ama@example.com", "Amandus");
-  private final LoadViewCallback viewCallback;
+  private final AppManager appManager;
+  private final User user;
 
   @FXML
   Label username;
@@ -54,8 +54,9 @@ public class UserController {
   @FXML
   TableColumn<Booking, String> bookedTimeColumn;
 
-  public UserController(LoadViewCallback viewCallback) {
-    this.viewCallback = viewCallback;
+  public UserController(AppManager appManager) {
+    this.appManager = appManager;
+    user = appManager.getUser();
   }
 
   public User getUser() {
@@ -85,8 +86,12 @@ public class UserController {
             bookedTimesTableView.getSelectionModel().getSelectedItem(), cancelSelectedBooking));
 
     updateTableView(scorecardTableView, user.getScorecardHistory(), viewSelectedScorecard);
-    // TODO: Get bookings from all the BookingSystems and find the bookings for the current user
-    updateTableView(bookedTimesTableView, List.of(), cancelSelectedBooking);
+
+    var bookings = appManager.getBookingSystems().stream()
+        .flatMap(bs -> bs.getBookings().stream())
+        .filter(b -> b.getUserEmail().equalsIgnoreCase(user.getEmail()))
+        .collect(Collectors.toList());
+    updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
   }
 
   private <T> void updateTableView(TableView<T> tableView, Collection<T> collection,
@@ -112,21 +117,27 @@ public class UserController {
 
   @FXML
   void handleLogOutButton(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader
-        .load(getClass().getResource("LogIn.fxml")); // TODO: Implement LogIn.fxml
-    Scene courseScene = new Scene(courseParent);
+    Parent parent = FXMLLoader
+        .load(getClass().getResource("LogIn.fxml"));
+    Scene scene = new Scene(parent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
+    window.setScene(scene);
     window.show();
   }
 
   @FXML
   void handleViewSelectedScorecardButton() {
-    viewCallback.loadView("ScorecardView.fxml"); // TODO: Implement ScorecardView.fxml
+    // TODO: Implement ScorecardView.fxml
+    appManager.loadView("ScorecardView.fxml", a -> {
+      throw new IllegalStateException("Not implemented");
+    });
   }
 
   @FXML
   void handleAddBooking() {
-    viewCallback.loadView("Booking.fxml"); // TODO: Pass information to BookingController
+    // TODO: Pass information to BookingController
+    appManager.loadView("Booking.fxml", a -> {
+      throw new IllegalStateException("Not implemented");
+    });
   }
 }

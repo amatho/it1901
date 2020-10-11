@@ -1,5 +1,8 @@
 package golfapp.gui;
 
+import golfapp.core.User;
+import golfapp.data.Dao;
+import golfapp.data.DaoFactory;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,17 +17,23 @@ import javafx.stage.Stage;
 
 public class LogInController {
 
-  @FXML
-  private Label nameLabel;
-  @FXML
-  private TextField email;
-  @FXML
-  private TextField nameField;
-  @FXML
-  private Button logIn;
-  @FXML
-  private Button newUser;
+  private final Dao<User> userDao;
   private boolean newUserIsActive;
+
+  @FXML
+  Label nameLabel;
+  @FXML
+  TextField email;
+  @FXML
+  TextField nameField;
+  @FXML
+  Button logIn;
+  @FXML
+  Button newUser;
+
+  public LogInController() {
+    userDao = DaoFactory.userDao();
+  }
 
   @FXML
   void initialize() {
@@ -50,7 +59,7 @@ public class LogInController {
   }
 
   @FXML
-  public void handleNewUserButton() {
+  void handleNewUserButton() {
     if (newUserIsActive) {
       nameField.clear();
       nameField.setVisible(false);
@@ -68,15 +77,35 @@ public class LogInController {
     updateLogInButton();
   }
 
-
   @FXML
-  public void handleLogIn(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("App.fxml"));
-    Scene courseScene = new Scene(courseParent);
+  void handleLogIn(ActionEvent event) throws IOException {
+    User user;
+    if (newUserIsActive) {
+      if (email.getText().isBlank() || nameField.getText().isBlank()) {
+        return;
+      }
+
+      user = new User(email.getText(), nameField.getText());
+      var userDao = DaoFactory.userDao();
+      userDao.save(user);
+    } else {
+      var result = userDao.getAllIgnoreId()
+          .filter(u -> u.getEmail().equalsIgnoreCase(email.getText())).findAny();
+
+      if (result.isEmpty()) {
+        handleNewUserButton();
+        return;
+      }
+
+      user = result.orElseThrow();
+    }
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
+    loader.setControllerFactory(c -> new AppController(user));
+    Parent parent = loader.load();
+    Scene scene = new Scene(parent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
+    window.setScene(scene);
     window.show();
   }
-
-
 }
