@@ -9,8 +9,8 @@ first `cd golfapp-gui` <br/>
 then `mvn javafx:run`
 
 ## Testing
+To test, run `mvn verify` <br/>
 Testing the project will utilize different systems made for testing (Jacoco, Spotbugs, Checkstyle).
-To test, run `mvn verify`
 
 ## Documentation
 For further documentation, visit [Developer documentation](./docs/README.md)
