@@ -27,6 +27,11 @@ public class AppController implements AppManager {
   @FXML
   Button userButton;
 
+  /**
+   * Create an {@code AppController} for a logged in user.
+   *
+   * @param user the logged in user
+   */
   public AppController(User user) {
     this.user = user;
     bookingSystems = new ArrayList<>();
@@ -44,6 +49,8 @@ public class AppController implements AppManager {
         .setOnMouseClicked(e -> loadView("CreateScorecard.fxml", CreateScorecardController::new));
 
     userButton.setOnMouseClicked(e -> loadView("User.fxml", UserController::new));
+
+    loadView("User.fxml", UserController::new);
   }
 
   @Override

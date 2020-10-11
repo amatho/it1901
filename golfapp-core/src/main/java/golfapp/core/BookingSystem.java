@@ -69,8 +69,6 @@ public class BookingSystem {
     }
 
     availableTimes.remove(booking.getDateTime());
-
-    // Also need to implement a connection to the User class
   }
 
   /**
@@ -88,10 +86,20 @@ public class BookingSystem {
     availableTimes.add(booking.getDateTime());
   }
 
+  /**
+   * Get all available times for booking.
+   *
+   * @return stream of all available times
+   */
   public List<LocalDateTime> getAllAvailableTimes() {
     return availableTimes;
   }
 
+  /**
+   * Get the date and time of all the bookings.
+   *
+   * @return stream of all booked times
+   */
   public Stream<LocalDateTime> getAllBookedTimes() {
     return bookings.stream().map(Booking::getDateTime);
   }
@@ -106,9 +114,14 @@ public class BookingSystem {
     return availableTimes.stream().filter(dateTime -> dateTime.toLocalDate().equals(date));
   }
 
+  /**
+   * Get available dates for booking.
+   *
+   * @return stream of available dates
+   */
   public Stream<LocalDate> getAvailableDates() {
     return availableTimes.stream()
-        .map(d -> d.toLocalDate())
+        .map(LocalDateTime::toLocalDate)
         .distinct();
   }
 

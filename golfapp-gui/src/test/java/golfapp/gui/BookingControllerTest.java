@@ -75,14 +75,14 @@ public class BookingControllerTest {
   }
 
   @Test
-  void when_confirmBooking_isClicked_And_avaiableTimesChoiceBox_isNull(FxRobot robot) {
+  void when_confirmBooking_isClicked_And_availableTimesChoiceBox_isNull(FxRobot robot) {
     robot.clickOn("#courseChoiceBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
     assertNull(bookingController.availableTimesChoiceBox.getValue());
     robot.clickOn("#confirmBooking");
-    assertEquals("Du har ikke valgt et gyldig tidspunkt.",
+    assertEquals("Your chosen time was not valid.",
         bookingController.confirmedBookingLabel.getText());
   }
 
@@ -115,7 +115,7 @@ public class BookingControllerTest {
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#confirmBooking");
-    assertEquals("Booking bekreftet", bookingController.confirmedBookingLabel.getText());
+    assertEquals("Booking confirmed", bookingController.confirmedBookingLabel.getText());
   }
 
   @Test

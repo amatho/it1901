@@ -53,6 +53,11 @@ public class BookingController {
   @FXML
   Label confirmedBookingLabel;
 
+  /**
+   * Create a {@code BookingController}.
+   *
+   * @param appManager the app manager
+   */
   public BookingController(AppManager appManager) {
     this.appManager = appManager;
     bookingSystems = appManager.getBookingSystems();
@@ -87,7 +92,7 @@ public class BookingController {
     availableTimesChoiceBox.getItems().clear();
     confirmedBookingLabel.setVisible(false);
     if (courseChoiceBox.getValue() == null) {
-      outputLabel.setText("Du må velge en bane for å se ledige tider.");
+      outputLabel.setText("You must choose a course to see available times.");
     } else {
       availableTimesChoiceBox.setValue(null);
       yourTimeText.setText("");
@@ -100,7 +105,7 @@ public class BookingController {
           .map(LocalDateTime::toLocalTime)
           .forEach(availableTimesChoiceBoxItems::add);
 
-      outputLabel.setText("Velg en ledig tid");
+      outputLabel.setText("Choose an available time");
       showBooking(true);
 
       yourCourseText.setText(courseChoiceBox.getValue().toString());
@@ -125,9 +130,9 @@ public class BookingController {
     confirmedBookingLabel.setVisible(true);
     confirmedBookingLabel.setText("");
     if (availableTimesChoiceBox.getValue() == null) {
-      confirmedBookingLabel.setText("Du har ikke valgt et gyldig tidspunkt.");
+      confirmedBookingLabel.setText("Your chosen time was not valid.");
     } else {
-      confirmedBookingLabel.setText("Booking bekreftet");
+      confirmedBookingLabel.setText("Booking confirmed");
 
       Course selectedCourse = courseChoiceBox.getValue();
       LocalDateTime bookingTime = dateChoiceBox.getValue()

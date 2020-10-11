@@ -12,50 +12,50 @@
          <font>
             <Font name="System Bold" size="40.0" />
          </font></Label>
-      <Label layoutX="14.0" layoutY="130.0" text="Bane:">
+      <Label layoutX="14.0" layoutY="130.0" text="Course:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <ChoiceBox fx:id="courseChoiceBox" layoutX="14.0" layoutY="158.0" prefHeight="25.0" prefWidth="176.0" />
-      <Label layoutX="14.0" layoutY="198.0" prefHeight="18.0" prefWidth="131.0" text="Dato:">
+      <Label layoutX="14.0" layoutY="198.0" prefHeight="18.0" prefWidth="131.0" text="Date:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <ChoiceBox fx:id="dateChoiceBox" layoutX="14.0" layoutY="223.0" prefHeight="25.0" prefWidth="176.0" />
-      <Button fx:id="showAvailableTimes" layoutX="14.0" layoutY="293.0" mnemonicParsing="false" onAction="#showAvailableTimes" prefHeight="37.0" prefWidth="176.0" text="Søk etter ledige tider">
+      <Button fx:id="showAvailableTimes" layoutX="14.0" layoutY="293.0" mnemonicParsing="false" onAction="#showAvailableTimes" prefHeight="37.0" prefWidth="176.0" text="Search for available times">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="outputLabel" layoutX="208.0" layoutY="125.0" prefHeight="37.0" prefWidth="339.0" text="Velg en bane:">
+      <Label fx:id="outputLabel" layoutX="208.0" layoutY="125.0" prefHeight="37.0" prefWidth="425.0" text="Choose a course:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <ChoiceBox fx:id="availableTimesChoiceBox" layoutX="208.0" layoutY="158.0" prefWidth="150.0" />
-      <Label fx:id="yourBooking" layoutX="397.0" layoutY="152.0" prefHeight="37.0" prefWidth="198.0" text="Din booking:">
+      <Label fx:id="yourBooking" layoutX="397.0" layoutY="152.0" prefHeight="37.0" prefWidth="198.0" text="Your booking:">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="confirmBooking" layoutX="450.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="37.0" prefWidth="131.0" text="Bekreft booking">
+      <Button fx:id="confirmBooking" layoutX="450.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="37.0" prefWidth="131.0" text="Confirm booking">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="yourCourseLabel" layoutX="397.0" layoutY="198.0" prefHeight="25.0" prefWidth="119.0" text="Din bane:">
+      <Label fx:id="yourCourseLabel" layoutX="397.0" layoutY="198.0" prefHeight="25.0" prefWidth="119.0" text="Your course:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourDateLabel" layoutX="397.0" layoutY="236.0" prefHeight="25.0" prefWidth="119.0" text="Din dato:">
+      <Label fx:id="yourDateLabel" layoutX="397.0" layoutY="236.0" prefHeight="25.0" prefWidth="119.0" text="Your date:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourTimeLabel" layoutX="397.0" layoutY="273.0" prefHeight="25.0" prefWidth="119.0" text="Din tid:">
+      <Label fx:id="yourTimeLabel" layoutX="397.0" layoutY="273.0" prefHeight="25.0" prefWidth="119.0" text="Your time:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -80,7 +80,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourMailLabel" layoutX="397.0" layoutY="312.0" prefHeight="25.0" prefWidth="119.0" text="Din mail:">
+      <Label fx:id="yourMailLabel" layoutX="397.0" layoutY="312.0" prefHeight="25.0" prefWidth="119.0" text="Your mail:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

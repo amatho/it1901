@@ -11,6 +11,12 @@ public class PlayerScoreInput extends HBox {
   private final TextField scoreField;
   private int score = 3;
 
+  /**
+   * Creates a {@code HBox} containing text fields for score and name, and buttons for modifying the
+   * score.
+   *
+   * @param user the user to get the name from
+   */
   public PlayerScoreInput(User user) {
     super();
 
@@ -21,16 +27,11 @@ public class PlayerScoreInput extends HBox {
 
     scoreField.setEditable(false);
     name.setEditable(false);
-    plus.setOnMouseClicked(e -> handlePlus());
     minus.setOnMouseClicked(e -> handleMinus());
+    plus.setOnMouseClicked(e -> handlePlus());
 
-    getChildren().addAll(name, plus, scoreField, minus);
+    getChildren().addAll(name, minus, scoreField, plus);
     getChildren().forEach(n -> setMargin(n, new Insets(5)));
-  }
-
-  private void handlePlus() {
-    score++;
-    scoreField.setText("" + score);
   }
 
   private void handleMinus() {
@@ -39,6 +40,11 @@ public class PlayerScoreInput extends HBox {
     }
 
     score--;
+    scoreField.setText("" + score);
+  }
+
+  private void handlePlus() {
+    score++;
     scoreField.setText("" + score);
   }
 }
