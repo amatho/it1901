@@ -1,9 +1,16 @@
 package golfapp.gui;
 
 import golfapp.core.Booking;
+import golfapp.core.BookingSystem;
+import golfapp.core.Course;
+import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -52,6 +59,10 @@ public class UserController {
     user = appManager.getUser();
   }
 
+  public User getUser() {
+    return user;
+  }
+
   @FXML
   void initialize() {
     username.setText("Name: " + user.getDisplayName());
@@ -98,10 +109,12 @@ public class UserController {
 
   @FXML
   void handleCancelSelectedBooking() {
-    // TODO: See above
-    // Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
-    // user.removeBooking(toDelete);
-    // updateTableView(bookedTimesTableView, user.getBookedTimes(), cancelSelectedBooking);
+    Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
+    var bookings = appManager.getBookingSystems().stream()
+        .flatMap(bs -> bs.getBookings().stream())
+        .filter(b -> b != toDelete)
+        .collect(Collectors.toList());
+    updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
   }
 
   @FXML
