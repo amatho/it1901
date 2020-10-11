@@ -109,10 +109,12 @@ public class UserController {
 
   @FXML
   void handleCancelSelectedBooking() {
-    // TODO: See above
-    // Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
-    // user.removeBooking(toDelete);
-    // updateTableView(bookedTimesTableView, user.getBookedTimes(), cancelSelectedBooking);
+    Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
+    var bookings = appManager.getBookingSystems().stream()
+        .flatMap(bs -> bs.getBookings().stream())
+        .filter(b -> b != toDelete)
+        .collect(Collectors.toList());
+    updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
   }
 
   @FXML
