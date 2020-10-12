@@ -93,12 +93,7 @@ public class BookingControllerTest {
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
     assertNull(bookingController.availableTimesChoiceBox.getValue());
-    robot.clickOn("#availableTimesChoiceBox");
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.ENTER);
+    robot.clickOn("#availableTimesChoiceBox").clickOn("09:00");
     assertEquals(LocalTime.of(9, 0), bookingController.availableTimesChoiceBox.getValue());
   }
 
@@ -108,12 +103,7 @@ public class BookingControllerTest {
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
-    robot.clickOn("#availableTimesChoiceBox");
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.ENTER);
+    robot.clickOn("#availableTimesChoiceBox").clickOn("08:45");
     robot.clickOn("#confirmBooking");
     assertEquals("Booking confirmed", bookingController.confirmedBookingLabel.getText());
   }
