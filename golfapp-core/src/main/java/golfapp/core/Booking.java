@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public class Booking {
 
-  private final String userEmail;
-  private final LocalDateTime dateTime;
+  private String userEmail;
+  private LocalDateTime dateTime;
 
   /**
    * Create a new booking.
@@ -16,6 +16,10 @@ public class Booking {
   public Booking(String userEmail, LocalDateTime dateTime) {
     this.userEmail = userEmail;
     this.dateTime = dateTime;
+  }
+
+  // Creator for Jackson
+  private Booking() {
   }
 
   public String getUserEmail() {

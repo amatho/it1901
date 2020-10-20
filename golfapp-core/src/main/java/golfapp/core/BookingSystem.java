@@ -1,5 +1,6 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,17 +12,19 @@ import java.util.stream.Stream;
 
 public class BookingSystem {
 
+  @JsonIgnore
   private static final List<LocalTime> VALID_TIMES = createValidTimes();
-  private final Course course;
-  private final List<LocalDateTime> availableTimes = new ArrayList<>();
-  private final Set<Booking> bookings = new HashSet<>();
+
+  private final List<LocalDateTime> availableTimes;
+  private final Set<Booking> bookings;
 
   /**
    * Creates a new booking system, using the current time as a basis for the times available for
    * booking.
    */
-  public BookingSystem(Course course) {
-    this.course = course;
+  public BookingSystem() {
+    availableTimes = new ArrayList<>();
+    bookings = new HashSet<>();
 
     for (int i = 0; i < 14; i++) {
       LocalDate localDate = LocalDate.now().plusDays(i);
@@ -39,10 +42,6 @@ public class BookingSystem {
       }
     }
     return result;
-  }
-
-  public Course getCourse() {
-    return course;
   }
 
   public Set<Booking> getBookings() {

@@ -1,11 +1,9 @@
 package golfapp.gui;
 
-import golfapp.core.BookingSystem;
 import golfapp.core.User;
-import golfapp.data.DaoFactory;
+import golfapp.data.FileGolfAppModelDao;
+import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +13,8 @@ import javafx.scene.layout.BorderPane;
 
 public class AppController implements AppManager {
 
+  private final GolfAppModelDao modelDao;
   private final User user;
-  private final List<BookingSystem> bookingSystems;
 
   @FXML
   BorderPane borderPane;
@@ -33,12 +31,12 @@ public class AppController implements AppManager {
    * @param user the logged in user
    */
   public AppController(User user) {
-    this.user = user;
-    bookingSystems = new ArrayList<>();
+    this(new FileGolfAppModelDao(), user);
+  }
 
-    // Create booking systems
-    // TODO: Get booking systems from an actual data source
-    DaoFactory.courseDao().getAllIgnoreId().forEach(c -> bookingSystems.add(new BookingSystem(c)));
+  public AppController(GolfAppModelDao modelDao, User user) {
+    this.modelDao = modelDao;
+    this.user = user;
   }
 
   @FXML
@@ -77,7 +75,7 @@ public class AppController implements AppManager {
   }
 
   @Override
-  public List<BookingSystem> getBookingSystems() {
-    return bookingSystems;
+  public GolfAppModelDao getModelDao() {
+    return modelDao;
   }
 }

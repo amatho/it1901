@@ -1,8 +1,8 @@
 package golfapp.gui;
 
 import golfapp.core.User;
-import golfapp.data.Dao;
-import golfapp.data.DaoFactory;
+import golfapp.data.FileGolfAppModelDao;
+import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 public class LogInController {
 
-  private final Dao<User> userDao;
+  private final GolfAppModelDao modelDao;
   private boolean newUserIsActive;
 
   @FXML
@@ -32,7 +32,11 @@ public class LogInController {
   Button newUser;
 
   public LogInController() {
-    userDao = DaoFactory.userDao();
+    this(new FileGolfAppModelDao());
+  }
+
+  public LogInController(GolfAppModelDao modelDao) {
+    this.modelDao = modelDao;
   }
 
   @FXML
@@ -86,10 +90,9 @@ public class LogInController {
       }
 
       user = new User(email.getText(), nameField.getText());
-      var userDao = DaoFactory.userDao();
-      userDao.save(user);
+      modelDao.addUser(user);
     } else {
-      var result = userDao.getAllIgnoreId()
+      var result = modelDao.getUsers().stream()
           .filter(u -> u.getEmail().equalsIgnoreCase(email.getText())).findAny();
 
       if (result.isEmpty()) {

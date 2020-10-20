@@ -10,12 +10,14 @@ import golfapp.core.Course;
 import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
+import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -61,8 +63,8 @@ public class UserControllerTest {
     Booking booking2 = new Booking(user.getEmail(), ldt2);
     Course c1 = new Course("Course-1", Arrays.asList(h1, h2));
     Course c2 = new Course("Course-2", Arrays.asList(h1, h2));
-    BookingSystem bookingSystemC1 = new BookingSystem(c1);
-    BookingSystem bookingSystemC2 = new BookingSystem(c2);
+    BookingSystem bookingSystemC1 = new BookingSystem();
+    BookingSystem bookingSystemC2 = new BookingSystem();
     bookingSystemC1.addBooking(booking1);
     bookingSystemC2.addBooking(booking2);
     Scorecard s1 = new Scorecard(c1, List.of(user));
@@ -71,7 +73,9 @@ public class UserControllerTest {
     user.addScorecard(s2);
 
     var appManager = mock(AppManager.class);
-    when(appManager.getBookingSystems()).thenReturn(List.of(bookingSystemC1, bookingSystemC2));
+    var modelDao = mock(GolfAppModelDao.class);
+    when(modelDao.getBookingSystems()).thenReturn(Map.of(c1, bookingSystemC1, c2, bookingSystemC2));
+    when(appManager.getModelDao()).thenReturn(modelDao);
     when(appManager.getUser()).thenReturn(user);
 
     loader.setControllerFactory(c -> new UserController(appManager));

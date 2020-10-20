@@ -1,8 +1,7 @@
 package golfapp.gui;
 
-import golfapp.core.BookingSystem;
 import golfapp.core.User;
-import java.util.List;
+import golfapp.data.GolfAppModelDao;
 import java.util.function.Function;
 
 public interface AppManager {
@@ -23,9 +22,9 @@ public interface AppManager {
   User getUser();
 
   /**
-   * Get the booking systems managed by the app.
+   * Get data access object for the Golf App model.
    *
-   * @return a list of booking systems
+   * @return the GolfAppModel DAO
    */
-  List<BookingSystem> getBookingSystems();
+  GolfAppModelDao getModelDao();
 }
