@@ -158,7 +158,7 @@ public class FileGolfAppModelDaoTest {
     var modelDao = new FileGolfAppModelDao(stringFile);
 
     var entry = modelDao.getBookingSystems().entrySet().stream().findFirst().orElseThrow();
-    entry.getValue().addBooking(new Booking("test@foo.com",
+    entry.getValue().addBooking(new Booking(new User("test@foo.com", "Test Foo"),
         LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.of(14, 0))));
     modelDao.updateBookingSystem(entry.getKey(), entry.getValue());
 

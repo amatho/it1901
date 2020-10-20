@@ -59,8 +59,8 @@ public class UserControllerTest {
     Hole h2 = new Hole(1.0, 3, 1.2);
     LocalDateTime ldt1 = LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 30));
     LocalDateTime ldt2 = LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 45));
-    Booking booking1 = new Booking(user.getEmail(), ldt1);
-    Booking booking2 = new Booking(user.getEmail(), ldt2);
+    Booking booking1 = new Booking(user, ldt1);
+    Booking booking2 = new Booking(user, ldt2);
     Course c1 = new Course("Course-1", Arrays.asList(h1, h2));
     Course c2 = new Course("Course-2", Arrays.asList(h1, h2));
     BookingSystem bookingSystemC1 = new BookingSystem();

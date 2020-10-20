@@ -134,7 +134,7 @@ public class BookingController {
           .atTime(availableTimesChoiceBox.getValue());
 
       var bookingSystem = bookingSystems.get(selectedCourse);
-      bookingSystem.addBooking(new Booking(yourMailText.getText(), bookingTime));
+      bookingSystem.addBooking(new Booking(appManager.getUser(), bookingTime));
       appManager.getModelDao().updateBookingSystem(selectedCourse, bookingSystem);
 
       cleanBooking();

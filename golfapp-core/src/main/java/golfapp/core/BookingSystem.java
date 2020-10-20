@@ -1,6 +1,8 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,10 +14,11 @@ import java.util.stream.Stream;
 
 public class BookingSystem {
 
-  @JsonIgnore
   private static final List<LocalTime> VALID_TIMES = createValidTimes();
 
+  @JsonIgnore
   private final List<LocalDateTime> availableTimes;
+
   private final Set<Booking> bookings;
 
   /**
@@ -32,6 +35,24 @@ public class BookingSystem {
         availableTimes.add(LocalDateTime.of(localDate, validTime));
       }
     }
+  }
+
+  /**
+   * Creates a booking system, and adds the given bookings to it.
+   *
+   * @param bookings the bookings to add
+   * @return the created booking system
+   */
+  @JsonCreator
+  public static BookingSystem createBookingSystem(
+      @JsonProperty("bookings") final Set<Booking> bookings) {
+    var bs = new BookingSystem();
+
+    if (bookings != null) {
+      bookings.forEach(bs::addBooking);
+    }
+
+    return bs;
   }
 
   private static List<LocalTime> createValidTimes() {

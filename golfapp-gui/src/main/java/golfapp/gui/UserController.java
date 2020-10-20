@@ -6,6 +6,8 @@ import golfapp.core.Course;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -51,7 +53,7 @@ public class UserController {
   @FXML
   TableView<BookingTableEntry> bookedTimesTableView;
   @FXML
-  TableColumn<BookingTableEntry, String> bookedEmailColumn;
+  TableColumn<BookingTableEntry, String> bookedCourseColumn;
   @FXML
   TableColumn<BookingTableEntry, String> bookedTimeColumn;
 
@@ -73,12 +75,13 @@ public class UserController {
     scorecardTimeColumn
         .setCellValueFactory(sc -> new ReadOnlyStringWrapper(sc.getValue().getDate().toString()));
 
-    bookedEmailColumn.setCellValueFactory(
+    bookedCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().course.getName()));
     bookedTimeColumn
         .setCellValueFactory(
             sc -> new ReadOnlyStringWrapper(
-                sc.getValue().booking.getDateTime().toLocalDate().toString()));
+                sc.getValue().booking.getDateTime()
+                    .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))));
 
     scorecardTableView.getSelectionModel().selectedItemProperty()
         .addListener((prop, oldValue, newValue) -> updateButton(
@@ -93,12 +96,14 @@ public class UserController {
 
   private void updateBookings() {
     var bookings = appManager.getModelDao().getBookingSystems().entrySet().stream()
-        .flatMap(e -> e.getValue().getBookings().stream().map(b -> {
-          BookingTableEntry tableEntry = new BookingTableEntry();
-          tableEntry.course = e.getKey();
-          tableEntry.booking = b;
-          return tableEntry;
-        })).collect(Collectors.toList());
+        .flatMap(e -> e.getValue().getBookings().stream()
+            .filter(b -> b.getUser().equals(user))
+            .map(b -> {
+              BookingTableEntry tableEntry = new BookingTableEntry();
+              tableEntry.course = e.getKey();
+              tableEntry.booking = b;
+              return tableEntry;
+            })).collect(Collectors.toList());
 
     updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
   }

@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+    property = "id", scope = User.class)
 public class User {
 
   private UUID id;

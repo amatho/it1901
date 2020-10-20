@@ -22,7 +22,7 @@
     </Label>
     <Button fx:id="viewSelectedScorecard" layoutX="14.0" layoutY="365.0" mnemonicParsing="false"
       onAction="#handleViewSelectedScorecardButton" prefHeight="27.0" prefWidth="153.0"
-      text="View selected soorecard"/>
+      text="View selected scorecard"/>
     <Button fx:id="logOut" layoutX="514.0" layoutY="15.0" mnemonicParsing="false"
       onAction="#handleLogOutButton" prefHeight="27.0" prefWidth="72.0" text="Log out"/>
     <TableView fx:id="scorecardTableView" layoutX="14.0" layoutY="103.0" prefHeight="256.0"
@@ -35,7 +35,7 @@
     <TableView fx:id="bookedTimesTableView" layoutX="320.0" layoutY="103.0" prefHeight="256.0"
       prefWidth="266.0">
       <columns>
-        <TableColumn fx:id="bookedEmailColumn" prefWidth="130.0" text="Email"/>
+        <TableColumn fx:id="bookedCourseColumn" prefWidth="130.0" text="Course"/>
         <TableColumn fx:id="bookedTimeColumn" prefWidth="135.0" text="Time"/>
       </columns>
     </TableView>

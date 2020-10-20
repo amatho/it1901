@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+    property = "id", scope = Course.class)
 public class Course {
 
   private UUID id;
