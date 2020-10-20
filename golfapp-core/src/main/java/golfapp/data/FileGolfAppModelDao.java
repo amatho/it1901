@@ -5,15 +5,16 @@ import golfapp.core.BookingSystem;
 import golfapp.core.Course;
 import golfapp.core.GolfAppModel;
 import golfapp.core.User;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FileGolfAppModelDao implements GolfAppModelDao {
 
@@ -61,13 +62,21 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
   }
 
   private GolfAppModel createDefaultModel() {
+    var reader = new BufferedReader(
+        new InputStreamReader(getClass().getResourceAsStream("default-courses.json"),
+            StandardCharsets.UTF_8));
+    var json = reader.lines().collect(Collectors.joining("\n"));
+    try {
+      reader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
     Set<Course> courses;
     try {
-      var path = Paths.get(getClass().getResource("default-courses.json").toURI());
-      var json = Files.readString(path);
       courses = new HashSet<>(
           MapperInstance.getInstance().readerFor(Course.class).<Course>readValues(json).readAll());
-    } catch (IOException | URISyntaxException e) {
+    } catch (Exception e) {
       throw new IllegalStateException("Could not read default courses", e);
     }
 
