@@ -3,12 +3,10 @@ package golfapp.gui;
 import golfapp.core.Booking;
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
-import golfapp.data.DaoFactory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,8 +15,7 @@ import javafx.scene.control.Label;
 public class BookingController {
 
   private final AppManager appManager;
-  private final List<BookingSystem> bookingSystems;
-  private final List<Course> courses;
+  private final Map<Course, BookingSystem> bookingSystems;
 
   @FXML
   ChoiceBox<LocalDate> dateChoiceBox;
@@ -60,9 +57,7 @@ public class BookingController {
    */
   public BookingController(AppManager appManager) {
     this.appManager = appManager;
-    bookingSystems = appManager.getBookingSystems();
-
-    courses = DaoFactory.courseDao().getAllIgnoreId().collect(Collectors.toList());
+    this.bookingSystems = appManager.getModelDao().getBookingSystems();
   }
 
   @FXML
@@ -76,7 +71,7 @@ public class BookingController {
   @FXML
   void showDate() {
     var dateChoiceBoxItems = dateChoiceBox.getItems();
-    bookingSystems.stream().flatMap(BookingSystem::getAvailableDates).distinct()
+    bookingSystems.values().stream().flatMap(BookingSystem::getAvailableDates).distinct()
         .forEach(dateChoiceBoxItems::add);
     dateChoiceBox.setItems(dateChoiceBoxItems);
     dateChoiceBox.getSelectionModel().selectFirst();
@@ -84,7 +79,7 @@ public class BookingController {
 
   @FXML
   void showCourse() {
-    courseChoiceBox.getItems().addAll(courses);
+    courseChoiceBox.getItems().addAll(bookingSystems.keySet());
   }
 
   @FXML
@@ -100,8 +95,8 @@ public class BookingController {
       Course selectedCourse = courseChoiceBox.getValue();
       LocalDate selectedDate = dateChoiceBox.getValue();
       var availableTimesChoiceBoxItems = availableTimesChoiceBox.getItems();
-      bookingSystems.stream().filter(b -> b.getCourse().equals(selectedCourse)).findAny()
-          .orElseThrow().getAvailableTimes(selectedDate)
+
+      bookingSystems.get(selectedCourse).getAvailableTimes(selectedDate)
           .map(LocalDateTime::toLocalTime)
           .forEach(availableTimesChoiceBoxItems::add);
 
@@ -137,8 +132,10 @@ public class BookingController {
       Course selectedCourse = courseChoiceBox.getValue();
       LocalDateTime bookingTime = dateChoiceBox.getValue()
           .atTime(availableTimesChoiceBox.getValue());
-      bookingSystems.stream().filter(b -> b.getCourse().equals(selectedCourse)).findAny()
-          .orElseThrow().addBooking(new Booking(yourMailText.getText(), bookingTime));
+
+      var bookingSystem = bookingSystems.get(selectedCourse);
+      bookingSystem.addBooking(new Booking(appManager.getUser(), bookingTime));
+      appManager.getModelDao().updateBookingSystem(selectedCourse, bookingSystem);
 
       cleanBooking();
       showBooking(false);

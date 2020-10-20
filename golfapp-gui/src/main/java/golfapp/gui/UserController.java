@@ -1,9 +1,13 @@
 package golfapp.gui;
 
 import golfapp.core.Booking;
+import golfapp.core.BookingSystem;
+import golfapp.core.Course;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -20,6 +24,12 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class UserController {
+
+  private static final class BookingTableEntry {
+
+    private Course course;
+    private Booking booking;
+  }
 
   private final AppManager appManager;
   private final User user;
@@ -41,11 +51,11 @@ public class UserController {
   @FXML
   TableColumn<Scorecard, String> scorecardTimeColumn;
   @FXML
-  TableView<Booking> bookedTimesTableView;
+  TableView<BookingTableEntry> bookedTimesTableView;
   @FXML
-  TableColumn<Booking, String> bookedEmailColumn;
+  TableColumn<BookingTableEntry, String> bookedCourseColumn;
   @FXML
-  TableColumn<Booking, String> bookedTimeColumn;
+  TableColumn<BookingTableEntry, String> bookedTimeColumn;
 
   public UserController(AppManager appManager) {
     this.appManager = appManager;
@@ -65,11 +75,13 @@ public class UserController {
     scorecardTimeColumn
         .setCellValueFactory(sc -> new ReadOnlyStringWrapper(sc.getValue().getDate().toString()));
 
-    bookedEmailColumn.setCellValueFactory(
-        sc -> new ReadOnlyStringWrapper(sc.getValue().getUserEmail()));
+    bookedCourseColumn.setCellValueFactory(
+        sc -> new ReadOnlyStringWrapper(sc.getValue().course.getName()));
     bookedTimeColumn
         .setCellValueFactory(
-            sc -> new ReadOnlyStringWrapper(sc.getValue().getDateTime().toLocalDate().toString()));
+            sc -> new ReadOnlyStringWrapper(
+                sc.getValue().booking.getDateTime()
+                    .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))));
 
     scorecardTableView.getSelectionModel().selectedItemProperty()
         .addListener((prop, oldValue, newValue) -> updateButton(
@@ -83,10 +95,16 @@ public class UserController {
   }
 
   private void updateBookings() {
-    var bookings = appManager.getBookingSystems().stream()
-        .flatMap(bs -> bs.getBookings().stream())
-        .filter(b -> b.getUserEmail().equalsIgnoreCase(user.getEmail()))
-        .collect(Collectors.toList());
+    var bookings = appManager.getModelDao().getBookingSystems().entrySet().stream()
+        .flatMap(e -> e.getValue().getBookings().stream()
+            .filter(b -> b.getUser().equals(user))
+            .map(b -> {
+              BookingTableEntry tableEntry = new BookingTableEntry();
+              tableEntry.course = e.getKey();
+              tableEntry.booking = b;
+              return tableEntry;
+            })).collect(Collectors.toList());
+
     updateTableView(bookedTimesTableView, bookings, cancelSelectedBooking);
   }
 
@@ -105,16 +123,15 @@ public class UserController {
 
   @FXML
   void handleCancelSelectedBooking() {
-    Booking toDelete = bookedTimesTableView.getSelectionModel().getSelectedItem();
-    for (var bs : appManager.getBookingSystems()) {
-      for (var b : bs.getBookings()) {
-        if (b == toDelete) {
-          bs.removeBooking(toDelete);
-          updateBookings();
-          return;
-        }
-      }
-    }
+    BookingTableEntry entry = bookedTimesTableView.getSelectionModel().getSelectedItem();
+    Course course = entry.course;
+    Booking toDelete = entry.booking;
+
+    BookingSystem bookingSystem = appManager.getModelDao().getBookingSystems().get(course);
+    bookingSystem.removeBooking(toDelete);
+    appManager.getModelDao().updateBookingSystem(course, bookingSystem);
+
+    updateBookings();
   }
 
   @FXML

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 public class CourseTest {
 
-
   @Test
   public void getCourseLength_returnsCorrectLength() {
     Course course1 = new Course("course1", List.of());

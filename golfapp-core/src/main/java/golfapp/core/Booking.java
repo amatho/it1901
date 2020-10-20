@@ -1,25 +1,31 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import java.time.LocalDateTime;
 
 public class Booking {
 
-  private final String userEmail;
-  private final LocalDateTime dateTime;
+  @JsonIdentityReference(alwaysAsId = true)
+  private User user;
+  private LocalDateTime dateTime;
 
   /**
    * Create a new booking.
    *
-   * @param userEmail the {@code UUID} from the {@code User} that created this booking
-   * @param dateTime  the {@code LocalDateTime} for this booking
+   * @param user     the user that created this booking
+   * @param dateTime the {@link LocalDateTime} for this booking
    */
-  public Booking(String userEmail, LocalDateTime dateTime) {
-    this.userEmail = userEmail;
+  public Booking(User user, LocalDateTime dateTime) {
+    this.user = user;
     this.dateTime = dateTime;
   }
 
-  public String getUserEmail() {
-    return userEmail;
+  // Creator for Jackson
+  private Booking() {
+  }
+
+  public User getUser() {
+    return user;
   }
 
   public LocalDateTime getDateTime() {
@@ -27,9 +33,9 @@ public class Booking {
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (obj instanceof Booking) {
-      var other = (Booking) obj;
+  public boolean equals(Object o) {
+    if (o instanceof Booking) {
+      var other = (Booking) o;
       return other.dateTime.equals(dateTime);
     }
 

@@ -1,10 +1,15 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.List;
-import java.util.Objects;
+import java.util.UUID;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id", scope = Course.class)
 public class Course {
 
+  private UUID id;
   private String name;
   private List<Hole> holes;
 
@@ -15,12 +20,17 @@ public class Course {
    * @param holes the holes of this course
    */
   public Course(String name, List<Hole> holes) {
+    id = UUID.randomUUID();
     this.name = name;
     this.holes = holes;
   }
 
   // Creator for Jackson
   private Course() {
+  }
+
+  public UUID getId() {
+    return id;
   }
 
   public String getName() {
@@ -47,11 +57,15 @@ public class Course {
     return holes.size();
   }
 
+  public boolean deepEquals(Course other) {
+    return id.equals(other.id) && name.equals(other.name) && holes.equals(other.holes);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (o instanceof Course) {
       var other = (Course) o;
-      return name.equals(other.name) && holes.equals(other.holes);
+      return id.equals(other.id);
     }
 
     return false;
@@ -59,7 +73,7 @@ public class Course {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, holes);
+    return id.hashCode();
   }
 
   @Override

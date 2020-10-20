@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import golfapp.core.User;
 import java.io.IOException;
@@ -42,8 +44,15 @@ public class BookingControllerTest {
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("Booking.fxml"));
-    loader.setControllerFactory(c -> new BookingController(new AppController(
-        new User("amandus@gmail.com", "Amandus"))));
+
+    var appManager = mock(AppManager.class);
+    var inMemoryModelDao = new InMemoryGolfAppModelDao();
+    var user = new User("foo@example.com", "Foo Bar");
+    when(appManager.getModelDao()).thenReturn(inMemoryModelDao);
+    when(appManager.getUser()).thenReturn(user);
+
+    loader.setControllerFactory(c -> new BookingController(appManager));
+
     final Parent root = loader.load();
     bookingController = loader.getController();
     final var scene = new Scene(root);

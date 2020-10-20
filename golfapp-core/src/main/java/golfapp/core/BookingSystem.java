@@ -1,5 +1,8 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,16 +15,19 @@ import java.util.stream.Stream;
 public class BookingSystem {
 
   private static final List<LocalTime> VALID_TIMES = createValidTimes();
-  private final Course course;
-  private final List<LocalDateTime> availableTimes = new ArrayList<>();
-  private final Set<Booking> bookings = new HashSet<>();
+
+  @JsonIgnore
+  private final List<LocalDateTime> availableTimes;
+
+  private final Set<Booking> bookings;
 
   /**
    * Creates a new booking system, using the current time as a basis for the times available for
    * booking.
    */
-  public BookingSystem(Course course) {
-    this.course = course;
+  public BookingSystem() {
+    availableTimes = new ArrayList<>();
+    bookings = new HashSet<>();
 
     for (int i = 0; i < 14; i++) {
       LocalDate localDate = LocalDate.now().plusDays(i);
@@ -29,6 +35,24 @@ public class BookingSystem {
         availableTimes.add(LocalDateTime.of(localDate, validTime));
       }
     }
+  }
+
+  /**
+   * Creates a booking system, and adds the given bookings to it.
+   *
+   * @param bookings the bookings to add
+   * @return the created booking system
+   */
+  @JsonCreator
+  public static BookingSystem createBookingSystem(
+      @JsonProperty("bookings") final Set<Booking> bookings) {
+    var bs = new BookingSystem();
+
+    if (bookings != null) {
+      bookings.forEach(bs::addBooking);
+    }
+
+    return bs;
   }
 
   private static List<LocalTime> createValidTimes() {
@@ -39,10 +63,6 @@ public class BookingSystem {
       }
     }
     return result;
-  }
-
-  public Course getCourse() {
-    return course;
   }
 
   public Set<Booking> getBookings() {

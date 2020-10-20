@@ -1,5 +1,6 @@
 [
   {
+    "id": "048a45db-7c58-40aa-baf0-2d44e22b063c",
     "name": "Oslo Golfklubb",
     "holes": [
       {
@@ -15,6 +16,7 @@
     ]
   },
   {
+    "id": "6b30f588-565d-4e95-b9e4-703b96a099c5",
     "name": "Trondheim GK",
     "holes": [
       {
@@ -30,6 +32,7 @@
     ]
   },
   {
+    "id": "0aa45166-c137-42a1-b1d5-a560248d6b53",
     "name": "Bærum Golfklubb",
     "holes": [
       {
@@ -45,6 +48,7 @@
     ]
   },
   {
+    "id": "ef9ca632-dcab-447f-8d7e-b8f3b170600d",
     "name": "Alta GK",
     "holes": [
       {

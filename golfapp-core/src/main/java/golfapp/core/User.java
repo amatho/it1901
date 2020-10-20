@@ -1,10 +1,16 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id", scope = User.class)
 public class User {
 
+  private UUID id;
   private String email;
   private String displayName;
   private Set<Scorecard> scorecardHistory;
@@ -16,6 +22,7 @@ public class User {
    * @param displayName the name to display for this user
    */
   public User(String email, String displayName) {
+    id = UUID.randomUUID();
     this.email = email;
     this.displayName = displayName;
     scorecardHistory = new HashSet<>();
@@ -23,6 +30,10 @@ public class User {
 
   // Creator for Jackson
   private User() {
+  }
+
+  public UUID getId() {
+    return id;
   }
 
   public String getEmail() {
@@ -49,11 +60,16 @@ public class User {
     scorecardHistory.remove(scorecard);
   }
 
+  public boolean deepEquals(User other) {
+    return id.equals(other.id) && email.equalsIgnoreCase(other.email)
+        && displayName.equals(other.displayName) && scorecardHistory.equals(other.scorecardHistory);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (o instanceof User) {
       User other = (User) o;
-      return email.equalsIgnoreCase(other.email);
+      return id.equals(other.id);
     }
 
     return false;
@@ -61,7 +77,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return email.hashCode();
+    return id.hashCode();
   }
 
   @Override
