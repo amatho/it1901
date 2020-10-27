@@ -13,7 +13,7 @@
   <packaging>war</packaging>
 
   <properties>
-  <jerseyVersion>2.32</jerseyVersion>
+    <jerseyVersion>2.32</jerseyVersion>
   </properties>
 
   <dependencies>

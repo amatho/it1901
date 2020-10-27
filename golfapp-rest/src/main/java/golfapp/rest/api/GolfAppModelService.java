@@ -23,5 +23,4 @@ public class GolfAppModelService {
   public GolfAppModel getGolfAppModel() {
     return golfAppModel;
   }
-
 }

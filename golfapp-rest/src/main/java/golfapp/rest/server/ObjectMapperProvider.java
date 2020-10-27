@@ -17,7 +17,6 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         .setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
   }
 
-
   @Override
   public ObjectMapper getContext(Class<?> type) {
     return objectMapper;
