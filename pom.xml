@@ -12,6 +12,7 @@
   <modules>
     <module>golfapp-core</module>
     <module>golfapp-gui</module>
+    <module>golfapp-rest</module>
   </modules>
 
   <profiles>
