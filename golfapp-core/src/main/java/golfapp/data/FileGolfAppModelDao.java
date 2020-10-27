@@ -61,38 +61,13 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
     }
   }
 
-  private GolfAppModel createDefaultModel() {
-    var reader = new BufferedReader(
-        new InputStreamReader(getClass().getResourceAsStream("default-courses.json"),
-            StandardCharsets.UTF_8));
-    var json = reader.lines().collect(Collectors.joining("\n"));
-    try {
-      reader.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    Set<Course> courses;
-    try {
-      courses = new HashSet<>(
-          MapperInstance.getInstance().readerFor(Course.class).<Course>readValues(json).readAll());
-    } catch (Exception e) {
-      throw new IllegalStateException("Could not read default courses", e);
-    }
-
-    var bookingSystems = new HashMap<Course, BookingSystem>(courses.size());
-    courses.forEach(c -> bookingSystems.put(c, new BookingSystem()));
-
-    return new GolfAppModel(new HashSet<>(), courses, bookingSystems);
-  }
-
   private GolfAppModel readModel() {
     String json;
     try {
       json = files.readString(dataPath);
     } catch (IOException e) {
       // Assume that nothing has been saved before and return a new model
-      return createDefaultModel();
+      return GolfAppModel.createDefaultModel();
     }
 
     try {

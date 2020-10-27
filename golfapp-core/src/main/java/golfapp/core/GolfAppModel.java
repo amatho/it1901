@@ -4,8 +4,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import golfapp.data.BookingSystemsListConverter;
 import golfapp.data.BookingSystemsMapConverter;
+import golfapp.data.MapperInstance;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GolfAppModel {
 
@@ -69,5 +77,35 @@ public class GolfAppModel {
 
   public void updateBookingSystem(Course course, BookingSystem bookingSystem) {
     bookingSystems.computeIfPresent(course, (c, bs) -> bookingSystem);
+  }
+
+  /**
+   * Creates a default model.
+   *
+   * @return the default model
+   */
+  public static GolfAppModel createDefaultModel() {
+    var reader = new BufferedReader(
+        new InputStreamReader(GolfAppModel.class.getResourceAsStream("default-courses.json"),
+            StandardCharsets.UTF_8));
+    var json = reader.lines().collect(Collectors.joining("\n"));
+    try {
+      reader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    Set<Course> courses;
+    try {
+      courses = new HashSet<>(
+          MapperInstance.getInstance().readerFor(Course.class).<Course>readValues(json).readAll());
+    } catch (Exception e) {
+      throw new IllegalStateException("Could not read default courses", e);
+    }
+
+    var bookingSystems = new HashMap<Course, BookingSystem>(courses.size());
+    courses.forEach(c -> bookingSystems.put(c, new BookingSystem()));
+
+    return new GolfAppModel(new HashSet<>(), courses, bookingSystems);
   }
 }
