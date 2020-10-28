@@ -4,6 +4,7 @@ import golfapp.core.Course;
 import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import java.util.List;
+import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -42,15 +43,32 @@ public class ScorecardViewController {
     //leftInfoSet();
 
   }
-  private void playerSetup(){
-
+  private void playerSetup() {
+    Set<String> users = scorecard.getUsers();
+    for (String s : users) {
+      HBox h = new HBox();
+      h.getChildren().add(new Label(s));
+      leftInfo.getChildren().add(h);
+      h.setSpacing(10);
+      h.setAlignment(Pos.CENTER);
+      h.setPrefHeight(80);
+    }
+    holePar = new HBox();
+    holePar.setPrefHeight(80);
+    leftInfo.getChildren().add(holePar);
   }
 
   private void HBoxSetUp() {
     int i = 1;
+    holeLength.getChildren().add(new Label("Lengde:"));
+    holeIndex.getChildren().add(new Label("Hull:"));
+    playerSetup();
+    holePar.getChildren().add(new Label("Par:"));
+
     for (Hole h : holes) {
       holeLength.getChildren().add(new Label(Double.toString(h.getLength())));
       holePar.getChildren().add(new Label(Integer.toString(h.getPar())));
+      holeIndex.getChildren().add(new Label(Integer.toString(i)));
       i++;
     }
     holeIndex.setSpacing(10);
@@ -59,8 +77,6 @@ public class ScorecardViewController {
     holeIndex.setAlignment(Pos.CENTER);
     holeLength.setAlignment(Pos.CENTER);
     holePar.setAlignment(Pos.CENTER);
-
-
   }
 
 

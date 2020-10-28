@@ -97,7 +97,9 @@ public class Scorecard {
     return date;
   }
 
-  public Set<String> getUsers() { return scorecard.keySet(); }
+  public Set<String> getUsers() {
+    return scorecard.keySet();
+  }
 
   @Override
   public boolean equals(Object o) {
