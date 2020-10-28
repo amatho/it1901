@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Scorecard {
 
@@ -95,6 +96,8 @@ public class Scorecard {
   public LocalDate getDate() {
     return date;
   }
+
+  public Set<String> getUsers() { return scorecard.keySet(); }
 
   @Override
   public boolean equals(Object o) {
