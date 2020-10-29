@@ -2,6 +2,8 @@ package golfapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +23,8 @@ public class Course {
    */
   public Course(String name, List<Hole> holes) {
     id = UUID.randomUUID();
-    this.name = name;
-    this.holes = holes;
+    setName(name);
+    this.holes = new ArrayList<>(holes);
   }
 
   // Creator for Jackson
@@ -41,8 +43,13 @@ public class Course {
     this.name = name;
   }
 
+  /**
+   * Returns an unmodifiable view of the holes.
+   *
+   * @return list of holes
+   */
   public List<Hole> getHoles() {
-    return holes;
+    return Collections.unmodifiableList(holes);
   }
 
   public Hole getHole(int index) {
