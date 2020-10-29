@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import golfapp.data.BookingSystemsListConverter;
 import golfapp.data.BookingSystemsMapConverter;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,17 +28,22 @@ public class GolfAppModel {
    */
   public GolfAppModel(Set<User> users, Set<Course> courses,
       Map<Course, BookingSystem> bookingSystems) {
-    this.users = users;
-    this.courses = courses;
-    this.bookingSystems = bookingSystems;
+    this.users = new HashSet<>(users);
+    this.courses = new HashSet<>(courses);
+    this.bookingSystems = new HashMap<>(bookingSystems);
   }
 
   // Creator for Jackson
   private GolfAppModel() {
   }
 
+  /**
+   * Returns an unmodifiable view of the users.
+   *
+   * @return set of users
+   */
   public Set<User> getUsers() {
-    return users;
+    return Collections.unmodifiableSet(users);
   }
 
   public void addUser(User user) {
@@ -59,12 +67,22 @@ public class GolfAppModel {
     }
   }
 
+  /**
+   * Returns an unmodifiable view of the courses.
+   *
+   * @return set of courses
+   */
   public Set<Course> getCourses() {
-    return courses;
+    return Collections.unmodifiableSet(courses);
   }
 
+  /**
+   * Returns an unmodifiable view of the booking systems map.
+   *
+   * @return map of booking systems
+   */
   public Map<Course, BookingSystem> getBookingSystems() {
-    return bookingSystems;
+    return Collections.unmodifiableMap(bookingSystems);
   }
 
   public void updateBookingSystem(Course course, BookingSystem bookingSystem) {
