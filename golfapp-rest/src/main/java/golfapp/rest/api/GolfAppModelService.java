@@ -23,4 +23,10 @@ public class GolfAppModelService {
   public GolfAppModel getGolfAppModel() {
     return golfAppModel;
   }
+
+  @Path("users")
+  public UserResource getUserResource() {
+    var model = getGolfAppModel();
+    return new UserResource(model);
+  }
 }
