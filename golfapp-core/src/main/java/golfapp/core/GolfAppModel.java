@@ -51,12 +51,12 @@ public class GolfAppModel {
    *
    * @param user the updated user
    */
-  public void updateUser(User user) {
-    var isEmpty = users.stream().filter(u -> u.equals(user)).findAny().map(u -> u = user).isEmpty();
-
-    if (isEmpty) {
-      throw new IllegalArgumentException("Could not find a user to update");
+  public boolean updateUser(User user) {
+    var wasUpdated = users.remove(user);
+    if (wasUpdated) {
+      users.add(user);
     }
+    return wasUpdated;
   }
 
   public Set<Course> getCourses() {

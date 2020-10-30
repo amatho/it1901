@@ -6,48 +6,39 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.UserController">
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.UserController">
   <children>
-    <Label fx:id="username" alignment="CENTER" layoutX="147.0" layoutY="28.0" prefHeight="44.0"
-      prefWidth="283.0" text="User" textAlignment="CENTER">
+    <Label fx:id="username" alignment="CENTER" layoutX="259.0" layoutY="20.0" prefHeight="44.0" prefWidth="283.0" text="User" textAlignment="CENTER">
       <font>
-        <Font name="System Bold" size="36.0"/>
+        <Font name="System Bold" size="36.0" />
       </font>
     </Label>
-    <Label layoutX="396.0" layoutY="72.0" text="Booked times:">
+    <Label layoutX="428.0" layoutY="84.0" text="Booked times:">
       <font>
-        <Font name="System Bold" size="19.0"/>
+        <Font name="System Bold" size="19.0" />
       </font>
     </Label>
-    <Button fx:id="viewSelectedScorecard" layoutX="14.0" layoutY="365.0" mnemonicParsing="false"
-      onAction="#handleViewSelectedScorecardButton" prefHeight="27.0" prefWidth="153.0"
-      text="View selected scorecard"/>
-    <Button fx:id="logOut" layoutX="514.0" layoutY="15.0" mnemonicParsing="false"
-      onAction="#handleLogOutButton" prefHeight="27.0" prefWidth="72.0" text="Log out"/>
-    <TableView fx:id="scorecardTableView" layoutX="14.0" layoutY="103.0" prefHeight="256.0"
-      prefWidth="266.0">
+    <Button fx:id="viewSelectedScorecard" layoutX="58.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleViewSelectedScorecardButton" prefHeight="27.0" prefWidth="184.0" text="View selected scorecard" />
+    <Button fx:id="logOut" layoutX="714.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="27.0" prefWidth="72.0" text="Log out" />
+    <TableView fx:id="scorecardTableView" layoutX="58.0" layoutY="122.0" prefHeight="390.0" prefWidth="326.0">
       <columns>
-        <TableColumn fx:id="scorecardCourseColumn" prefWidth="130.0" text="Course"/>
-        <TableColumn fx:id="scorecardTimeColumn" prefWidth="135.0" text="Time"/>
+        <TableColumn fx:id="scorecardCourseColumn" prefWidth="130.0" text="Course" />
+        <TableColumn fx:id="scorecardTimeColumn" prefWidth="135.0" text="Time" />
       </columns>
     </TableView>
-    <TableView fx:id="bookedTimesTableView" layoutX="320.0" layoutY="103.0" prefHeight="256.0"
-      prefWidth="266.0">
+    <TableView fx:id="bookedTimesTableView" layoutX="418.0" layoutY="122.0" prefHeight="390.0" prefWidth="326.0">
       <columns>
-        <TableColumn fx:id="bookedCourseColumn" prefWidth="130.0" text="Course"/>
-        <TableColumn fx:id="bookedTimeColumn" prefWidth="135.0" text="Time"/>
+        <TableColumn fx:id="bookedCourseColumn" prefWidth="151.0" text="Course" />
+        <TableColumn fx:id="bookedTimeColumn" prefWidth="174.0" text="Time" />
       </columns>
     </TableView>
-    <Label layoutX="73.0" layoutY="72.0" text="Scorecard History:">
+    <Label layoutX="73.0" layoutY="84.0" text="Scorecard History:">
       <font>
-        <Font name="System Bold" size="19.0"/>
+        <Font name="System Bold" size="19.0" />
       </font>
     </Label>
-    <Button fx:id="cancelSelectedBooking" layoutX="320.0" layoutY="365.0" mnemonicParsing="false"
-      onAction="#handleCancelSelectedBooking" prefHeight="27.0" prefWidth="153.0"
-      text="Cancel selected booking"/>
-    <Button fx:id="addBooking" layoutX="483.0" layoutY="365.0" mnemonicParsing="false"
-      onAction="#handleAddBooking" prefHeight="27.0" prefWidth="103.0" text="Add booking"/>
+    <Button fx:id="cancelSelectedBooking" layoutX="418.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleCancelSelectedBooking" prefHeight="27.0" prefWidth="184.0" text="Cancel selected booking" />
+    <Button fx:id="addBooking" layoutX="606.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="27.0" prefWidth="138.0" text="Add booking" />
   </children>
 </AnchorPane>

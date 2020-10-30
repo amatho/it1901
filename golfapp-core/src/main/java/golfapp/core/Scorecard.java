@@ -1,5 +1,6 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 public class Scorecard {
 
+  @JsonIdentityReference(alwaysAsId = true)
   private Course course;
   // Use the users' emails as key, to avoid cyclic reference in a user's scorecard history
   private HashMap<String, List<Integer>> scorecard;
@@ -32,7 +34,7 @@ public class Scorecard {
 
     for (var u : users) {
       var score = new ArrayList<Integer>(course.getCourseLength());
-      course.getHoles().forEach(h -> score.add(0));
+      course.getHoles().forEach(h -> score.add(h.getPar()));
       scorecard.put(u.getEmail(), score);
     }
   }

@@ -10,6 +10,7 @@ public class PlayerScoreInput extends HBox {
 
   private final TextField scoreField;
   private int score = 3;
+  private final User user;
 
   /**
    * Creates a {@code HBox} containing text fields for score and name, and buttons for modifying the
@@ -19,6 +20,7 @@ public class PlayerScoreInput extends HBox {
    */
   public PlayerScoreInput(User user) {
     super();
+    this.user = user;
 
     scoreField = new TextField("" + score);
     final var name = new TextField(user.getDisplayName());
@@ -46,5 +48,25 @@ public class PlayerScoreInput extends HBox {
   private void handlePlus() {
     score++;
     scoreField.setText("" + score);
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void updateScoreField(){
+    scoreField.setText("" + score);
+  }
+
+  public void setScore(int score) {
+    if (score < 1) {
+      throw new IllegalArgumentException("Score needs to bee more yhen 0, was: " + score);
+    }
+    this.score = score;
+    updateScoreField();
   }
 }
