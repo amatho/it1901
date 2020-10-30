@@ -6,10 +6,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id", scope = User.class)
 public class User {
+
+  private static final Pattern EMAIL_REGEX = Pattern
+      .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
   private UUID id;
   private String email;
@@ -41,9 +45,13 @@ public class User {
     return email;
   }
 
-  // TODO: Validate email
-  private void setEmail(String email) {
-    this.email = email;
+  public void setEmail(String email) {
+    var matcher = EMAIL_REGEX.matcher(email);
+    if (matcher.find()) {
+      this.email = email;
+    } else {
+      throw new IllegalArgumentException("Invalid e-mail input");
+    }
   }
 
   public String getDisplayName() {
