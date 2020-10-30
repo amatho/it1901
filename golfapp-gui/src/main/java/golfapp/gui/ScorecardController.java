@@ -30,7 +30,6 @@ public class ScorecardController {
   private Label holeHeight;
   @FXML
   private Label holeLength;
-
   @FXML
   private VBox playerInputs;
   @FXML

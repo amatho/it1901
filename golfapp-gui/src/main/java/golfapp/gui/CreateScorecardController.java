@@ -137,6 +137,7 @@ public class CreateScorecardController {
     var selectedUser = tableView.getSelectionModel().getSelectedItem();
 
     users.remove(selectedUser);
+    tableView.getSelectionModel().clearSelection();
     updateDeleteButton();
   }
 }
