@@ -7,19 +7,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.ScorecardViewController">
-   <children>
-      <VBox fx:id="leftInfo" layoutX="48.0" layoutY="166.0" prefHeight="420.0" prefWidth="663.0" AnchorPane.leftAnchor="48.0">
-         <children>
-            <HBox fx:id="holeIndex" prefHeight="60.0" prefWidth="100.0" />
-            <HBox fx:id="holeLength" prefHeight="60.0" prefWidth="100.0" />
-         </children>
-      </VBox>
-      <Label fx:id="infoLabel" layoutX="48.0" layoutY="114.0" prefHeight="51.0" prefWidth="663.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="goToUser" layoutX="48.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleGoToUser" prefHeight="25.0" prefWidth="132.0" text="&lt;-- Go back to User" />
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.ScorecardViewController">
+  <children>
+    <VBox fx:id="leftInfo" layoutX="48.0" layoutY="166.0" prefHeight="420.0" prefWidth="663.0"
+      AnchorPane.leftAnchor="48.0">
+      <children>
+        <HBox fx:id="holeIndex" prefHeight="60.0" prefWidth="100.0"/>
+        <HBox fx:id="holeLength" prefHeight="60.0" prefWidth="100.0"/>
+      </children>
+    </VBox>
+    <Label fx:id="infoLabel" layoutX="48.0" layoutY="114.0" prefHeight="51.0" prefWidth="663.0">
+      <font>
+        <Font size="24.0"/>
+      </font>
+    </Label>
+    <Button fx:id="goToUser" layoutX="48.0" layoutY="88.0" mnemonicParsing="false"
+      onAction="#handleGoToUser" prefHeight="25.0" prefWidth="132.0" text="&lt;-- Go back to User"/>
+  </children>
 </AnchorPane>

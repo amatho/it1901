@@ -3,14 +3,12 @@ package golfapp.gui;
 import golfapp.core.Booking;
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
-import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
@@ -94,19 +92,6 @@ public class UserController {
 
     updateTableView(scorecardTableView, user.getScorecardHistory(), viewSelectedScorecard);
     updateBookings();
-    // TODO: Remove this
-    Hole hole1 = new Hole(120.0,3, 20);
-    Hole hole2 = new Hole(300.0,4, 20);
-    Course course = new Course("Øvelsesbane",List.of(hole1, hole2));
-    User user1 = new User("minemail", "Test1");
-    User user2 = new User("hansemail", "Test2");
-    Scorecard s = new Scorecard(course, List.of(user1,user2));
-    s.setScore(user1,hole1, 4);
-    s.setScore(user2,hole1, 3);
-    s.setScore(user1,hole2, 2);
-    s.setScore(user2,hole2, 5);
-    scorecardTableView.getItems().add(s);
-
   }
 
   private void updateBookings() {
@@ -161,8 +146,10 @@ public class UserController {
 
   @FXML
   void handleViewSelectedScorecardButton() {
-    Scorecard scorecard = scorecardTableView.getSelectionModel().getSelectedItem();
-    appManager.loadView("ScorecardView.fxml", a -> new ScorecardViewController(a, scorecard));
+    // TODO: Implement ScorecardView.fxml
+    appManager.loadView("ScorecardView.fxml", a -> {
+      throw new IllegalStateException("Not implemented");
+    });
   }
 
   @FXML

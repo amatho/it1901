@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class ScorecardViewController {
+
   private final AppManager appManager;
   private final Scorecard scorecard;
   private final Course course;
@@ -40,7 +41,7 @@ public class ScorecardViewController {
    * Create a controller for ScorecardViewController.
    *
    * @param appManager takes in appManager
-   * @param scorecard takes in the relevant scorecard
+   * @param scorecard  takes in the relevant scorecard
    */
   public ScorecardViewController(AppManager appManager, Scorecard scorecard) {
     this.appManager = appManager;
@@ -90,7 +91,7 @@ public class ScorecardViewController {
 
       leftInfo.getChildren().add(h);
       h.setPrefHeight(80);
-      heightPlayers = heightPlayers +  h.getHeight();
+      heightPlayers = heightPlayers + h.getHeight();
       h.setStyle("-fx-font: 24 arial;");
     }
 
