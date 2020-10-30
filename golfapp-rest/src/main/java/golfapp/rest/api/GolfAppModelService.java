@@ -29,4 +29,16 @@ public class GolfAppModelService {
     var model = getGolfAppModel();
     return new UserResource(model);
   }
+
+  @Path("courses")
+  public CourseResource getCourseResource() {
+    var model = getGolfAppModel();
+    return new CourseResource(model);
+  }
+
+  @Path("bookingsystems")
+  public BookingSystemResource getBookingSystemResource() {
+    var model = getGolfAppModel();
+    return new BookingSystemResource(model);
+  }
 }
