@@ -24,7 +24,7 @@ public class ScorecardViewController {
   private final Course course;
   private final List<Hole> holes;
   private double vboxPrefWidth = 0;
-  private final double widthLeftLabel = 120;
+  private static final double widthLeftLabel = 120;
 
   @FXML
   VBox leftInfo;
