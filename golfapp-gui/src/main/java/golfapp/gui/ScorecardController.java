@@ -21,39 +21,26 @@ public class ScorecardController {
 
 
   @FXML
-  private Label courseName;
+  Label courseName;
   @FXML
-  private Label holeNr;
+  Label holeNr;
   @FXML
-  private Label holePar;
+  Label holePar;
   @FXML
-  private Label holeHeight;
+  Label holeHeight;
   @FXML
-  private Label holeLength;
+  Label holeLength;
   @FXML
-  private VBox playerInputs;
+  VBox playerInputs;
   @FXML
-  private Pagination holes;
+  Pagination holes;
   @FXML
-  private Button finishButton;
+  Button finishButton;
 
   public ScorecardController(AppManager appManager, ObservableList<User> users, Course course) {
     this.appManager = appManager;
     this.users = users;
     this.scorecard = new Scorecard(course, users);
-  }
-
-  private void updatePlayerInputs() {
-    playerInputs.getChildren().clear();
-    Hole currentHole = scorecard.getCourse().getHole(holes.getCurrentPageIndex());
-    for (var user : users) {
-      var playerInput = new PlayerScoreInput(user);
-      playerInput.setScore(scorecard.getScore(user, currentHole));
-      playerInputs.getChildren().add(playerInput);
-
-      boolean visible = holes.getCurrentPageIndex() == scorecard.getCourse().getCourseLength()-1;
-      finishButton.setVisible(visible);
-    }
   }
 
   @FXML
@@ -68,6 +55,19 @@ public class ScorecardController {
     });
     updatePlayerInputs();
     updateHoleInfo();
+  }
+
+  private void updatePlayerInputs() {
+    playerInputs.getChildren().clear();
+    Hole currentHole = scorecard.getCourse().getHole(holes.getCurrentPageIndex());
+    for (var user : users) {
+      var playerInput = new PlayerScoreInput(user);
+      playerInput.setScore(scorecard.getScore(user, currentHole));
+      playerInputs.getChildren().add(playerInput);
+
+      boolean visible = holes.getCurrentPageIndex() == scorecard.getCourse().getCourseLength() - 1;
+      finishButton.setVisible(visible);
+    }
   }
 
   private void updateHoleInfo() {

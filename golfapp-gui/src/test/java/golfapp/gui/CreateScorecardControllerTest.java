@@ -1,12 +1,10 @@
 package golfapp.gui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import golfapp.core.GolfAppModel;
 import golfapp.core.User;
 import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
@@ -124,7 +122,7 @@ public class CreateScorecardControllerTest {
   }
 
   @Test
-  void handleDeleteUserButton_viewChanges(FxRobot robot) throws InterruptedException {
+  void handleDeleteUserButton_viewChanges(FxRobot robot) {
     robot.clickOn("#userChoiceBox").clickOn("Phil");
     robot.clickOn("#addUserButton");
     robot.clickOn("#usernameField").write("Ken");
@@ -136,7 +134,6 @@ public class CreateScorecardControllerTest {
     Assertions.assertFalse(controller.deleteButton.isDisable());
     robot.clickOn("#deleteButton");
     Assertions.assertTrue(controller.deleteButton.isDisable());
-
 
     Assertions.assertEquals(2, robot.lookup("#tableView").queryTableView().getItems().size());
     robot.clickOn((Node) robot.lookup("#tableView .table-row-cell").nth(0).query());

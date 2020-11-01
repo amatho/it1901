@@ -15,7 +15,7 @@
          </font>
       </Label>
       <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#handleGoBackButton" text="Go back" />
-     <VBox fx:id="playerInputs" layoutX="14.0" layoutY="121.0" prefHeight="328.0" prefWidth="464.0" />
+     <VBox fx:id="playerInputs" layoutX="78.0" layoutY="119.0" prefHeight="328.0" prefWidth="464.0" />
       <Pagination fx:id="holes" layoutX="262.0" layoutY="530.0" prefHeight="58.0" prefWidth="328.0" />
       <Button fx:id="finishButton" layoutX="717.0" layoutY="559.0" mnemonicParsing="false" onAction="#handleFinishScorecard" text="Finish Scorecard" />
       <Label fx:id="holeNr" layoutX="568.0" layoutY="130.0" prefHeight="17.0" prefWidth="109.0" text="Holenr." />
