@@ -31,6 +31,7 @@ public class User {
 
   // Creator for Jackson
   private User() {
+    scorecardHistory = new HashSet<>();
   }
 
   public UUID getId() {

@@ -70,8 +70,8 @@ public class FileGolfAppModelDaoTest {
           ],
           "bookingSystems": [
             {
-              "course": "31adc2be-b6a9-4a1c-8dc6-20dc5a3dc5c0",
-              "bookingSystem": {}
+              "key": "31adc2be-b6a9-4a1c-8dc6-20dc5a3dc5c0",
+              "value": {}
             }
           ]
       }
