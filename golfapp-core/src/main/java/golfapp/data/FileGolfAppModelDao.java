@@ -5,16 +5,10 @@ import golfapp.core.BookingSystem;
 import golfapp.core.Course;
 import golfapp.core.GolfAppModel;
 import golfapp.core.User;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class FileGolfAppModelDao implements GolfAppModelDao {
 
@@ -71,7 +65,7 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
     }
 
     try {
-      return MapperInstance.getInstance().readValue(json, GolfAppModel.class);
+      return CustomObjectMapper.SINGLETON.readValue(json, GolfAppModel.class);
     } catch (JsonProcessingException e) {
       throw new IllegalStateException("Could not parse JSON correctly", e);
     }
@@ -80,7 +74,7 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
   private void writeModel(GolfAppModel model) {
     String json;
     try {
-      json = MapperInstance.getInstance().writeValueAsString(model);
+      json = CustomObjectMapper.SINGLETON.writeValueAsString(model);
     } catch (JsonProcessingException e) {
       throw new IllegalStateException("Could not parse JSON correctly", e);
     }

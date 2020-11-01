@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import golfapp.data.BookingSystemsListConverter;
 import golfapp.data.BookingSystemsMapConverter;
-import golfapp.data.MapperInstance;
+import golfapp.data.CustomObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -100,7 +100,7 @@ public class GolfAppModel {
     Set<Course> courses;
     try {
       courses = new HashSet<>(
-          MapperInstance.getInstance().readerFor(Course.class).<Course>readValues(json).readAll());
+          CustomObjectMapper.SINGLETON.readerFor(Course.class).<Course>readValues(json).readAll());
     } catch (Exception e) {
       throw new IllegalStateException("Could not read default courses", e);
     }

@@ -1,9 +1,10 @@
 package golfapp.rest.api;
 
 import golfapp.core.BookingSystem;
+import golfapp.core.Course;
 import golfapp.core.GolfAppModel;
-import golfapp.data.BookingSystemsEntry;
 import golfapp.data.BookingSystemsListConverter;
+import golfapp.data.MapEntry;
 import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
@@ -24,7 +25,7 @@ public class BookingSystemResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<BookingSystemsEntry> getBookingSystems() {
+  public List<MapEntry<Course, BookingSystem>> getBookingSystems() {
     var converter = new BookingSystemsListConverter();
     return converter.convert(golfAppModel.getBookingSystems());
   }
