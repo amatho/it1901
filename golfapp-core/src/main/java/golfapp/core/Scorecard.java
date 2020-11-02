@@ -1,5 +1,9 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import golfapp.data.ScorecardListConverter;
+import golfapp.data.ScorecardMapConverter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,9 +16,11 @@ import java.util.Objects;
 public class Scorecard {
 
   private Course course;
-  // Use the users' emails as key, to avoid cyclic reference in a user's scorecard history
-  private Map<String, List<Integer>> scorecard;
   private LocalDate date;
+
+  @JsonSerialize(converter = ScorecardListConverter.class)
+  @JsonDeserialize(converter = ScorecardMapConverter.class)
+  private Map<User, List<Integer>> scorecard;
 
   /**
    * Create a new scorecard.
@@ -35,7 +41,7 @@ public class Scorecard {
     for (var u : users) {
       var score = new ArrayList<Integer>(course.getCourseLength());
       course.getHoles().forEach(h -> score.add(0));
-      scorecard.put(u.getEmail(), score);
+      scorecard.put(u, score);
     }
   }
 
@@ -61,7 +67,7 @@ public class Scorecard {
       throw new IllegalArgumentException("Score must be 1 or bigger.");
     }
 
-    scorecard.get(user.getEmail()).set(holeIndex, score);
+    scorecard.get(user).set(holeIndex, score);
   }
 
   /**
@@ -78,11 +84,11 @@ public class Scorecard {
       throw new IllegalArgumentException("The given hole is not in the course");
     }
 
-    return scorecard.get(user.getEmail()).get(holeIndex);
+    return scorecard.get(user).get(holeIndex);
   }
 
   public int getTotalScore(User user) {
-    var scores = scorecard.get(user.getEmail());
+    var scores = scorecard.get(user);
     return scores.stream().mapToInt(Integer::intValue).sum();
   }
 
@@ -90,7 +96,7 @@ public class Scorecard {
     return course;
   }
 
-  Map<String, List<Integer>> getScorecard() {
+  Map<User, List<Integer>> getScorecard() {
     return Collections.unmodifiableMap(scorecard);
   }
 
