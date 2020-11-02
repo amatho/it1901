@@ -1,6 +1,7 @@
 package golfapp.gui;
 
 import golfapp.core.Course;
+import golfapp.core.GuestUser;
 import golfapp.core.User;
 import java.util.List;
 import java.util.Set;
@@ -113,7 +114,7 @@ public class CreateScorecardController {
   @FXML
   void handleAddGuestButton() {
     if (tableView.getItems().size() < 4) {
-      User user = new User("Guest", usernameField.getText());
+      User user = new GuestUser("Guest", usernameField.getText());
       tableView.getItems().add(user);
       usernameField.clear();
       updateAddUserButton();

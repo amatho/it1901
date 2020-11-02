@@ -48,7 +48,7 @@ public class User {
 
   public void setEmail(String email) {
     var matcher = EMAIL_REGEX.matcher(email);
-    if (matcher.find()) {
+    if (matcher.find() || (this instanceof GuestUser)) {
       this.email = email;
     } else {
       throw new IllegalArgumentException("Invalid e-mail input");
