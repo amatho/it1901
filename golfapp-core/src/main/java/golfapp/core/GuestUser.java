@@ -14,5 +14,6 @@ public class GuestUser extends User {
 
   @Override
   public void setEmail(String email) {
+    this.email = email;
   }
 }

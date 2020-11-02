@@ -16,7 +16,7 @@ public class User {
       .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
   private UUID id;
-  private String email;
+  protected String email;
   private String displayName;
   private Set<Scorecard> scorecardHistory;
 
@@ -48,7 +48,7 @@ public class User {
 
   public void setEmail(String email) {
     var matcher = EMAIL_REGEX.matcher(email);
-    if (matcher.find() || (this instanceof GuestUser)) {
+    if (matcher.find()) {
       this.email = email;
     } else {
       throw new IllegalArgumentException("Invalid e-mail input");
