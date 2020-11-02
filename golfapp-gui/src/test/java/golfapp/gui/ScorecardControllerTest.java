@@ -52,7 +52,7 @@ public class ScorecardControllerTest {
     User user1 = new User("thisuser@email.com", "This User");
     User user2 = new User("bob@email.com", "Bob");
     User user3 = new User("phil@email.com", "Phil");
-    User user4 = new GuestUser("", "Ken");
+    User user4 = new GuestUser("Ken");
     golfAppModelDao.addUser(user1);
     golfAppModelDao.addUser(user2);
     golfAppModelDao.addUser(user3);

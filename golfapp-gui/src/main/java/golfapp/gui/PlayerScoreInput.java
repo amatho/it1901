@@ -54,7 +54,12 @@ public class PlayerScoreInput extends HBox {
     return score;
   }
 
-
+  /**
+   * Sets the score of the player input.
+   *
+   * @param score the new score
+   * @throws IllegalArgumentException if the score is less than 1
+   */
   public void setScore(int score) {
     if (score < 1) {
       throw new IllegalArgumentException("Score needs to bee more then 0, was: " + score);

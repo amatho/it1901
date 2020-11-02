@@ -46,6 +46,12 @@ public class User {
     return email;
   }
 
+  /**
+   * Sets the user's email, checking if the provided email matches a RegEx.
+   *
+   * @param email the new email
+   * @throws IllegalArgumentException if the given email was invalid
+   */
   public void setEmail(String email) {
     var matcher = EMAIL_REGEX.matcher(email);
     if (matcher.find()) {
