@@ -9,11 +9,11 @@ public class GuestUser extends User {
    * @param displayName the name to display for this user
    */
   public GuestUser(String email, String displayName) {
-    super(email, displayName);
+    super("", displayName);
   }
 
   @Override
   public void setEmail(String email) {
-    this.email = email;
+    this.email = "Guest";
   }
 }

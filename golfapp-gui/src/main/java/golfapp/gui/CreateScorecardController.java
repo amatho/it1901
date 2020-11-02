@@ -114,7 +114,7 @@ public class CreateScorecardController {
   @FXML
   void handleAddGuestButton() {
     if (tableView.getItems().size() < 4) {
-      User user = new GuestUser("Guest", usernameField.getText());
+      User user = new GuestUser("", usernameField.getText());
       tableView.getItems().add(user);
       usernameField.clear();
       updateAddUserButton();
