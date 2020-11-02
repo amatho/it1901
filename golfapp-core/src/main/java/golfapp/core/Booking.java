@@ -1,11 +1,9 @@
 package golfapp.core;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import java.time.LocalDateTime;
 
 public class Booking {
 
-  @JsonIdentityReference(alwaysAsId = true)
   private User user;
   private LocalDateTime dateTime;
 

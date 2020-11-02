@@ -2,6 +2,7 @@ package golfapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -23,13 +24,14 @@ public class User {
    */
   public User(String email, String displayName) {
     id = UUID.randomUUID();
-    this.email = email;
-    this.displayName = displayName;
+    setEmail(email);
+    setDisplayName(displayName);
     scorecardHistory = new HashSet<>();
   }
 
   // Creator for Jackson
   private User() {
+    scorecardHistory = new HashSet<>();
   }
 
   public UUID getId() {
@@ -40,6 +42,11 @@ public class User {
     return email;
   }
 
+  // TODO: Validate email
+  private void setEmail(String email) {
+    this.email = email;
+  }
+
   public String getDisplayName() {
     return displayName;
   }
@@ -48,8 +55,13 @@ public class User {
     this.displayName = displayName;
   }
 
+  /**
+   * Returns an unmodifiable view of the scorecard history.
+   *
+   * @return set of scorecards
+   */
   public Set<Scorecard> getScorecardHistory() {
-    return scorecardHistory;
+    return Collections.unmodifiableSet(scorecardHistory);
   }
 
   public void addScorecard(Scorecard scorecard) {

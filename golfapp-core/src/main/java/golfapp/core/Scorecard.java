@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Scorecard {
@@ -13,7 +15,7 @@ public class Scorecard {
   @JsonIdentityReference(alwaysAsId = true)
   private Course course;
   // Use the users' emails as key, to avoid cyclic reference in a user's scorecard history
-  private HashMap<String, List<Integer>> scorecard;
+  private Map<String, List<Integer>> scorecard;
   private LocalDate date;
 
   /**
@@ -90,8 +92,8 @@ public class Scorecard {
     return course;
   }
 
-  HashMap<String, List<Integer>> getScorecard() {
-    return scorecard;
+  Map<String, List<Integer>> getScorecard() {
+    return Collections.unmodifiableMap(scorecard);
   }
 
   public LocalDate getDate() {

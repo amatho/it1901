@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import golfapp.data.MapperInstance;
+import golfapp.data.CustomObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,8 @@ public class UserTest {
         List.of(user));
     user.addScorecard(scorecard);
 
-    var json = MapperInstance.getInstance().writeValueAsString(user);
-    var deserializedUser = MapperInstance.getInstance().readValue(json, User.class);
+    var json = CustomObjectMapper.SINGLETON.writeValueAsString(user);
+    var deserializedUser = CustomObjectMapper.SINGLETON.readValue(json, User.class);
 
     assertTrue(user.deepEquals(deserializedUser));
   }

@@ -5,16 +5,10 @@ import golfapp.core.BookingSystem;
 import golfapp.core.Course;
 import golfapp.core.GolfAppModel;
 import golfapp.core.User;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class FileGolfAppModelDao implements GolfAppModelDao {
 
@@ -61,42 +55,17 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
     }
   }
 
-  private GolfAppModel createDefaultModel() {
-    var reader = new BufferedReader(
-        new InputStreamReader(getClass().getResourceAsStream("default-courses.json"),
-            StandardCharsets.UTF_8));
-    var json = reader.lines().collect(Collectors.joining("\n"));
-    try {
-      reader.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    Set<Course> courses;
-    try {
-      courses = new HashSet<>(
-          MapperInstance.getInstance().readerFor(Course.class).<Course>readValues(json).readAll());
-    } catch (Exception e) {
-      throw new IllegalStateException("Could not read default courses", e);
-    }
-
-    var bookingSystems = new HashMap<Course, BookingSystem>(courses.size());
-    courses.forEach(c -> bookingSystems.put(c, new BookingSystem()));
-
-    return new GolfAppModel(new HashSet<>(), courses, bookingSystems);
-  }
-
   private GolfAppModel readModel() {
     String json;
     try {
       json = files.readString(dataPath);
     } catch (IOException e) {
       // Assume that nothing has been saved before and return a new model
-      return createDefaultModel();
+      return GolfAppModel.createDefaultModel();
     }
 
     try {
-      return MapperInstance.getInstance().readValue(json, GolfAppModel.class);
+      return CustomObjectMapper.SINGLETON.readValue(json, GolfAppModel.class);
     } catch (JsonProcessingException e) {
       throw new IllegalStateException("Could not parse JSON correctly", e);
     }
@@ -105,7 +74,7 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
   private void writeModel(GolfAppModel model) {
     String json;
     try {
-      json = MapperInstance.getInstance().writeValueAsString(model);
+      json = CustomObjectMapper.SINGLETON.writeValueAsString(model);
     } catch (JsonProcessingException e) {
       throw new IllegalStateException("Could not parse JSON correctly", e);
     }
