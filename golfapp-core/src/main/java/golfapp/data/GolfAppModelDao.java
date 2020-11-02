@@ -15,7 +15,7 @@ public interface GolfAppModelDao {
 
   void addUser(User u);
 
-  void updateUser(User u);
+  boolean updateUser(User u);
 
   void deleteUser(User u);
 
