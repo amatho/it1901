@@ -6,12 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import golfapp.data.CustomObjectMapper;
 import java.util.List;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class UserTest {
-  
-  @Disabled
+
   @Test
   void json_serializeAndDeserialize() throws JsonProcessingException {
     var user = new User("foo@foobar.com", "Foo Bar");
