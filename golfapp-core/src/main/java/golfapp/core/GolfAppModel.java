@@ -1,5 +1,7 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import golfapp.data.BookingSystemsListConverter;
@@ -18,12 +20,12 @@ import java.util.stream.Collectors;
 
 public class GolfAppModel {
 
-  private Set<User> users;
-  private Set<Course> courses;
+  private final Set<User> users;
+  private final Set<Course> courses;
 
   @JsonSerialize(converter = BookingSystemsListConverter.class)
   @JsonDeserialize(converter = BookingSystemsMapConverter.class)
-  private Map<Course, BookingSystem> bookingSystems;
+  private final Map<Course, BookingSystem> bookingSystems;
 
   /**
    * Creates a model with the given data.
@@ -40,7 +42,11 @@ public class GolfAppModel {
   }
 
   // Creator for Jackson
-  private GolfAppModel() {
+  @JsonCreator
+  public static GolfAppModel createGolfAppModel(@JsonProperty("users") Set<User> users,
+      @JsonProperty("courses") Set<Course> courses,
+      @JsonProperty("bookingSystems") Map<Course, BookingSystem> bookingSystems) {
+    return new GolfAppModel(users, courses, bookingSystems);
   }
 
   /**

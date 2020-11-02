@@ -1,5 +1,7 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 public class Hole {
@@ -22,7 +24,10 @@ public class Hole {
   }
 
   // Creator for Jackson
-  private Hole() {
+  @JsonCreator
+  public static Hole createHole(@JsonProperty("length") double length, @JsonProperty("par") int par,
+      @JsonProperty("height") double height) {
+    return new Hole(length, par, height);
   }
 
   public double getLength() {
