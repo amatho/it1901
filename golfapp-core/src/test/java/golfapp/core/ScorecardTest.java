@@ -16,7 +16,7 @@ public class ScorecardTest {
     var course = new Course("course", List.of(hole));
     var users = new ArrayList<User>();
     for (var i = 0; i < 5; i++) {
-      users.add(new User(i + "@test", "User " + i));
+      users.add(new User(i + "@test.com", "User " + i));
     }
 
     assertThrows(IllegalArgumentException.class, () -> new Scorecard(course, users));
