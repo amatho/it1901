@@ -105,10 +105,12 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void updateUser(User u) {
+  public boolean updateUser(User u) {
     var model = readModel();
-    model.updateUser(u);
+    var wasUpdated = model.updateUser(u);
     writeModel(model);
+
+    return wasUpdated;
   }
 
   @Override
