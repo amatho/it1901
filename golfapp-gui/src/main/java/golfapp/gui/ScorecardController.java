@@ -37,6 +37,13 @@ public class ScorecardController {
   @FXML
   Button finishButton;
 
+  /**
+   * Create a new ScorecardController.
+   *
+   * @param appManager the app manager
+   * @param users  the list of users
+   * @param course the course to implement in the scorecard attribute
+   */
   public ScorecardController(AppManager appManager, ObservableList<User> users, Course course) {
     this.appManager = appManager;
     this.users = users;
@@ -78,7 +85,7 @@ public class ScorecardController {
     holeLength.setText("Length: " + hole.getLength());
   }
 
-  void updateScores(int holeIndex) {
+  private void updateScores(int holeIndex) {
     Hole hole = scorecard.getCourse().getHole(holeIndex);
     for (Node node : playerInputs.getChildren()) {
       PlayerScoreInput psi = (PlayerScoreInput) node;
