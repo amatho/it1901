@@ -3,6 +3,9 @@ Our focus have been to implement a simple golf app with a functional schedule fo
 A user should be able to track his score while playing, and should also be able to create an account.
 
 ## User stories
+The user stories contains a screenshot section. This section includes both a screenshot of the app 
+we used for inspiration, and our actual implementation.
+
 * [First user story](./U1.md "User story 1")
 * [Second user story](./U2.md "User story 2")
 * [Third user story](./U3.md "User story 3")
