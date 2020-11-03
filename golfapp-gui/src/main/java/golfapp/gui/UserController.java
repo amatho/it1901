@@ -73,7 +73,8 @@ public class UserController {
     scorecardCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getName()));
     scorecardTimeColumn
-        .setCellValueFactory(sc -> new ReadOnlyStringWrapper(sc.getValue().getDate().toString()));
+        .setCellValueFactory(sc -> new ReadOnlyStringWrapper(
+            sc.getValue().getDate().format(DateTimeFormatter.ISO_DATE)));
 
     bookedCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().course.getName()));

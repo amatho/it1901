@@ -91,8 +91,4 @@ public class User {
     return id.hashCode();
   }
 
-  @Override
-  public String toString() {
-    return displayName;
-  }
 }
