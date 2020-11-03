@@ -23,6 +23,8 @@ public class LogInController {
   @FXML
   Label nameLabel;
   @FXML
+  Label status;
+  @FXML
   TextField email;
   @FXML
   TextField nameField;
@@ -43,12 +45,13 @@ public class LogInController {
   void initialize() {
     email.setPromptText("e-mail ...");
     nameField.setPromptText("Name ...");
+    status.setText("");
     logIn.setDisable(true);
     nameField.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
     email.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
     nameField.setVisible(false);
     nameLabel.setVisible(false);
-
+    status.setVisible(true);
     newUserIsActive = false;
   }
 
@@ -89,7 +92,13 @@ public class LogInController {
         return;
       }
 
-      user = new User(email.getText(), nameField.getText());
+      try {
+        user = new User(email.getText(), nameField.getText());
+      } catch (IllegalArgumentException e) {
+        status.setVisible(true);
+        status.setText("Please insert a valid email!");
+        return;
+      }
       modelDao.addUser(user);
     } else {
       var result = modelDao.getUsers().stream()

@@ -1,5 +1,7 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import golfapp.data.ScorecardListConverter;
@@ -15,12 +17,12 @@ import java.util.Objects;
 
 public class Scorecard {
 
-  private Course course;
-  private LocalDate date;
+  private final Course course;
+  private final LocalDate date;
 
   @JsonSerialize(converter = ScorecardListConverter.class)
   @JsonDeserialize(converter = ScorecardMapConverter.class)
-  private Map<User, List<Integer>> scorecard;
+  private final Map<User, List<Integer>> scorecard;
 
   /**
    * Create a new scorecard.
@@ -45,8 +47,18 @@ public class Scorecard {
     }
   }
 
+  private Scorecard(Course course, Map<User, List<Integer>> scorecard, LocalDate date) {
+    this.course = course;
+    this.scorecard = scorecard;
+    this.date = date;
+  }
+
   // Creator for Jackson
-  private Scorecard() {
+  @JsonCreator
+  public static Scorecard createScorecard(@JsonProperty("course") Course course,
+      @JsonProperty("scorecard") Map<User, List<Integer>> scorecard,
+      @JsonProperty("date") LocalDate date) {
+    return new Scorecard(course, scorecard, date);
   }
 
   /**

@@ -62,8 +62,8 @@ class InMemoryGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void updateUser(User u) {
-    fileModelDao.updateUser(u);
+  public boolean updateUser(User u) {
+    return fileModelDao.updateUser(u);
   }
 
   @Override
