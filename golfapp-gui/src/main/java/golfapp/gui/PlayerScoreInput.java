@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 public class PlayerScoreInput extends HBox {
 
   private final TextField scoreField;
+  private final User user;
   private int score = 3;
 
   /**
@@ -19,6 +20,7 @@ public class PlayerScoreInput extends HBox {
    */
   public PlayerScoreInput(User user) {
     super();
+    this.user = user;
 
     scoreField = new TextField("" + score);
     final var name = new TextField(user.getDisplayName());
@@ -45,6 +47,32 @@ public class PlayerScoreInput extends HBox {
 
   private void handlePlus() {
     score++;
+    scoreField.setText("" + score);
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  /**
+   * Sets the score of the player input.
+   *
+   * @param score the new score
+   * @throws IllegalArgumentException if the score is less than 1
+   */
+  public void setScore(int score) {
+    if (score < 1) {
+      throw new IllegalArgumentException("Score needs to bee more then 0, was: " + score);
+    }
+    this.score = score;
+    updateScoreField();
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void updateScoreField() {
     scoreField.setText("" + score);
   }
 }

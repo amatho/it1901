@@ -2,18 +2,23 @@ package golfapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id", scope = User.class)
 public class User {
 
-  private UUID id;
-  private String email;
+  private static final Pattern EMAIL_REGEX = Pattern
+      .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+  private final UUID id;
+  protected String email;
   private String displayName;
-  private Set<Scorecard> scorecardHistory;
+  private final Set<Scorecard> scorecardHistory;
 
   /**
    * Create a new user.
@@ -22,14 +27,28 @@ public class User {
    * @param displayName the name to display for this user
    */
   public User(String email, String displayName) {
-    id = UUID.randomUUID();
-    this.email = email;
-    this.displayName = displayName;
-    scorecardHistory = new HashSet<>();
+    this(UUID.randomUUID(), email, displayName, new HashSet<>());
   }
 
-  // Creator for Jackson
+  private User(UUID id, String email, String displayName, Set<Scorecard> scorecardHistory) {
+    this.id = id;
+    setEmail(email);
+    setDisplayName(displayName);
+    this.scorecardHistory = scorecardHistory;
+  }
+
+  /**
+   * Parameterless constructor for Jackson. This is needed since a {@link Scorecard} in a user's
+   * scorecard history has a reference to a {@code User}, which introduces a circular reference. A
+   * parameterless constructor lets Jackson create a {@code User} object before it discovers the
+   * reference to that same {@code User} in a {@code Scorecard}. Otherwise, when Jackson finds an
+   * unknown {@code User} ID, it would insert null as the value.
+   *
+   * @see JsonIdentityInfo
+   */
   private User() {
+    id = null;
+    scorecardHistory = null;
   }
 
   public UUID getId() {
@@ -40,6 +59,21 @@ public class User {
     return email;
   }
 
+  /**
+   * Sets the user's email, checking if the provided email matches a RegEx.
+   *
+   * @param email the new email
+   * @throws IllegalArgumentException if the given email was invalid
+   */
+  public void setEmail(String email) {
+    var matcher = EMAIL_REGEX.matcher(email);
+    if (matcher.find()) {
+      this.email = email;
+    } else {
+      throw new IllegalArgumentException("Invalid e-mail input");
+    }
+  }
+
   public String getDisplayName() {
     return displayName;
   }
@@ -48,8 +82,13 @@ public class User {
     this.displayName = displayName;
   }
 
+  /**
+   * Returns an unmodifiable view of the scorecard history.
+   *
+   * @return set of scorecards
+   */
   public Set<Scorecard> getScorecardHistory() {
-    return scorecardHistory;
+    return Collections.unmodifiableSet(scorecardHistory);
   }
 
   public void addScorecard(Scorecard scorecard) {

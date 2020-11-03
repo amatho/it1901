@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,8 +66,13 @@ public class BookingSystem {
     return result;
   }
 
+  /**
+   * Returns an unmodifiable view of the bookings.
+   *
+   * @return set of bookings
+   */
   public Set<Booking> getBookings() {
-    return bookings;
+    return Collections.unmodifiableSet(bookings);
   }
 
   /**
@@ -107,12 +113,12 @@ public class BookingSystem {
   }
 
   /**
-   * Get all available times for booking.
+   * Returns an unmodifiable view of all available times for booking.
    *
    * @return stream of all available times
    */
   public List<LocalDateTime> getAllAvailableTimes() {
-    return availableTimes;
+    return Collections.unmodifiableList(availableTimes);
   }
 
   /**
