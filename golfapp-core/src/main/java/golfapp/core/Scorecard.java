@@ -117,7 +117,7 @@ public class Scorecard {
     return date;
   }
 
-  public Set<String> getUsers() {
+  public Set<User> getUsers() {
     return scorecard.keySet();
   }
 

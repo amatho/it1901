@@ -3,11 +3,14 @@ package golfapp.gui;
 import golfapp.core.Course;
 import golfapp.core.Hole;
 import golfapp.core.Scorecard;
+import golfapp.core.User;
 import java.util.List;
 import java.util.Set;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -25,6 +28,7 @@ public class ScorecardViewController {
   private final List<Hole> holes;
   private double vboxPrefWidth = 0;
   private static final double widthLeftLabel = 120;
+  private static final double widthOtherLabels = 80;
 
   @FXML
   VBox leftInfo;
@@ -59,6 +63,10 @@ public class ScorecardViewController {
     leftInfo.setPrefWidth(vboxPrefWidth);
     infoLabel.setText("Name: " + course.getName()
         + "         Date: " + scorecard.getDate());
+    ScrollBar sc = new ScrollBar();
+    sc.setMin(0);
+    sc.setOrientation(Orientation.HORIZONTAL);
+    leftInfo.getChildren().add(sc);
   }
 
   @FXML
@@ -68,9 +76,9 @@ public class ScorecardViewController {
 
   private double playerSetup() {
     double heightPlayers = 0.0;
-    Set<String> users = scorecard.getUsers();
-    for (String s : users) {
-      Label label = new Label(s);
+    Set<User> users = scorecard.getUsers();
+    for (User s : users) {
+      Label label = new Label(s.getDisplayName());
       label.setBorder(new Border(new BorderStroke(Color.BLACK,
           BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
       label.setPrefWidth(widthLeftLabel);
@@ -78,16 +86,15 @@ public class ScorecardViewController {
       HBox h = new HBox();
       h.getChildren().add(label);
 
-      //method for now invalid
-      /*for (Hole hole : holes) {
-        int score = scorecard.getScore(s, hole); // invalid type for now.
+      for (Hole hole : holes) {
+        int score = scorecard.getScore(s, hole);
         Label scoreEachHole = new Label(Integer.toString(score));
         scoreEachHole.setBorder(new Border(new BorderStroke(Color.BLACK,
             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
-        scoreEachHole.setPrefWidth(widthLeftLabel);
+        scoreEachHole.setPrefWidth(widthOtherLabels);
         scoreEachHole.setAlignment(Pos.CENTER);
         h.getChildren().add(scoreEachHole);
-      }*/
+      }
 
       leftInfo.getChildren().add(h);
       h.setPrefHeight(80);
@@ -141,7 +148,6 @@ public class ScorecardViewController {
       label3.setBorder(new Border(new BorderStroke(Color.BLACK,
           BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
 
-      double widthOtherLabels = 80;
       label1.setPrefWidth(widthOtherLabels);
       label2.setPrefWidth(widthOtherLabels);
       label3.setPrefWidth(widthOtherLabels);
