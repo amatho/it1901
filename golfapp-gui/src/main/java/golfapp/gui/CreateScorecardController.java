@@ -11,11 +11,25 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
 public class CreateScorecardController {
+
+  private static class UserCell extends ListCell<User> {
+
+    @Override
+    protected void updateItem(User user, boolean b) {
+      super.updateItem(user, b);
+
+      setText(user == null ? "" : user.getDisplayName());
+    }
+  }
 
   private final AppManager appManager;
   private final Set<Course> courses;
@@ -39,7 +53,7 @@ public class CreateScorecardController {
   @FXML
   ChoiceBox<Course> courseChoiceBox;
   @FXML
-  ChoiceBox<User> userChoiceBox;
+  ComboBox<User> userComboBox;
 
   public CreateScorecardController(AppManager appManager) {
     this.appManager = appManager;
@@ -55,31 +69,34 @@ public class CreateScorecardController {
     tableView.getItems().add(appManager.getUser());
     courseChoiceBox.getSelectionModel().selectedIndexProperty()
         .addListener(c -> updateCreateButton());
-    userChoiceBox.getSelectionModel().selectedIndexProperty()
+    userComboBox.getSelectionModel().selectedIndexProperty()
         .addListener(u -> updateAddUserButton());
+    Callback<ListView<User>, ListCell<User>> cellFactory = l -> new UserCell();
+    userComboBox.setCellFactory(cellFactory);
+    userComboBox.setButtonCell(cellFactory.call(null));
     tableView.getSelectionModel().selectedItemProperty().addListener(u -> {
       updateCreateButton();
       updateDeleteButton();
       updateAddUserButton();
       updateAddGuestButton();
-      updateUserChoiceBox();
+      updateUserComboBox();
     });
     usernameField.textProperty().addListener(t -> updateAddGuestButton());
-    userChoiceBox.getItems().addAll(appManager.getModelDao().getUsers());
+    userComboBox.getItems().addAll(appManager.getModelDao().getUsers());
 
     updateAddUserButton();
     updateAddGuestButton();
     updateCreateButton();
     updateDeleteButton();
-    updateUserChoiceBox();
+    updateUserComboBox();
   }
 
-  private void updateUserChoiceBox() {
-    userChoiceBox.getItems().clear();
+  private void updateUserComboBox() {
+    userComboBox.getItems().clear();
     List<User> users = appManager.getModelDao().getUsers().stream()
         .filter(u -> !tableView.getItems().contains(u))
         .collect(Collectors.toList());
-    userChoiceBox.getItems().addAll(users);
+    userComboBox.getItems().addAll(users);
   }
 
   private void updateCreateButton() {
@@ -95,7 +112,7 @@ public class CreateScorecardController {
 
   private void updateAddUserButton() {
     boolean disable =
-        userChoiceBox.getSelectionModel().isEmpty() || tableView.getItems().size() >= 4;
+        userComboBox.getSelectionModel().isEmpty() || tableView.getItems().size() >= 4;
     addUserButton.setDisable(disable);
   }
 
@@ -119,17 +136,17 @@ public class CreateScorecardController {
       usernameField.clear();
       updateAddUserButton();
       updateAddGuestButton();
-      updateUserChoiceBox();
+      updateUserComboBox();
     }
   }
 
   @FXML
   void handleAddUserButton() {
-    User user = userChoiceBox.getSelectionModel().getSelectedItem();
+    User user = userComboBox.getSelectionModel().getSelectedItem();
     tableView.getItems().add(user);
     updateAddUserButton();
     updateAddGuestButton();
-    updateUserChoiceBox();
+    updateUserComboBox();
   }
 
   @FXML
