@@ -76,9 +76,10 @@ public class ScorecardControllerTest {
       assertEquals(3, psi.getScore());
     }
     robot.clickOn((Node) robot.lookup("#playerInputs").lookup("+").query());
+
+
     PlayerScoreInput psi0 = (PlayerScoreInput) controller.playerInputs.getChildren().get(0);
     assertEquals(4, psi0.getScore());
-
     robot.clickOn((Node) robot.lookup("#holes").lookup("2").query());
     assertTrue(controller.finishButton.isVisible());
     robot.clickOn((Node) robot.lookup("#holes").lookup("1").query());
