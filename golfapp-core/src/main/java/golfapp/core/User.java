@@ -1,8 +1,6 @@
 package golfapp.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,12 +37,18 @@ public class User {
     this.scorecardHistory = scorecardHistory;
   }
 
-  // Creator for Jackson
-  @JsonCreator
-  public static User createUser(@JsonProperty("id") UUID id, @JsonProperty("email") String email,
-      @JsonProperty("displayName") String displayName,
-      @JsonProperty("scorecardHistory") Set<Scorecard> scorecardHistory) {
-    return new User(id, email, displayName, scorecardHistory);
+  /**
+   * Parameterless constructor for Jackson. This is needed since a {@link Scorecard} in a user's
+   * scorecard history has a reference to a {@code User}, which introduces a circular reference. A
+   * parameterless constructor lets Jackson create a {@code User} object before it discovers the
+   * reference to that same {@code User} in a {@code Scorecard}. Otherwise, when Jackson finds an
+   * unknown {@code User} ID, it would insert null as the value.
+   *
+   * @see JsonIdentityInfo
+   */
+  private User() {
+    id = null;
+    scorecardHistory = null;
   }
 
   public UUID getId() {
