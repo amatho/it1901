@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import golfapp.core.Course;
-import golfapp.core.GuestUser;
 import golfapp.core.Hole;
 import golfapp.core.User;
 import golfapp.data.GolfAppModelDao;
@@ -52,7 +51,7 @@ public class ScorecardControllerTest {
     User user1 = new User("thisuser@email.com", "This User");
     User user2 = new User("bob@email.com", "Bob");
     User user3 = new User("phil@email.com", "Phil");
-    User user4 = new GuestUser("Ken");
+    User user4 = new User("ken@email.com", "Ken");
     golfAppModelDao.addUser(user1);
     golfAppModelDao.addUser(user2);
     golfAppModelDao.addUser(user3);
