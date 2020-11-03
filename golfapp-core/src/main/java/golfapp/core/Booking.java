@@ -1,13 +1,13 @@
 package golfapp.core;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class Booking {
 
-  @JsonIdentityReference(alwaysAsId = true)
-  private User user;
-  private LocalDateTime dateTime;
+  private final User user;
+  private final LocalDateTime dateTime;
 
   /**
    * Create a new booking.
@@ -21,7 +21,10 @@ public class Booking {
   }
 
   // Creator for Jackson
-  private Booking() {
+  @JsonCreator
+  public static Booking createBooking(@JsonProperty("user") User user,
+      @JsonProperty("dateTime") LocalDateTime dateTime) {
+    return new Booking(user, dateTime);
   }
 
   public User getUser() {

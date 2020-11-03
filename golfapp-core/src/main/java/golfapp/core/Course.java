@@ -1,6 +1,8 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +13,9 @@ import java.util.UUID;
     property = "id", scope = Course.class)
 public class Course {
 
-  private UUID id;
+  private final UUID id;
   private String name;
-  private List<Hole> holes;
+  private final List<Hole> holes;
 
   /**
    * Create a new course.
@@ -22,13 +24,20 @@ public class Course {
    * @param holes the holes of this course
    */
   public Course(String name, List<Hole> holes) {
-    id = UUID.randomUUID();
+    this(UUID.randomUUID(), name, holes);
+  }
+
+  private Course(UUID id, String name, List<Hole> holes) {
+    this.id = id;
     setName(name);
     this.holes = new ArrayList<>(holes);
   }
 
   // Creator for Jackson
-  private Course() {
+  @JsonCreator
+  public static Course createCourse(@JsonProperty("id") UUID id, @JsonProperty("name") String name,
+      @JsonProperty("holes") List<Hole> holes) {
+    return new Course(id, name, holes);
   }
 
   public UUID getId() {

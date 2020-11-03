@@ -1,5 +1,7 @@
 package golfapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,10 +13,10 @@ import java.util.Objects;
 
 public class Scorecard {
 
-  private Course course;
+  private final Course course;
   // Use the users' emails as key, to avoid cyclic reference in a user's scorecard history
-  private Map<String, List<Integer>> scorecard;
-  private LocalDate date;
+  private final Map<String, List<Integer>> scorecard;
+  private final LocalDate date;
 
   /**
    * Create a new scorecard.
@@ -34,13 +36,23 @@ public class Scorecard {
 
     for (var u : users) {
       var score = new ArrayList<Integer>(course.getCourseLength());
-      course.getHoles().forEach(h -> score.add(0));
+      course.getHoles().forEach(h -> score.add(h.getPar()));
       scorecard.put(u.getEmail(), score);
     }
   }
 
+  private Scorecard(Course course, Map<String, List<Integer>> scorecard, LocalDate date) {
+    this.course = course;
+    this.scorecard = scorecard;
+    this.date = date;
+  }
+
   // Creator for Jackson
-  private Scorecard() {
+  @JsonCreator
+  public static Scorecard createScorecard(@JsonProperty("course") Course course,
+      @JsonProperty("scorecard") Map<String, List<Integer>> scorecard,
+      @JsonProperty("date") LocalDate date) {
+    return new Scorecard(course, scorecard, date);
   }
 
   /**
