@@ -42,7 +42,7 @@ public class Scorecard {
 
     for (var u : users) {
       var score = new ArrayList<Integer>(course.getCourseLength());
-      course.getHoles().forEach(h -> score.add(0));
+      course.getHoles().forEach(h -> score.add(h.getPar()));
       scorecard.put(u, score);
     }
   }
