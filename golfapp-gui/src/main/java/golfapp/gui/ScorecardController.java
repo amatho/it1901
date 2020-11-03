@@ -19,7 +19,6 @@ public class ScorecardController {
   private final List<User> users;
   private final Scorecard scorecard;
 
-
   @FXML
   Label courseName;
   @FXML
@@ -41,8 +40,8 @@ public class ScorecardController {
    * Create a new ScorecardController.
    *
    * @param appManager the app manager
-   * @param users  the list of users
-   * @param course the course to implement in the scorecard attribute
+   * @param users      the list of users
+   * @param course     the course to implement in the scorecard attribute
    */
   public ScorecardController(AppManager appManager, ObservableList<User> users, Course course) {
     this.appManager = appManager;

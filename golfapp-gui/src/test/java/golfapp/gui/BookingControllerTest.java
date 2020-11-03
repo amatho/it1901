@@ -67,8 +67,8 @@ public class BookingControllerTest {
 
   @Test
   void testInitialize() {
-    assertEquals(LocalDate.now(), bookingController.dateChoiceBox.getValue());
-    assertNull(bookingController.courseChoiceBox.getValue());
+    assertEquals(LocalDate.now(), bookingController.dateComboBox.getValue());
+    assertNull(bookingController.courseComboBox.getValue());
     assertFalse(bookingController.confirmedBookingLabel.isVisible());
   }
 
@@ -76,7 +76,7 @@ public class BookingControllerTest {
   void when_showAvailableTimes_isClicked(FxRobot robot) {
     robot.clickOn("#showAvailableTimes");
     assertFalse(bookingController.availableTimesComboBox.isVisible());
-    robot.clickOn("#courseChoiceBox");
+    robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
@@ -84,8 +84,8 @@ public class BookingControllerTest {
   }
 
   @Test
-  void when_confirmBooking_isClicked_And_availableTimesChoiceBox_isNull(FxRobot robot) {
-    robot.clickOn("#courseChoiceBox");
+  void when_confirmBooking_isClicked_And_availableTimesComboBox_isNull(FxRobot robot) {
+    robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
@@ -96,8 +96,8 @@ public class BookingControllerTest {
   }
 
   @Test
-  void when_availableTimesChoiceBox_isClicked(FxRobot robot) {
-    robot.clickOn("#courseChoiceBox");
+  void when_availableTimesComboBox_isClicked(FxRobot robot) {
+    robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
@@ -108,7 +108,7 @@ public class BookingControllerTest {
 
   @Test
   void test_confirm_Booking(FxRobot robot) {
-    robot.clickOn("#courseChoiceBox");
+    robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");

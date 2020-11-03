@@ -3,6 +3,8 @@ package golfapp.gui;
 import golfapp.core.Course;
 import golfapp.core.GuestUser;
 import golfapp.core.User;
+import golfapp.gui.cell.CourseCell;
+import golfapp.gui.cell.UserCell;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,26 +12,12 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
 
 public class CreateScorecardController {
-
-  private static class UserCell extends ListCell<User> {
-
-    @Override
-    protected void updateItem(User user, boolean b) {
-      super.updateItem(user, b);
-
-      setText(user == null ? "" : user.getDisplayName());
-    }
-  }
 
   private final AppManager appManager;
   private final Set<Course> courses;
@@ -51,7 +39,7 @@ public class CreateScorecardController {
   @FXML
   TextField usernameField;
   @FXML
-  ChoiceBox<Course> courseChoiceBox;
+  ComboBox<Course> courseComboBox;
   @FXML
   ComboBox<User> userComboBox;
 
@@ -65,15 +53,20 @@ public class CreateScorecardController {
     usernameColumn
         .setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getDisplayName()));
     emailColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getEmail()));
-    courseChoiceBox.getItems().addAll(courses);
-    tableView.getItems().add(appManager.getUser());
-    courseChoiceBox.getSelectionModel().selectedIndexProperty()
+
+    courseComboBox.getItems().addAll(courses);
+    courseComboBox.getSelectionModel().selectedIndexProperty()
         .addListener(c -> updateCreateButton());
+    courseComboBox.setCellFactory(l -> new CourseCell());
+    courseComboBox.setButtonCell(new CourseCell());
+
     userComboBox.getSelectionModel().selectedIndexProperty()
         .addListener(u -> updateAddUserButton());
-    Callback<ListView<User>, ListCell<User>> cellFactory = l -> new UserCell();
-    userComboBox.setCellFactory(cellFactory);
-    userComboBox.setButtonCell(cellFactory.call(null));
+    userComboBox.setCellFactory(l -> new UserCell());
+    userComboBox.setButtonCell(new UserCell());
+    userComboBox.getItems().addAll(appManager.getModelDao().getUsers());
+
+    tableView.getItems().add(appManager.getUser());
     tableView.getSelectionModel().selectedItemProperty().addListener(u -> {
       updateCreateButton();
       updateDeleteButton();
@@ -81,8 +74,8 @@ public class CreateScorecardController {
       updateAddGuestButton();
       updateUserComboBox();
     });
+
     usernameField.textProperty().addListener(t -> updateAddGuestButton());
-    userComboBox.getItems().addAll(appManager.getModelDao().getUsers());
 
     updateAddUserButton();
     updateAddGuestButton();
@@ -101,7 +94,7 @@ public class CreateScorecardController {
 
   private void updateCreateButton() {
     boolean disable =
-        courseChoiceBox.getSelectionModel().isEmpty() || tableView.getItems().isEmpty();
+        courseComboBox.getSelectionModel().isEmpty() || tableView.getItems().isEmpty();
     createButton.setDisable(disable);
   }
 
@@ -125,7 +118,7 @@ public class CreateScorecardController {
   void changeSceneButtonPushed() {
     appManager
         .loadView("Scorecard.fxml", c -> new ScorecardController(appManager, tableView.getItems(),
-            courseChoiceBox.getValue()));
+            courseComboBox.getValue()));
   }
 
   @FXML

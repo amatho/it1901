@@ -3,6 +3,9 @@ package golfapp.gui;
 import golfapp.core.Booking;
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
+import golfapp.gui.cell.CourseCell;
+import golfapp.gui.cell.LocalDateCell;
+import golfapp.gui.cell.LocalTimeCell;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
@@ -20,9 +22,9 @@ public class BookingController {
   private final Map<Course, BookingSystem> bookingSystems;
 
   @FXML
-  ChoiceBox<LocalDate> dateChoiceBox;
+  ComboBox<LocalDate> dateComboBox;
   @FXML
-  ChoiceBox<Course> courseChoiceBox;
+  ComboBox<Course> courseComboBox;
   @FXML
   Button showAvailableTimes;
   @FXML
@@ -64,6 +66,13 @@ public class BookingController {
 
   @FXML
   void initialize() {
+    dateComboBox.setCellFactory(l -> new LocalDateCell());
+    dateComboBox.setButtonCell(new LocalDateCell());
+    courseComboBox.setCellFactory(l -> new CourseCell());
+    courseComboBox.setButtonCell(new CourseCell());
+    availableTimesComboBox.setCellFactory(l -> new LocalTimeCell());
+    availableTimesComboBox.setButtonCell(new LocalTimeCell());
+
     showBooking(false);
     confirmedBookingLabel.setVisible(false);
     showCourse();
@@ -72,30 +81,30 @@ public class BookingController {
 
   @FXML
   void showDate() {
-    var dateChoiceBoxItems = dateChoiceBox.getItems();
+    var dateChoiceBoxItems = dateComboBox.getItems();
     bookingSystems.values().stream().flatMap(BookingSystem::getAvailableDates).distinct()
         .forEach(dateChoiceBoxItems::add);
-    dateChoiceBox.setItems(dateChoiceBoxItems);
-    dateChoiceBox.getSelectionModel().selectFirst();
+    dateComboBox.setItems(dateChoiceBoxItems);
+    dateComboBox.getSelectionModel().selectFirst();
   }
 
   @FXML
   void showCourse() {
-    courseChoiceBox.getItems().addAll(bookingSystems.keySet());
+    courseComboBox.getItems().addAll(bookingSystems.keySet());
   }
 
   @FXML
   void showAvailableTimes() {
     availableTimesComboBox.getItems().clear();
     confirmedBookingLabel.setVisible(false);
-    if (courseChoiceBox.getValue() == null) {
+    if (courseComboBox.getValue() == null) {
       outputLabel.setText("You must choose a course to see available times.");
     } else {
       availableTimesComboBox.setValue(null);
       yourTimeText.setText("");
 
-      Course selectedCourse = courseChoiceBox.getValue();
-      LocalDate selectedDate = dateChoiceBox.getValue();
+      Course selectedCourse = courseComboBox.getValue();
+      LocalDate selectedDate = dateComboBox.getValue();
       var availableTimesComboBoxItems = availableTimesComboBox.getItems();
 
       bookingSystems.get(selectedCourse).getAvailableTimes(selectedDate)
@@ -105,9 +114,9 @@ public class BookingController {
       outputLabel.setText("Choose an available time");
       showBooking(true);
 
-      yourCourseText.setText(courseChoiceBox.getValue().getName());
-      yourDateText.setText(dateChoiceBox.getValue().format(DateTimeFormatter.ISO_DATE));
-      dateChoiceBox.getValue();
+      yourCourseText.setText(courseComboBox.getValue().getName());
+      yourDateText.setText(dateComboBox.getValue().format(DateTimeFormatter.ISO_DATE));
+      dateComboBox.getValue();
       yourMailText.setText(appManager.getUser().getEmail());
       availableTimesComboBox.getSelectionModel().selectedItemProperty()
           .addListener((availableTimesComboBox,
@@ -116,7 +125,7 @@ public class BookingController {
               yourTimeText.setText("");
             } else {
               yourTimeText
-                  .setText(newValue.format(DateTimeFormatter.ISO_TIME));
+                  .setText(newValue.format(DateTimeFormatter.ofPattern("HH:mm")));
             }
           });
     }
@@ -137,8 +146,8 @@ public class BookingController {
     } else {
       confirmedBookingLabel.setText("Booking confirmed");
 
-      Course selectedCourse = courseChoiceBox.getValue();
-      LocalDateTime bookingTime = dateChoiceBox.getValue()
+      Course selectedCourse = courseComboBox.getValue();
+      LocalDateTime bookingTime = dateComboBox.getValue()
           .atTime(availableTimesComboBox.getValue());
 
       var bookingSystem = bookingSystems.get(selectedCourse);
