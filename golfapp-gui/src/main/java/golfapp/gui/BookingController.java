@@ -11,6 +11,7 @@ import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 public class BookingController {
@@ -27,7 +28,7 @@ public class BookingController {
   @FXML
   Label outputLabel;
   @FXML
-  ChoiceBox<LocalTime> availableTimesChoiceBox;
+  ComboBox<LocalTime> availableTimesComboBox;
   @FXML
   Label yourBooking;
   @FXML
@@ -85,21 +86,21 @@ public class BookingController {
 
   @FXML
   void showAvailableTimes() {
-    availableTimesChoiceBox.getItems().clear();
+    availableTimesComboBox.getItems().clear();
     confirmedBookingLabel.setVisible(false);
     if (courseChoiceBox.getValue() == null) {
       outputLabel.setText("You must choose a course to see available times.");
     } else {
-      availableTimesChoiceBox.setValue(null);
+      availableTimesComboBox.setValue(null);
       yourTimeText.setText("");
 
       Course selectedCourse = courseChoiceBox.getValue();
       LocalDate selectedDate = dateChoiceBox.getValue();
-      var availableTimesChoiceBoxItems = availableTimesChoiceBox.getItems();
+      var availableTimesComboBoxItems = availableTimesComboBox.getItems();
 
       bookingSystems.get(selectedCourse).getAvailableTimes(selectedDate)
           .map(LocalDateTime::toLocalTime)
-          .forEach(availableTimesChoiceBoxItems::add);
+          .forEach(availableTimesComboBoxItems::add);
 
       outputLabel.setText("Choose an available time");
       showBooking(true);
@@ -108,17 +109,22 @@ public class BookingController {
       yourDateText.setText(dateChoiceBox.getValue().format(DateTimeFormatter.ISO_DATE));
       dateChoiceBox.getValue();
       yourMailText.setText(appManager.getUser().getEmail());
-
-      availableTimesChoiceBox.getSelectionModel().selectedItemProperty()
-          .addListener((availableTimesChoiceBox,
-              oldValue, newValue) -> yourTimeText
-              .setText(newValue.format(DateTimeFormatter.ISO_TIME)));
+      availableTimesComboBox.getSelectionModel().selectedItemProperty()
+          .addListener((availableTimesComboBox,
+              oldValue, newValue) -> {
+            if (newValue == null) {
+              yourTimeText.setText("");
+            } else {
+              yourTimeText
+                  .setText(newValue.format(DateTimeFormatter.ISO_TIME));
+            }
+          });
     }
   }
 
   @FXML
   void cleanBooking() {
-    availableTimesChoiceBox.setValue(null);
+    availableTimesComboBox.setValue(null);
     yourTimeText.setText("");
   }
 
@@ -126,14 +132,14 @@ public class BookingController {
   void confirmBooking() {
     confirmedBookingLabel.setVisible(true);
     confirmedBookingLabel.setText("");
-    if (availableTimesChoiceBox.getValue() == null) {
+    if (availableTimesComboBox.getValue() == null) {
       confirmedBookingLabel.setText("Your chosen time was not valid.");
     } else {
       confirmedBookingLabel.setText("Booking confirmed");
 
       Course selectedCourse = courseChoiceBox.getValue();
       LocalDateTime bookingTime = dateChoiceBox.getValue()
-          .atTime(availableTimesChoiceBox.getValue());
+          .atTime(availableTimesComboBox.getValue());
 
       var bookingSystem = bookingSystems.get(selectedCourse);
       bookingSystem.addBooking(new Booking(appManager.getUser(), bookingTime));
@@ -146,7 +152,7 @@ public class BookingController {
 
   @FXML
   void showBooking(Boolean b) {
-    availableTimesChoiceBox.setVisible(b);
+    availableTimesComboBox.setVisible(b);
     yourBooking.setVisible(b);
     confirmBooking.setVisible(b);
     yourCourseLabel.setVisible(b);

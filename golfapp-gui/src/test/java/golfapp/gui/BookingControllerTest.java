@@ -75,12 +75,12 @@ public class BookingControllerTest {
   @Test
   void when_showAvailableTimes_isClicked(FxRobot robot) {
     robot.clickOn("#showAvailableTimes");
-    assertFalse(bookingController.availableTimesChoiceBox.isVisible());
+    assertFalse(bookingController.availableTimesComboBox.isVisible());
     robot.clickOn("#courseChoiceBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
-    assertTrue(bookingController.availableTimesChoiceBox.isVisible());
+    assertTrue(bookingController.availableTimesComboBox.isVisible());
   }
 
   @Test
@@ -89,7 +89,7 @@ public class BookingControllerTest {
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
-    assertNull(bookingController.availableTimesChoiceBox.getValue());
+    assertNull(bookingController.availableTimesComboBox.getValue());
     robot.clickOn("#confirmBooking");
     assertEquals("Your chosen time was not valid.",
         bookingController.confirmedBookingLabel.getText());
@@ -101,9 +101,9 @@ public class BookingControllerTest {
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
-    assertNull(bookingController.availableTimesChoiceBox.getValue());
-    robot.clickOn("#availableTimesChoiceBox").clickOn("09:00");
-    assertEquals(LocalTime.of(9, 0), bookingController.availableTimesChoiceBox.getValue());
+    assertNull(bookingController.availableTimesComboBox.getValue());
+    robot.clickOn("#availableTimesComboBox").clickOn("09:00");
+    assertEquals(LocalTime.of(9, 0), bookingController.availableTimesComboBox.getValue());
   }
 
   @Test
@@ -112,14 +112,14 @@ public class BookingControllerTest {
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
-    robot.clickOn("#availableTimesChoiceBox").clickOn("08:45");
+    robot.clickOn("#availableTimesComboBox").clickOn("08:45");
     robot.clickOn("#confirmBooking");
     assertEquals("Booking confirmed", bookingController.confirmedBookingLabel.getText());
   }
 
   @Test
   void test_cleanBooking() {
-    assertNull(bookingController.availableTimesChoiceBox.getValue());
+    assertNull(bookingController.availableTimesComboBox.getValue());
     assertEquals("", bookingController.yourTimeText.getText());
 
   }
