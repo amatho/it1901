@@ -66,7 +66,7 @@ public class User {
     if (matcher.find()) {
       this.email = email;
     } else {
-      throw new IllegalArgumentException("Invalid e-mail input");
+      throw new IllegalArgumentException("Invalid e-mail input: " + this.email);
     }
   }
 
