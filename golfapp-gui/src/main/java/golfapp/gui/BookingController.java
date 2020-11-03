@@ -6,6 +6,7 @@ import golfapp.core.Course;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -103,14 +104,15 @@ public class BookingController {
       outputLabel.setText("Choose an available time");
       showBooking(true);
 
-      yourCourseText.setText(courseChoiceBox.getValue().toString());
-      yourDateText.setText(String.valueOf(dateChoiceBox.getValue()));
+      yourCourseText.setText(courseChoiceBox.getValue().getName());
+      yourDateText.setText(dateChoiceBox.getValue().format(DateTimeFormatter.ISO_DATE));
       dateChoiceBox.getValue();
       yourMailText.setText(appManager.getUser().getEmail());
 
       availableTimesChoiceBox.getSelectionModel().selectedItemProperty()
           .addListener((availableTimesChoiceBox,
-              oldValue, newValue) -> yourTimeText.setText(String.valueOf(newValue)));
+              oldValue, newValue) -> yourTimeText
+              .setText(newValue.format(DateTimeFormatter.ISO_TIME)));
     }
   }
 
@@ -156,13 +158,5 @@ public class BookingController {
     yourMailText.setVisible(b);
     yourTimeText.setVisible(b);
   }
-  /*@FXML
-  void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("Booking.fxml"));
-    Scene courseScene = new Scene(courseParent);
-    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
-    window.show();
-  }
-   */
+
 }
