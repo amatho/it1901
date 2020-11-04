@@ -1,8 +1,5 @@
 package golfapp.gui;
 
-import golfapp.core.User;
-import golfapp.data.FileGolfAppModelDao;
-import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
 import java.util.function.Function;
 import javafx.fxml.FXML;
@@ -11,10 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
-public class AppController implements AppManager {
+public class AppController implements ViewChangeRequestListener {
 
-  private final GolfAppModelDao modelDao;
-  private final User user;
+  private final AppManager appManager;
 
   @FXML
   BorderPane borderPane;
@@ -26,37 +22,34 @@ public class AppController implements AppManager {
   Button userButton;
 
   /**
-   * Create an {@code AppController} for a logged in user.
+   * Create an {@code AppController}.
    *
-   * @param user the logged in user
+   * @param appManager the app manager
    */
-  public AppController(User user) {
-    this(new FileGolfAppModelDao(), user);
-  }
-
-  public AppController(GolfAppModelDao modelDao, User user) {
-    this.modelDao = modelDao;
-    this.user = user;
+  public AppController(AppManager appManager) {
+    this.appManager = appManager;
+    appManager.addViewChangeRequestListener(this);
   }
 
   @FXML
   void initialize() {
-    bookingButton.setOnMouseClicked(e -> loadView("Booking.fxml", BookingController::new));
+    bookingButton
+        .setOnMouseClicked(e -> appManager.loadView("Booking.fxml", BookingController::new));
 
-    createScorecardButton
-        .setOnMouseClicked(e -> loadView("CreateScorecard.fxml", CreateScorecardController::new));
+    createScorecardButton.setOnMouseClicked(
+        e -> appManager.loadView("CreateScorecard.fxml", CreateScorecardController::new));
 
-    userButton.setOnMouseClicked(e -> loadView("User.fxml", UserController::new));
+    userButton.setOnMouseClicked(e -> appManager.loadView("User.fxml", UserController::new));
 
-    loadView("User.fxml", UserController::new);
+    appManager.loadView("User.fxml", UserController::new);
   }
 
   @Override
-  public void loadView(String fxmlName, Function<AppManager, Object> controllerFactory) {
+  public void viewChangeRequested(String fxmlName, Function<AppManager, Object> controllerFactory) {
     var loader = new FXMLLoader(getClass().getResource(fxmlName));
 
     if (controllerFactory != null) {
-      loader.setControllerFactory(c -> controllerFactory.apply(this));
+      loader.setControllerFactory(c -> controllerFactory.apply(appManager));
     }
 
     Parent parent;
@@ -67,15 +60,5 @@ public class AppController implements AppManager {
     }
 
     borderPane.setCenter(parent);
-  }
-
-  @Override
-  public User getUser() {
-    return user;
-  }
-
-  @Override
-  public GolfAppModelDao getModelDao() {
-    return modelDao;
   }
 }

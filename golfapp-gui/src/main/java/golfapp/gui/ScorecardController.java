@@ -1,6 +1,7 @@
 package golfapp.gui;
 
 import golfapp.core.Course;
+import golfapp.core.GuestUser;
 import golfapp.core.Hole;
 import golfapp.core.Scorecard;
 import golfapp.core.User;
@@ -41,8 +42,8 @@ public class ScorecardController {
    * Create a new ScorecardController.
    *
    * @param appManager the app manager
-   * @param users  the list of users
-   * @param course the course to implement in the scorecard attribute
+   * @param users      the list of users
+   * @param course     the course to implement in the scorecard attribute
    */
   public ScorecardController(AppManager appManager, ObservableList<User> users, Course course) {
     this.appManager = appManager;
@@ -99,6 +100,10 @@ public class ScorecardController {
   void handleFinishScorecard() {
     updateScores(holes.getCurrentPageIndex());
     for (User u : users) {
+      if (u instanceof GuestUser) {
+        continue;
+      }
+
       u.addScorecard(scorecard);
       appManager.getModelDao().updateUser(u);
     }

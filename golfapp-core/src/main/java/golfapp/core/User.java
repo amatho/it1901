@@ -48,7 +48,7 @@ public class User {
    */
   private User() {
     id = null;
-    scorecardHistory = null;
+    scorecardHistory = new HashSet<>();
   }
 
   public UUID getId() {

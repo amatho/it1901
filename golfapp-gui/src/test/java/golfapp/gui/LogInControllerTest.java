@@ -36,6 +36,8 @@ public class LogInControllerTest {
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
+    loader.setControllerFactory(
+        c -> new LogInController(new AppManager(new InMemoryGolfAppModelDao())));
     final Parent root = loader.load();
     controller = loader.getController();
     final var scene = new Scene(root);
