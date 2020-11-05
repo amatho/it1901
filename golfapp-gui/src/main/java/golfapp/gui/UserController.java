@@ -146,10 +146,9 @@ public class UserController {
 
   @FXML
   void handleViewSelectedScorecardButton() {
-    // TODO: Implement ScorecardView.fxml
-    appManager.loadView("ScorecardView.fxml", a -> {
-      throw new IllegalStateException("Not implemented");
-    });
+    appManager.loadView("ScorecardView.fxml",
+        a -> new ScorecardViewController(a, scorecardTableView.getSelectionModel()
+            .getSelectedItem()));
   }
 
   @FXML

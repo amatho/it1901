@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.BookingController">
    <children>
       <Label layoutX="266.0" layoutY="14.0" prefHeight="36.0" prefWidth="198.0" text="Booking">
@@ -59,22 +60,22 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourCourseText" layoutX="476.0" layoutY="198.0" prefHeight="25.0" prefWidth="141.0">
+      <Label fx:id="yourCourseText" layoutX="483.0" layoutY="198.0" prefHeight="25.0" prefWidth="141.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourDateText" layoutX="476.0" layoutY="236.0" prefHeight="25.0" prefWidth="141.0">
+      <Label fx:id="yourDateText" layoutX="483.0" layoutY="236.0" prefHeight="25.0" prefWidth="141.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourTimeText" layoutX="476.0" layoutY="273.0" prefHeight="25.0" prefWidth="141.0">
+      <Label fx:id="yourTimeText" layoutX="483.0" layoutY="273.0" prefHeight="25.0" prefWidth="141.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourMailText" layoutX="476.0" layoutY="312.0" prefHeight="25.0" prefWidth="209.0">
+      <Label fx:id="yourMailText" layoutX="483.0" layoutY="312.0" prefHeight="25.0" prefWidth="209.0">
          <font>
             <Font size="14.0" />
          </font>
