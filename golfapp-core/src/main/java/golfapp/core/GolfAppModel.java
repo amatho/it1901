@@ -2,6 +2,7 @@ package golfapp.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import golfapp.data.BookingSystemsListConverter;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -121,8 +123,8 @@ public class GolfAppModel {
 
     Set<Course> courses;
     try {
-      courses = new HashSet<>(
-          CustomObjectMapper.SINGLETON.readerFor(Course.class).<Course>readValues(json).readAll());
+      courses = CustomObjectMapper.SINGLETON.readValue(json, new TypeReference<>() {
+      });
     } catch (Exception e) {
       throw new IllegalStateException("Could not read default courses", e);
     }
@@ -131,5 +133,21 @@ public class GolfAppModel {
     courses.forEach(c -> bookingSystems.put(c, new BookingSystem()));
 
     return new GolfAppModel(new HashSet<>(), courses, bookingSystems);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof GolfAppModel) {
+      var other = (GolfAppModel) o;
+      return users.equals(other.users) && courses.equals(other.courses) && bookingSystems
+          .equals(other.bookingSystems);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(users, courses, bookingSystems);
   }
 }

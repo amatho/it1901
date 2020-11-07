@@ -3,6 +3,7 @@ package golfapp.data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
 import golfapp.core.GolfAppModel;
@@ -19,9 +20,9 @@ import java.net.http.HttpResponse.BodyHandler;
 import java.net.http.HttpResponse.BodySubscribers;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 public class RemoteGolfAppModelDao implements GolfAppModelDao {
 
@@ -58,88 +59,63 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
 
   @Override
   public GolfAppModel getModel() {
-    return get("", j -> {
-      try {
-        return mapper.readValue(j, GolfAppModel.class);
-      } catch (JsonProcessingException e) {
-        throw new UncheckedIOException("Could not read model JSON", e);
-      }
-    }).body();
+    return this.<GolfAppModel>get("", mapper.readerFor(GolfAppModel.class)).body();
   }
 
   @Override
   public Set<User> getUsers() {
-    return get("users", j -> {
-      try {
-        return new HashSet<>(mapper.readerFor(User.class).<User>readValues(j).readAll());
-      } catch (IOException e) {
-        throw new UncheckedIOException("Could not read users JSON", e);
-      }
-    }).body();
+    return new HashSet<>(this.<List<User>>get("users", mapper.readerForListOf(User.class)).body());
   }
 
   @Override
   public void addUser(User u) {
-    put("users", u, j -> j);
+    put("users", u, mapper.reader());
   }
 
   @Override
   public boolean updateUser(User u) {
-    return post("users/" + uriEncode(u.getId().toString()), u, j -> {
-      try {
-        return mapper.readValue(j, Boolean.class);
-      } catch (JsonProcessingException e) {
-        throw new UncheckedIOException("Could not read update user JSON", e);
-      }
-    }).body();
+    return this.<Boolean, User>post("users/" + uriEncode(u.getId().toString()), u,
+        mapper.readerFor(Boolean.class)).body();
   }
 
   @Override
   public void deleteUser(User u) {
-    delete("users/" + uriEncode(u.getId().toString()), j -> j);
+    delete("users/" + uriEncode(u.getId().toString()), mapper.reader());
   }
 
   @Override
   public Set<Course> getCourses() {
-    return get("courses", j -> {
-      try {
-        return new HashSet<>(mapper.readerFor(Course.class).<Course>readValues(j).readAll());
-      } catch (IOException e) {
-        throw new UncheckedIOException("Could not read courses JSON", e);
-      }
-    }).body();
+    return new HashSet<>(
+        this.<List<Course>>get("courses", mapper.readerForListOf(Course.class)).body());
   }
 
   @Override
   public Map<Course, BookingSystem> getBookingSystems() {
     var converter = new BookingSystemsMapConverter();
-
-    return get("bookingsystems", j -> {
-      try {
-        var entries = mapper.readerFor(new TypeReference<MapEntry<Course, BookingSystem>>() {
-        }).<MapEntry<Course, BookingSystem>>readValues(j).readAll();
-        return converter.convert(entries);
-      } catch (IOException e) {
-        throw new UncheckedIOException("Could not read booking systems JSON", e);
-      }
-    }).body();
+    var bookingSystemList = this.<List<MapEntry<Course, BookingSystem>>>get("bookingsystems",
+        mapper.readerFor(new TypeReference<List<MapEntry<Course, BookingSystem>>>() {
+        }))
+        .body();
+    return converter.convert(bookingSystemList);
   }
 
   @Override
   public void updateBookingSystem(Course c, BookingSystem b) {
-    post("bookingsystems/" + uriEncode(c.getId().toString()), b, j -> j);
+    post("bookingsystems/" + uriEncode(c.getId().toString()), b,
+        mapper.readerFor(Boolean.class));
   }
 
-  private <T> HttpResponse<T> get(String path, Function<String, T> jsonCallback) {
+  private <R> HttpResponse<R> get(String path, ObjectReader objectReader) {
     var request = HttpRequest.newBuilder(endpoint.resolve(path))
         .header("Accept", "application/json")
         .GET()
         .build();
-    return sendRequest(request, jsonCallback);
+    return sendRequest(request, objectReader);
   }
 
-  private <T, U> HttpResponse<T> put(String path, U body, Function<String, T> jsonCallback) {
-    HttpRequest request = null;
+  private <ResponseT, BodyT> HttpResponse<ResponseT> put(String path, BodyT body,
+      ObjectReader objectReader) {
+    HttpRequest request;
     try {
       request = HttpRequest.newBuilder(endpoint.resolve(path))
           .header("Accept", "application/json")
@@ -150,10 +126,11 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
       throw new UncheckedIOException("Could not write value as JSON", e);
     }
 
-    return sendRequest(request, jsonCallback);
+    return sendRequest(request, objectReader);
   }
 
-  private <T, U> HttpResponse<T> post(String path, U body, Function<String, T> jsonCallback) {
+  private <ResponseT, BodyT> HttpResponse<ResponseT> post(String path, BodyT body,
+      ObjectReader objectReader) {
     HttpRequest request;
     try {
       request = HttpRequest.newBuilder(endpoint.resolve(path))
@@ -165,30 +142,39 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
       throw new UncheckedIOException("Could not write value as JSON", e);
     }
 
-    return sendRequest(request, jsonCallback);
+    return sendRequest(request, objectReader);
   }
 
-  private <T> HttpResponse<T> delete(String path, Function<String, T> jsonCallback) {
+  private <R> HttpResponse<R> delete(String path, ObjectReader objectReader) {
     var request = HttpRequest.newBuilder(endpoint.resolve(path))
         .header("Accept", "application/json")
         .DELETE()
         .build();
-    return sendRequest(request, jsonCallback);
+    return sendRequest(request, objectReader);
   }
 
-  private <T> HttpResponse<T> sendRequest(HttpRequest request, Function<String, T> jsonCallback) {
+  private <R> HttpResponse<R> sendRequest(HttpRequest request, ObjectReader objectReader) {
     try {
-      return client.send(request, createBodyHandler(jsonCallback));
+      return client.send(request, createBodyHandler(objectReader));
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException("HTTP Request failed (URI: " + request.uri() + ")", e);
     }
   }
 
-  private <T> BodyHandler<T> createBodyHandler(Function<String, T> jsonCallback) {
+  private <T> BodyHandler<T> createBodyHandler(ObjectReader objectReader) {
     return responseInfo -> {
       if (responseInfo.statusCode() < 300 && responseInfo.statusCode() >= 200) {
         return BodySubscribers
-            .mapping(BodySubscribers.ofString(StandardCharsets.UTF_8), jsonCallback);
+            .mapping(BodySubscribers.ofString(StandardCharsets.UTF_8), json -> {
+              if (json.isBlank()) {
+                return null;
+              }
+              try {
+                return objectReader.readValue(json);
+              } catch (JsonProcessingException e) {
+                throw new RuntimeException("Could not read JSON from body", e);
+              }
+            });
       }
 
       throw new RuntimeException("Received HTTP error: " + responseInfo.statusCode());

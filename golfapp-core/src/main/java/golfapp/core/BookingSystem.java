@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -159,5 +160,20 @@ public class BookingSystem {
    */
   public Stream<LocalDateTime> getBookedTimes(LocalDate date) {
     return getAllBookedTimes().filter(dateTime -> dateTime.toLocalDate().equals(date));
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof BookingSystem) {
+      var other = (BookingSystem) o;
+      return availableTimes.equals(other.availableTimes) && bookings.equals(other.bookings);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(availableTimes, bookings);
   }
 }
