@@ -10,13 +10,13 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 
-public class FileGolfAppModelDao implements GolfAppModelDao {
+public class LocalGolfAppModelDao implements GolfAppModelDao {
 
   private static final Path dataFolder = getLocalUserDataFolder();
   private static final Path dataPath = dataFolder.resolve("golf-app-model.json");
   private final FilesWrapper files;
 
-  public FileGolfAppModelDao() {
+  public LocalGolfAppModelDao() {
     this(new FilesWrapper());
   }
 
@@ -25,7 +25,7 @@ public class FileGolfAppModelDao implements GolfAppModelDao {
    *
    * @param files the files wrapper
    */
-  public FileGolfAppModelDao(FilesWrapper files) {
+  public LocalGolfAppModelDao(FilesWrapper files) {
     this.files = files;
 
     createDataDir();
