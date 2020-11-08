@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-abstract class AbstractControllerTest<T> {
+public abstract class AbstractControllerTest<T> {
 
   protected T controller;
 
