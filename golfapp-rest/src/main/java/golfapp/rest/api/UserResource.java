@@ -37,6 +37,13 @@ public class UserResource {
     return Response.ok().build();
   }
 
+  /**
+   * Update a user.
+   *
+   * @param user the updated user
+   * @param id   ID of the user to update
+   * @return HTTP response
+   */
   @Path("{id}")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -52,6 +59,12 @@ public class UserResource {
     return Response.ok(wasUpdated).build();
   }
 
+  /**
+   * Delete a user.
+   *
+   * @param id ID of the user to delete
+   * @return HTTP response
+   */
   @Path("{id}")
   @DELETE
   public Response deleteUser(@PathParam("id") UUID id) {

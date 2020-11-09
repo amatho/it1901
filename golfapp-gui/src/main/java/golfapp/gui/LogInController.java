@@ -1,8 +1,6 @@
 package golfapp.gui;
 
 import golfapp.core.User;
-import golfapp.data.FileGolfAppModelDao;
-import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +15,7 @@ import javafx.stage.Stage;
 
 public class LogInController {
 
-  private final GolfAppModelDao modelDao;
+  private final AppManager appManager;
   private boolean newUserIsActive;
 
   @FXML
@@ -34,11 +32,11 @@ public class LogInController {
   Button newUser;
 
   public LogInController() {
-    this(new FileGolfAppModelDao());
+    this(new AppManager());
   }
 
-  public LogInController(GolfAppModelDao modelDao) {
-    this.modelDao = modelDao;
+  public LogInController(AppManager appManager) {
+    this.appManager = appManager;
   }
 
   @FXML
@@ -99,9 +97,9 @@ public class LogInController {
         status.setText("Please insert a valid email!");
         return;
       }
-      modelDao.addUser(user);
+      appManager.getModelDao().addUser(user);
     } else {
-      var result = modelDao.getUsers().stream()
+      var result = appManager.getModelDao().getUsers().stream()
           .filter(u -> u.getEmail().equalsIgnoreCase(email.getText())).findAny();
 
       if (result.isEmpty()) {
@@ -112,8 +110,10 @@ public class LogInController {
       user = result.orElseThrow();
     }
 
+    appManager.setUser(user);
+
     FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
-    loader.setControllerFactory(c -> new AppController(user));
+    loader.setControllerFactory(c -> new AppController(appManager));
     Parent parent = loader.load();
     Scene scene = new Scene(parent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

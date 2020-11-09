@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 
 public class UserController {
 
-  private static final class BookingTableEntry {
+  public static final class BookingTableEntry {
 
     private Course course;
     private Booking booking;
@@ -146,10 +146,9 @@ public class UserController {
 
   @FXML
   void handleViewSelectedScorecardButton() {
-    // TODO: Implement ScorecardView.fxml
-    appManager.loadView("ScorecardView.fxml", a -> {
-      throw new IllegalStateException("Not implemented");
-    });
+    appManager.loadView("ScorecardView.fxml",
+        a -> new ScorecardViewController(a, scorecardTableView.getSelectionModel()
+            .getSelectedItem()));
   }
 
   @FXML
