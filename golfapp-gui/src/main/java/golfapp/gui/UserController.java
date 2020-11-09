@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 
 public class UserController {
 
-  private static final class BookingTableEntry {
+  public static final class BookingTableEntry {
 
     private Course course;
     private Booking booking;

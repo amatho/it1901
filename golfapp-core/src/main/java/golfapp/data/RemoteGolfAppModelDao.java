@@ -30,6 +30,11 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
   private final HttpClient client;
   private final ObjectMapper mapper;
 
+  /**
+   * Create a {@link GolfAppModelDao} which uses a REST API.
+   *
+   * @param endpoint the endpoint of the REST API
+   */
   public RemoteGolfAppModelDao(URI endpoint) {
     this.endpoint = endpoint;
     client = HttpClient.newHttpClient();
