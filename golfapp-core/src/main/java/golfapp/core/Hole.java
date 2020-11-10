@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
+/**
+ * A single hole in a golf course.
+ */
 public class Hole {
 
   private double length;
@@ -11,7 +14,7 @@ public class Hole {
   private double height;
 
   /**
-   * Create a new Hole.
+   * Create a new hole.
    *
    * @param length the length to the hole
    * @param par    the par of the hole
@@ -23,7 +26,14 @@ public class Hole {
     this.height = height;
   }
 
-  // Creator for Jackson
+  /**
+   * Create a new hole. Meant as a creator for Jackson.
+   *
+   * @param length the length to the hole
+   * @param par    the par of the hole
+   * @param height the hole's height
+   * @return a new hole
+   */
   @JsonCreator
   public static Hole createHole(@JsonProperty("length") double length, @JsonProperty("par") int par,
       @JsonProperty("height") double height) {
