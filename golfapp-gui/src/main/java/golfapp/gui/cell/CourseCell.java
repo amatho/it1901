@@ -9,6 +9,7 @@ public class CourseCell extends ListCell<Course> {
   protected void updateItem(Course course, boolean empty) {
     super.updateItem(course, empty);
 
-    setText(course == null || empty ? "" : course.getName());
+    setText(course == null || empty ? ""
+        : course.getName() + " (" + course.getCourseLength() + "-holes)");
   }
 }

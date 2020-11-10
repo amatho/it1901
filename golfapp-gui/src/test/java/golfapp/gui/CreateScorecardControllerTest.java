@@ -152,7 +152,7 @@ public class CreateScorecardControllerTest extends
   @Test
   void updateCreateButton(FxRobot robot) {
     Assertions.assertTrue(controller.createButton.isDisable());
-    robot.clickOn("#courseComboBox").clickOn("Alta GK");
+    robot.clickOn("#courseComboBox").clickOn("Alta GK (5-holes)");
     Assertions.assertFalse(controller.createButton.isDisable());
     robot.clickOn((Node) robot.lookup("#tableView .table-row-cell").nth(0).query());
     robot.clickOn("#deleteButton");
