@@ -80,7 +80,7 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
     assertNull(controller.availableTimesComboBox.getValue());
-    robot.clickOn("#availableTimesComboeBox").clickOn("09:00");
+    robot.clickOn("#availableTimesComboBox").clickOn("09:00");
     assertEquals(LocalTime.of(9, 0), controller.availableTimesComboBox.getValue());
   }
 
