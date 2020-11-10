@@ -3,13 +3,17 @@ package golfapp.gui;
 import golfapp.core.Booking;
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
+import golfapp.gui.cell.CourseCell;
+import golfapp.gui.cell.LocalDateCell;
+import golfapp.gui.cell.LocalTimeCell;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 public class BookingController {
@@ -18,15 +22,15 @@ public class BookingController {
   private final Map<Course, BookingSystem> bookingSystems;
 
   @FXML
-  ChoiceBox<LocalDate> dateChoiceBox;
+  ComboBox<LocalDate> dateComboBox;
   @FXML
-  ChoiceBox<Course> courseChoiceBox;
+  ComboBox<Course> courseComboBox;
   @FXML
   Button showAvailableTimes;
   @FXML
   Label outputLabel;
   @FXML
-  ChoiceBox<LocalTime> availableTimesChoiceBox;
+  ComboBox<LocalTime> availableTimesComboBox;
   @FXML
   Label yourBooking;
   @FXML
@@ -62,6 +66,13 @@ public class BookingController {
 
   @FXML
   void initialize() {
+    dateComboBox.setCellFactory(l -> new LocalDateCell());
+    dateComboBox.setButtonCell(new LocalDateCell());
+    courseComboBox.setCellFactory(l -> new CourseCell());
+    courseComboBox.setButtonCell(new CourseCell());
+    availableTimesComboBox.setCellFactory(l -> new LocalTimeCell());
+    availableTimesComboBox.setButtonCell(new LocalTimeCell());
+
     showBooking(false);
     confirmedBookingLabel.setVisible(false);
     showCourse();
@@ -70,53 +81,59 @@ public class BookingController {
 
   @FXML
   void showDate() {
-    var dateChoiceBoxItems = dateChoiceBox.getItems();
+    var dateChoiceBoxItems = dateComboBox.getItems();
     bookingSystems.values().stream().flatMap(BookingSystem::getAvailableDates).distinct()
         .forEach(dateChoiceBoxItems::add);
-    dateChoiceBox.setItems(dateChoiceBoxItems);
-    dateChoiceBox.getSelectionModel().selectFirst();
+    dateComboBox.setItems(dateChoiceBoxItems);
+    dateComboBox.getSelectionModel().selectFirst();
   }
 
   @FXML
   void showCourse() {
-    courseChoiceBox.getItems().addAll(bookingSystems.keySet());
+    courseComboBox.getItems().addAll(bookingSystems.keySet());
   }
 
   @FXML
   void showAvailableTimes() {
-    availableTimesChoiceBox.getItems().clear();
+    availableTimesComboBox.getItems().clear();
     confirmedBookingLabel.setVisible(false);
-    if (courseChoiceBox.getValue() == null) {
+    if (courseComboBox.getValue() == null) {
       outputLabel.setText("You must choose a course to see available times.");
     } else {
-      availableTimesChoiceBox.setValue(null);
+      availableTimesComboBox.setValue(null);
       yourTimeText.setText("");
 
-      Course selectedCourse = courseChoiceBox.getValue();
-      LocalDate selectedDate = dateChoiceBox.getValue();
-      var availableTimesChoiceBoxItems = availableTimesChoiceBox.getItems();
+      Course selectedCourse = courseComboBox.getValue();
+      LocalDate selectedDate = dateComboBox.getValue();
+      var availableTimesComboBoxItems = availableTimesComboBox.getItems();
 
       bookingSystems.get(selectedCourse).getAvailableTimes(selectedDate)
           .map(LocalDateTime::toLocalTime)
-          .forEach(availableTimesChoiceBoxItems::add);
+          .forEach(availableTimesComboBoxItems::add);
 
       outputLabel.setText("Choose an available time");
       showBooking(true);
 
-      yourCourseText.setText(courseChoiceBox.getValue().toString());
-      yourDateText.setText(String.valueOf(dateChoiceBox.getValue()));
-      dateChoiceBox.getValue();
+      yourCourseText.setText(courseComboBox.getValue().getName());
+      yourDateText.setText(dateComboBox.getValue().format(DateTimeFormatter.ISO_DATE));
+      dateComboBox.getValue();
       yourMailText.setText(appManager.getUser().getEmail());
-
-      availableTimesChoiceBox.getSelectionModel().selectedItemProperty()
-          .addListener((availableTimesChoiceBox,
-              oldValue, newValue) -> yourTimeText.setText(String.valueOf(newValue)));
+      availableTimesComboBox.getSelectionModel().selectedItemProperty()
+          .addListener((availableTimesComboBox,
+              oldValue, newValue) -> {
+            if (newValue == null) {
+              yourTimeText.setText("");
+            } else {
+              yourTimeText
+                  .setText(newValue.format(DateTimeFormatter.ofPattern("HH:mm")));
+            }
+          });
     }
   }
 
   @FXML
   void cleanBooking() {
-    availableTimesChoiceBox.setValue(null);
+    availableTimesComboBox.setValue(null);
     yourTimeText.setText("");
   }
 
@@ -124,14 +141,14 @@ public class BookingController {
   void confirmBooking() {
     confirmedBookingLabel.setVisible(true);
     confirmedBookingLabel.setText("");
-    if (availableTimesChoiceBox.getValue() == null) {
+    if (availableTimesComboBox.getValue() == null) {
       confirmedBookingLabel.setText("Your chosen time was not valid.");
     } else {
       confirmedBookingLabel.setText("Booking confirmed");
 
-      Course selectedCourse = courseChoiceBox.getValue();
-      LocalDateTime bookingTime = dateChoiceBox.getValue()
-          .atTime(availableTimesChoiceBox.getValue());
+      Course selectedCourse = courseComboBox.getValue();
+      LocalDateTime bookingTime = dateComboBox.getValue()
+          .atTime(availableTimesComboBox.getValue());
 
       var bookingSystem = bookingSystems.get(selectedCourse);
       bookingSystem.addBooking(new Booking(appManager.getUser(), bookingTime));
@@ -144,7 +161,7 @@ public class BookingController {
 
   @FXML
   void showBooking(Boolean b) {
-    availableTimesChoiceBox.setVisible(b);
+    availableTimesComboBox.setVisible(b);
     yourBooking.setVisible(b);
     confirmBooking.setVisible(b);
     yourCourseLabel.setVisible(b);
@@ -156,13 +173,5 @@ public class BookingController {
     yourMailText.setVisible(b);
     yourTimeText.setVisible(b);
   }
-  /*@FXML
-  void changeSceneButtonPushed(ActionEvent event) throws IOException {
-    Parent courseParent = FXMLLoader.load(getClass().getResource("Booking.fxml"));
-    Scene courseScene = new Scene(courseParent);
-    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(courseScene);
-    window.show();
-  }
-   */
+
 }

@@ -7,7 +7,6 @@ import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -76,7 +75,8 @@ public class UserController {
     scorecardCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getName()));
     scorecardTimeColumn
-        .setCellValueFactory(sc -> new ReadOnlyStringWrapper(sc.getValue().getDate().toString()));
+        .setCellValueFactory(sc -> new ReadOnlyStringWrapper(
+            sc.getValue().getDate().format(DateTimeFormatter.ISO_DATE)));
 
     bookedCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().course.getName()));
@@ -84,7 +84,7 @@ public class UserController {
         .setCellValueFactory(
             sc -> new ReadOnlyStringWrapper(
                 sc.getValue().booking.getDateTime()
-                    .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))));
+                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm"))));
 
     scorecardTableView.getSelectionModel().selectedItemProperty()
         .addListener((prop, oldValue, newValue) -> updateButton(
