@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,7 +15,7 @@ import golfapp.core.GolfAppModel;
 import golfapp.core.User;
 import golfapp.data.BookingSystemsMapConverter;
 import golfapp.data.CustomObjectMapper;
-import golfapp.data.GolfAppModelDao;
+import golfapp.data.InMemoryGolfAppModelDao;
 import golfapp.data.MapEntry;
 import golfapp.rest.api.GolfAppModelService;
 import java.time.LocalDate;
@@ -40,9 +38,8 @@ public class GolfAppModelServiceTest extends JerseyTest {
 
   @Override
   protected Application configure() {
-    var modelDaoMock = mock(GolfAppModelDao.class);
-    when(modelDaoMock.getModel()).thenReturn(GolfAppModel.createDefaultModel());
-    return new GolfAppConfig(modelDaoMock);
+    var modelDao = new InMemoryGolfAppModelDao();
+    return new GolfAppConfig(modelDao);
   }
 
   @Override

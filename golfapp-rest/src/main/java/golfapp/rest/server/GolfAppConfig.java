@@ -1,6 +1,7 @@
 package golfapp.rest.server;
 
 import golfapp.data.GolfAppModelDao;
+import golfapp.data.InMemoryGolfAppModelDao;
 import golfapp.data.LocalGolfAppModelDao;
 import golfapp.rest.api.GolfAppModelService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -28,6 +29,14 @@ public class GolfAppConfig extends ResourceConfig {
   }
 
   public GolfAppConfig() {
-    this(new LocalGolfAppModelDao());
+    this(defaultGolfAppModelDao());
+  }
+
+  private static GolfAppModelDao defaultGolfAppModelDao() {
+    if (Boolean.getBoolean("maven.test.integration")) {
+      return new InMemoryGolfAppModelDao();
+    }
+
+    return new LocalGolfAppModelDao();
   }
 }

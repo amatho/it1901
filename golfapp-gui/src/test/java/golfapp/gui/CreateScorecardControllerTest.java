@@ -33,7 +33,7 @@ public class CreateScorecardControllerTest extends
 
   @Override
   CreateScorecardController controllerFactory() {
-    GolfAppModelDao golfAppModelDao = new InMemoryGolfAppModelDao();
+    GolfAppModelDao golfAppModelDao = new StringGolfAppModelDao();
     User user1 = new User("thisuser@email.com", "This User");
     User user2 = new User("bob@email.com", "Bob");
     User user3 = new User("phil@email.com", "Phil");

@@ -150,6 +150,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <maven.test.integration>true</maven.test.integration>
+          </systemPropertyVariables>
+        </configuration>
         <executions>
           <execution>
             <id>integration-test</id>

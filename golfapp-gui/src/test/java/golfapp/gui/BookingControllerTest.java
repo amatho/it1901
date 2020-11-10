@@ -35,7 +35,7 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
   @Override
   protected BookingController controllerFactory() {
     var appManager = mock(AppManager.class);
-    var inMemoryModelDao = new InMemoryGolfAppModelDao();
+    var inMemoryModelDao = new StringGolfAppModelDao();
     var user = new User("foo@example.com", "Foo Bar");
     when(appManager.getModelDao()).thenReturn(inMemoryModelDao);
     when(appManager.getUser()).thenReturn(user);
