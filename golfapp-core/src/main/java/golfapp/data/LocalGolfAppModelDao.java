@@ -86,17 +86,26 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public GolfAppModel getModel() {
     return readModel();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Set<User> getUsers() {
     var model = readModel();
     return model.getUsers();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void addUser(User u) {
     var model = readModel();
@@ -104,6 +113,9 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
     writeModel(model);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean updateUser(User u) {
     var model = readModel();
@@ -113,6 +125,9 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
     return wasUpdated;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void deleteUser(User u) {
     var model = readModel();
@@ -120,18 +135,27 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
     writeModel(model);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Set<Course> getCourses() {
     var model = readModel();
     return model.getCourses();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Map<Course, BookingSystem> getBookingSystems() {
     var model = readModel();
     return model.getBookingSystems();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void updateBookingSystem(Course c, BookingSystem b) {
     var model = readModel();

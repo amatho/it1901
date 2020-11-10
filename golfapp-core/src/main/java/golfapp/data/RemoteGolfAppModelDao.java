@@ -62,38 +62,59 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public GolfAppModel getModel() {
     return this.<GolfAppModel>get("", mapper.readerFor(GolfAppModel.class)).body();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Set<User> getUsers() {
     return new HashSet<>(this.<List<User>>get("users", mapper.readerForListOf(User.class)).body());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void addUser(User u) {
     put("users", u, mapper.reader());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean updateUser(User u) {
     return this.<Boolean, User>post("users/" + uriEncode(u.getId().toString()), u,
         mapper.readerFor(Boolean.class)).body();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void deleteUser(User u) {
     delete("users/" + uriEncode(u.getId().toString()), mapper.reader());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Set<Course> getCourses() {
     return new HashSet<>(
         this.<List<Course>>get("courses", mapper.readerForListOf(Course.class)).body());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Map<Course, BookingSystem> getBookingSystems() {
     var converter = new BookingSystemsMapConverter();
@@ -104,6 +125,9 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
     return converter.convert(bookingSystemList);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void updateBookingSystem(Course c, BookingSystem b) {
     post("bookingsystems/" + uriEncode(c.getId().toString()), b,
