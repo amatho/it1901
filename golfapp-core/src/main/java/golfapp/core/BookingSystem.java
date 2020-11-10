@@ -14,6 +14,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * A system for managing bookings and available times.
+ */
 public class BookingSystem {
 
   private static final List<LocalTime> VALID_TIMES = createValidTimes();
@@ -57,6 +60,12 @@ public class BookingSystem {
     return bs;
   }
 
+  /**
+   * Create a list of valid {@link LocalTime} for booking on a given day. This generates a list of
+   * each quarter of an hour between 08:00 and 19:45.
+   *
+   * @return list of valid times
+   */
   private static List<LocalTime> createValidTimes() {
     var result = new ArrayList<LocalTime>();
     for (int h = 8; h < 20; h++) {
