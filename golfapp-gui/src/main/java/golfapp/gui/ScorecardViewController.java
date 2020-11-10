@@ -6,6 +6,8 @@ import golfapp.core.Scorecard;
 import golfapp.core.User;
 import java.util.List;
 import java.util.Set;
+import javafx.css.converter.FontConverter;
+import javafx.css.converter.FontConverter.FontSizeConverter;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -19,6 +21,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class ScorecardViewController {
 
@@ -27,7 +30,7 @@ public class ScorecardViewController {
   private final Course course;
   private final List<Hole> holes;
   private double vboxPrefWidth = 0;
-  private static final double widthLeftLabel = 120;
+  private double widthLeftLabel = 150;
   private static final double widthOtherLabels = 80;
 
   @FXML
@@ -95,11 +98,17 @@ public class ScorecardViewController {
         scoreEachHole.setAlignment(Pos.CENTER);
         h.getChildren().add(scoreEachHole);
       }
+      Label totalPlayerScore = new Label(Integer.toString(scorecard.getTotalScore(s)));
+      totalPlayerScore.setBorder(new Border(new BorderStroke(Color.BLACK,
+          BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+      totalPlayerScore.setPrefWidth(widthOtherLabels);
+      totalPlayerScore.setAlignment(Pos.CENTER);
+      h.getChildren().add(totalPlayerScore);
 
-      leftInfo.getChildren().add(h);
-      h.setPrefHeight(80);
-      heightPlayers = heightPlayers + h.getHeight();
       h.setStyle("-fx-font: 24 arial;");
+      h.setPrefHeight(80);
+      leftInfo.getChildren().add(h);
+      heightPlayers = heightPlayers + h.getHeight();
     }
 
     holePar = new HBox();
@@ -125,7 +134,7 @@ public class ScorecardViewController {
     holeIndexLabel.setAlignment(Pos.CENTER);
     holeIndex.getChildren().add(holeIndexLabel);
 
-    vboxPrefWidth += holeLengthLabel.getPrefWidth();
+    vboxPrefWidth += widthLeftLabel;
     double heightVbox = playerSetup();
     heightVbox += holeIndex.getHeight() + holeLength.getHeight();
 
@@ -160,9 +169,38 @@ public class ScorecardViewController {
       holePar.getChildren().add(label2);
       holeIndex.getChildren().add(label3);
 
-      vboxPrefWidth += label1.getPrefWidth() + 2; // +borderWidth
+      vboxPrefWidth += widthOtherLabels + 2; // +borderWidth
       i++;
     }
+
+    Label total = new Label("Total:");
+    total.setBorder(new Border(new BorderStroke(Color.BLACK,
+        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+    total.setPrefWidth(widthOtherLabels);
+    total.setAlignment(Pos.CENTER);
+    holeIndex.getChildren().add(total);
+
+    double totLength = 0;
+    int totPar = 0;
+    for (Hole h : holes) {
+      totLength += h.getLength();
+      totPar += h.getPar();
+    }
+    Label totalLength = new Label(Double.toString(totLength));
+    totalLength.setBorder(new Border(new BorderStroke(Color.BLACK,
+        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+    totalLength.setPrefWidth(widthOtherLabels);
+    totalLength.setAlignment(Pos.CENTER);
+    holeLength.getChildren().add(totalLength);
+
+    Label totalPar = new Label(Integer.toString(totPar));
+    totalPar.setBorder(new Border(new BorderStroke(Color.BLACK,
+        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+    totalPar.setPrefWidth(widthOtherLabels);
+    totalPar.setAlignment(Pos.CENTER);
+    holePar.getChildren().add(totalPar);
+
+    vboxPrefWidth += widthOtherLabels;
 
     holeIndex.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
     holeLength.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
