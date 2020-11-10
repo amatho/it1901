@@ -20,7 +20,6 @@ public class ScorecardController {
   private final List<User> users;
   private final Scorecard scorecard;
 
-
   @FXML
   Label courseName;
   @FXML

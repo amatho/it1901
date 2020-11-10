@@ -82,31 +82,31 @@ public class CreateScorecardControllerTest extends
   void handleAddUserButton_UserIsAddedAndButtonUpdated(FxRobot robot) {
     Assertions.assertTrue(controller.addUserButton.isDisable());
 
-    robot.clickOn("#userChoiceBox").clickOn("Phil");
+    robot.clickOn("#userComboBox").clickOn("Phil");
     Assertions.assertFalse(controller.addUserButton.isDisable());
     robot.clickOn("#addUserButton");
     Assertions.assertTrue(controller.addUserButton.isDisable());
     Assertions.assertEquals(2, robot.lookup("#tableView").queryTableView().getItems().size());
 
-    robot.clickOn("#userChoiceBox").clickOn("Ken");
+    robot.clickOn("#userComboBox").clickOn("Ken");
     Assertions.assertFalse(controller.addUserButton.isDisable());
     robot.clickOn("#addUserButton");
     Assertions.assertTrue(controller.addUserButton.isDisable());
     Assertions.assertEquals(3, robot.lookup("#tableView").queryTableView().getItems().size());
 
-    robot.clickOn("#userChoiceBox").clickOn("Bob");
+    robot.clickOn("#userComboBox").clickOn("Bob");
     Assertions.assertFalse(controller.addUserButton.isDisable());
     robot.clickOn("#addUserButton");
     Assertions.assertTrue(controller.addUserButton.isDisable());
     Assertions.assertEquals(4, robot.lookup("#tableView").queryTableView().getItems().size());
 
-    robot.clickOn("#userChoiceBox").clickOn("Jon");
+    robot.clickOn("#userComboBox").clickOn("Jon");
     Assertions.assertTrue(controller.addUserButton.isDisable());
   }
 
   @Test
   void handleDeleteUserButton_viewChanges(FxRobot robot) {
-    robot.clickOn("#userChoiceBox").clickOn("Phil");
+    robot.clickOn("#userComboBox").clickOn("Phil");
     robot.clickOn("#addUserButton");
     robot.clickOn("#usernameField").write("Ken");
     robot.clickOn("#addGuestButton");
@@ -135,24 +135,24 @@ public class CreateScorecardControllerTest extends
   }
 
   @Test
-  void updateUserChoiceBox(FxRobot robot) {
-    Assertions.assertEquals(4, controller.userChoiceBox.getItems().size());
-    robot.clickOn("#userChoiceBox").clickOn("Phil");
-    User u = controller.userChoiceBox.getSelectionModel().getSelectedItem();
+  void updateUserComboBox(FxRobot robot) {
+    Assertions.assertEquals(4, controller.userComboBox.getItems().size());
+    robot.clickOn("#userComboBox").clickOn("Phil");
+    User u = controller.userComboBox.getSelectionModel().getSelectedItem();
     robot.clickOn("#addUserButton");
-    Assertions.assertEquals(3, controller.userChoiceBox.getItems().size());
-    Assertions.assertFalse(controller.userChoiceBox.getItems().contains(u));
+    Assertions.assertEquals(3, controller.userComboBox.getItems().size());
+    Assertions.assertFalse(controller.userComboBox.getItems().contains(u));
 
     robot.clickOn((Node) robot.lookup("#tableView .table-row-cell").nth(1).query());
     robot.clickOn("#deleteButton");
-    Assertions.assertEquals(4, controller.userChoiceBox.getItems().size());
-    Assertions.assertTrue(controller.userChoiceBox.getItems().contains(u));
+    Assertions.assertEquals(4, controller.userComboBox.getItems().size());
+    Assertions.assertTrue(controller.userComboBox.getItems().contains(u));
   }
 
   @Test
   void updateCreateButton(FxRobot robot) {
     Assertions.assertTrue(controller.createButton.isDisable());
-    robot.clickOn("#courseChoiceBox").clickOn("Alta GK");
+    robot.clickOn("#courseComboBox").clickOn("Alta GK");
     Assertions.assertFalse(controller.createButton.isDisable());
     robot.clickOn((Node) robot.lookup("#tableView .table-row-cell").nth(0).query());
     robot.clickOn("#deleteButton");
