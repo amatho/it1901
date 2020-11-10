@@ -1,21 +1,16 @@
 package golfapp.gui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import golfapp.core.User;
 import golfapp.data.GolfAppModelDao;
 import java.io.IOException;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
@@ -23,26 +18,21 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class CreateScorecardControllerTest {
-
-  private CreateScorecardController controller;
-  private AppManager appManagerMock;
-
-  @BeforeAll
-  static void headless() {
-    if (Boolean.getBoolean("gitlab-ci")) {
-      System.setProperty("java.awt.headless", "true");
-      System.setProperty("testfx.robot", "glass");
-      System.setProperty("testfx.headless", "true");
-      System.setProperty("prism.order", "sw");
-      System.setProperty("prism.text", "t2k");
-    }
-  }
+public class CreateScorecardControllerTest extends
+    AbstractControllerTest<CreateScorecardController> {
 
   @Start
   void start(final Stage stage) throws IOException {
-    final var loader = new FXMLLoader(getClass().getResource("CreateScorecard.fxml"));
-    appManagerMock = mock(AppManager.class);
+    loadFxml(stage);
+  }
+
+  @Override
+  String fxmlName() {
+    return "CreateScorecard.fxml";
+  }
+
+  @Override
+  CreateScorecardController controllerFactory() {
     GolfAppModelDao golfAppModelDao = new InMemoryGolfAppModelDao();
     User user1 = new User("thisuser@email.com", "This User");
     User user2 = new User("bob@email.com", "Bob");
@@ -54,19 +44,12 @@ public class CreateScorecardControllerTest {
     golfAppModelDao.addUser(user3);
     golfAppModelDao.addUser(user4);
     golfAppModelDao.addUser(user5);
+
+    AppManager appManagerMock = mock(AppManager.class);
     when(appManagerMock.getModelDao()).thenReturn(golfAppModelDao);
     when(appManagerMock.getUser()).thenReturn((user1));
-    loader.setControllerFactory(c -> new CreateScorecardController(appManagerMock));
-    final Parent root = loader.load();
-    controller = loader.getController();
-    final var scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
-  }
 
-  @Test
-  void testController() {
-    assertNotNull(controller);
+    return new CreateScorecardController(appManagerMock);
   }
 
   @Test

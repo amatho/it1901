@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 
 public class UserController {
 
-  private static final class BookingTableEntry {
+  public static final class BookingTableEntry {
 
     private Course course;
     private Booking booking;
@@ -35,6 +35,8 @@ public class UserController {
 
   @FXML
   Label username;
+  @FXML
+  Label email;
   @FXML
   Button viewSelectedScorecard;
   @FXML
@@ -67,7 +69,8 @@ public class UserController {
 
   @FXML
   void initialize() {
-    username.setText("Name: " + user.getDisplayName());
+    username.setText(user.getDisplayName());
+    email.setText(user.getEmail());
 
     scorecardCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getName()));
@@ -146,10 +149,9 @@ public class UserController {
 
   @FXML
   void handleViewSelectedScorecardButton() {
-    // TODO: Implement ScorecardView.fxml
-    appManager.loadView("ScorecardView.fxml", a -> {
-      throw new IllegalStateException("Not implemented");
-    });
+    appManager.loadView("ScorecardView.fxml",
+        a -> new ScorecardViewController(a, scorecardTableView.getSelectionModel()
+            .getSelectedItem()));
   }
 
   @FXML

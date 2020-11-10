@@ -4,9 +4,9 @@ import golfapp.core.BookingSystem;
 import golfapp.core.Course;
 import golfapp.core.GolfAppModel;
 import golfapp.core.User;
-import golfapp.data.FileGolfAppModelDao;
 import golfapp.data.FilesWrapper;
 import golfapp.data.GolfAppModelDao;
+import golfapp.data.LocalGolfAppModelDao;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
@@ -34,7 +34,7 @@ class InMemoryGolfAppModelDao implements GolfAppModelDao {
     }
   }
 
-  private final FileGolfAppModelDao fileModelDao;
+  private final LocalGolfAppModelDao fileModelDao;
 
   InMemoryGolfAppModelDao() {
     this(true);
@@ -43,7 +43,7 @@ class InMemoryGolfAppModelDao implements GolfAppModelDao {
   InMemoryGolfAppModelDao(boolean throwIfFileContentsEmpty) {
     var stringFile = new StringFile();
     stringFile.throwIfFileContentsEmpty = throwIfFileContentsEmpty;
-    fileModelDao = new FileGolfAppModelDao(stringFile);
+    fileModelDao = new LocalGolfAppModelDao(stringFile);
   }
 
   @Override

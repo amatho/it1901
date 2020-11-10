@@ -1,6 +1,7 @@
 package golfapp.core;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,5 +30,14 @@ public class UserTest {
     var user2 = new User("foo@test.com", "Foo Bar");
 
     assertNotEquals(user1, user2);
+  }
+
+  @Test
+  void setEmail_validEmail() {
+    User validUser = new User("foo@bar.baz", "foo bar");
+    assertThrows(IllegalArgumentException.class, () -> new User("foobar.baz", "Foo Bar"));
+    assertThrows(IllegalArgumentException.class, () -> new User("foo@bar", "Foo Bar"));
+    assertThrows(IllegalArgumentException.class, () -> new User("foo@bar.b", "Foo Bar"));
+
   }
 }

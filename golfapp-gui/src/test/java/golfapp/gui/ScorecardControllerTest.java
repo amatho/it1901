@@ -71,20 +71,22 @@ public class ScorecardControllerTest {
   @Test
   void updatePlayerInputs(FxRobot robot) {
     assertFalse(controller.finishButton.isVisible());
+    int i = 0;
     for (Node n : controller.playerInputs.getChildren()) {
       PlayerScoreInput psi = (PlayerScoreInput) n;
       assertEquals(3, psi.getScore());
+      robot.clickOn((Node) robot.lookup("#playerInputs > *").nth(i).lookup("+").query());
+      i++;
     }
-    robot.clickOn((Node) robot.lookup("#playerInputs").lookup("+").query());
-    PlayerScoreInput psi0 = (PlayerScoreInput) controller.playerInputs.getChildren().get(0);
-    assertEquals(4, psi0.getScore());
-
     robot.clickOn((Node) robot.lookup("#holes").lookup("2").query());
     assertTrue(controller.finishButton.isVisible());
     robot.clickOn((Node) robot.lookup("#holes").lookup("1").query());
     assertFalse(controller.finishButton.isVisible());
-    psi0 = (PlayerScoreInput) controller.playerInputs.getChildren().get(0);
-    assertEquals(4, psi0.getScore());
+
+    for (Node n : controller.playerInputs.getChildren()) {
+      PlayerScoreInput psi = (PlayerScoreInput) n;
+      assertEquals(4, psi.getScore());
+    }
   }
 
   @Test

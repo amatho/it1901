@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.UserController">
   <children>
-    <Label fx:id="username" alignment="CENTER" layoutX="259.0" layoutY="20.0" prefHeight="44.0" prefWidth="283.0" text="User" textAlignment="CENTER">
+    <Label fx:id="username" alignment="CENTER" layoutX="259.0" layoutY="7.0" prefHeight="44.0" prefWidth="283.0" text="Username" textAlignment="CENTER">
       <font>
         <Font name="System Bold" size="36.0" />
       </font>
@@ -40,5 +40,10 @@
     </Label>
     <Button fx:id="cancelSelectedBooking" layoutX="418.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleCancelSelectedBooking" prefHeight="27.0" prefWidth="184.0" text="Cancel selected booking" />
     <Button fx:id="addBooking" layoutX="606.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="27.0" prefWidth="138.0" text="Add booking" />
+      <Label fx:id="email" alignment="CENTER" layoutX="275.0" layoutY="51.0" prefHeight="24.0" prefWidth="251.0" text="email" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
   </children>
 </AnchorPane>
