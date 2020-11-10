@@ -1,7 +1,7 @@
 [
   {
     "id": "048a45db-7c58-40aa-baf0-2d44e22b063c",
-    "name": "Oslo Golfklubb (18-hull)",
+    "name": "Oslo Golfklubb",
     "holes": [
       {
         "length": 120,
@@ -97,7 +97,7 @@
   },
   {
     "id": "6b30f588-565d-4e95-b9e4-703b96a099c5",
-    "name": "Trondheim GK (9-hull)",
+    "name": "Trondheim GK",
     "holes": [
       {
         "length": 410,
@@ -148,7 +148,7 @@
   },
   {
     "id": "0aa45166-c137-42a1-b1d5-a560248d6b53",
-    "name": "Bærum Golfklubb (9-hull)",
+    "name": "Bærum Golfklubb",
     "holes": [
       {
         "length": 410,
@@ -199,7 +199,7 @@
   },
   {
     "id": "ef9ca632-dcab-447f-8d7e-b8f3b170600d",
-    "name": "Alta GK (5-hull)",
+    "name": "Alta GK",
     "holes": [
       {
         "length": 410,

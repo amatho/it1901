@@ -3,6 +3,8 @@ package golfapp.gui;
 import golfapp.core.Course;
 import golfapp.core.GuestUser;
 import golfapp.core.User;
+import golfapp.gui.cell.CourseCell;
+import golfapp.gui.cell.UserCell;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,7 +12,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -37,9 +39,9 @@ public class CreateScorecardController {
   @FXML
   TextField usernameField;
   @FXML
-  ChoiceBox<Course> courseChoiceBox;
+  ComboBox<Course> courseComboBox;
   @FXML
-  ChoiceBox<User> userChoiceBox;
+  ComboBox<User> userComboBox;
 
   public CreateScorecardController(AppManager appManager) {
     this.appManager = appManager;
@@ -51,40 +53,48 @@ public class CreateScorecardController {
     usernameColumn
         .setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getDisplayName()));
     emailColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getEmail()));
-    courseChoiceBox.getItems().addAll(courses);
-    tableView.getItems().add(appManager.getUser());
-    courseChoiceBox.getSelectionModel().selectedIndexProperty()
+
+    courseComboBox.getItems().addAll(courses);
+    courseComboBox.getSelectionModel().selectedIndexProperty()
         .addListener(c -> updateCreateButton());
-    userChoiceBox.getSelectionModel().selectedIndexProperty()
+    courseComboBox.setCellFactory(l -> new CourseCell());
+    courseComboBox.setButtonCell(new CourseCell());
+
+    userComboBox.getSelectionModel().selectedIndexProperty()
         .addListener(u -> updateAddUserButton());
+    userComboBox.setCellFactory(l -> new UserCell());
+    userComboBox.setButtonCell(new UserCell());
+    userComboBox.getItems().addAll(appManager.getModelDao().getUsers());
+
+    tableView.getItems().add(appManager.getUser());
     tableView.getSelectionModel().selectedItemProperty().addListener(u -> {
       updateCreateButton();
       updateDeleteButton();
       updateAddUserButton();
       updateAddGuestButton();
-      updateUserChoiceBox();
+      updateUserComboBox();
     });
+
     usernameField.textProperty().addListener(t -> updateAddGuestButton());
-    userChoiceBox.getItems().addAll(appManager.getModelDao().getUsers());
 
     updateAddUserButton();
     updateAddGuestButton();
     updateCreateButton();
     updateDeleteButton();
-    updateUserChoiceBox();
+    updateUserComboBox();
   }
 
-  private void updateUserChoiceBox() {
-    userChoiceBox.getItems().clear();
+  private void updateUserComboBox() {
+    userComboBox.getItems().clear();
     List<User> users = appManager.getModelDao().getUsers().stream()
         .filter(u -> !tableView.getItems().contains(u))
         .collect(Collectors.toList());
-    userChoiceBox.getItems().addAll(users);
+    userComboBox.getItems().addAll(users);
   }
 
   private void updateCreateButton() {
     boolean disable =
-        courseChoiceBox.getSelectionModel().isEmpty() || tableView.getItems().isEmpty();
+        courseComboBox.getSelectionModel().isEmpty() || tableView.getItems().isEmpty();
     createButton.setDisable(disable);
   }
 
@@ -95,7 +105,7 @@ public class CreateScorecardController {
 
   private void updateAddUserButton() {
     boolean disable =
-        userChoiceBox.getSelectionModel().isEmpty() || tableView.getItems().size() >= 4;
+        userComboBox.getSelectionModel().isEmpty() || tableView.getItems().size() >= 4;
     addUserButton.setDisable(disable);
   }
 
@@ -108,7 +118,7 @@ public class CreateScorecardController {
   void changeSceneButtonPushed() {
     appManager
         .loadView("Scorecard.fxml", c -> new ScorecardController(appManager, tableView.getItems(),
-            courseChoiceBox.getValue()));
+            courseComboBox.getValue()));
   }
 
   @FXML
@@ -119,17 +129,17 @@ public class CreateScorecardController {
       usernameField.clear();
       updateAddUserButton();
       updateAddGuestButton();
-      updateUserChoiceBox();
+      updateUserComboBox();
     }
   }
 
   @FXML
   void handleAddUserButton() {
-    User user = userChoiceBox.getSelectionModel().getSelectedItem();
+    User user = userComboBox.getSelectionModel().getSelectedItem();
     tableView.getItems().add(user);
     updateAddUserButton();
     updateAddGuestButton();
-    updateUserChoiceBox();
+    updateUserComboBox();
   }
 
   @FXML
