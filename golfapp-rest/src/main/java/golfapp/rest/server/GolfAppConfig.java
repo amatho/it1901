@@ -10,6 +10,11 @@ public class GolfAppConfig extends ResourceConfig {
 
   private GolfAppModel golfAppModel;
 
+  /**
+   * Create a Golf App config with the given model.
+   *
+   * @param golfAppModel the Golf App model to use
+   */
   public GolfAppConfig(GolfAppModel golfAppModel) {
     setGolfAppModel(golfAppModel);
     register(GolfAppModelService.class);

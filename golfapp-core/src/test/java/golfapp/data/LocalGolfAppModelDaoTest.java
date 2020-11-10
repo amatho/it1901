@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
 
-public class FileGolfAppModelDaoTest {
+public class LocalGolfAppModelDaoTest {
 
   private static class StringFile extends FilesWrapper {
 
@@ -81,7 +81,7 @@ public class FileGolfAppModelDaoTest {
   void constructor_createsDirectories() {
     var stringFile = new StringFile();
 
-    new FileGolfAppModelDao(stringFile);
+    new LocalGolfAppModelDao(stringFile);
 
     assertTrue(stringFile.hasCreatedDirectory);
   }
@@ -90,7 +90,7 @@ public class FileGolfAppModelDaoTest {
   void getModel_createsDefaultModelIfNothingWrittenBefore() {
     var stringFile = new StringFile();
     stringFile.shouldThrowWhenReadString = true;
-    var modelDao = new FileGolfAppModelDao(stringFile);
+    var modelDao = new LocalGolfAppModelDao(stringFile);
 
     var model = modelDao.getModel();
 
@@ -104,7 +104,7 @@ public class FileGolfAppModelDaoTest {
   void getModel_readsFromFile() {
     var stringFile = new StringFile();
     stringFile.fileContents = testJson;
-    var modelDao = new FileGolfAppModelDao(stringFile);
+    var modelDao = new LocalGolfAppModelDao(stringFile);
 
     var model = modelDao.getModel();
 
@@ -121,7 +121,7 @@ public class FileGolfAppModelDaoTest {
   void getters_readsFromModel() {
     var stringFile = new StringFile();
     stringFile.fileContents = testJson;
-    var modelDao = new FileGolfAppModelDao(stringFile);
+    var modelDao = new LocalGolfAppModelDao(stringFile);
 
     modelDao.getUsers();
     modelDao.getCourses();
@@ -135,7 +135,7 @@ public class FileGolfAppModelDaoTest {
   void userMethods_readsAndWritesModel() {
     var stringFile = new StringFile();
     stringFile.fileContents = testJson;
-    var modelDao = new FileGolfAppModelDao(stringFile);
+    var modelDao = new LocalGolfAppModelDao(stringFile);
     var model = modelDao.getModel();
     var user = model.getUsers().stream().findFirst().orElseThrow();
     user.setDisplayName("Foo Bar Baz");
@@ -155,7 +155,7 @@ public class FileGolfAppModelDaoTest {
   void bookingSystemsMethods_readsAndWritesModel() {
     var stringFile = new StringFile();
     stringFile.fileContents = testJson;
-    var modelDao = new FileGolfAppModelDao(stringFile);
+    var modelDao = new LocalGolfAppModelDao(stringFile);
 
     var entry = modelDao.getBookingSystems().entrySet().stream().findFirst().orElseThrow();
     entry.getValue().addBooking(new Booking(new User("test@foo.com", "Test Foo"),

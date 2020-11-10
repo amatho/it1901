@@ -30,6 +30,13 @@ public class BookingSystemResource {
     return converter.convert(golfAppModel.getBookingSystems());
   }
 
+  /**
+   * Update a booking system.
+   *
+   * @param bookingSystem the updated booking system
+   * @param courseId      the ID of the course this booking system belongs to
+   * @return true if the booking system was updated, false otherwise
+   */
   @Path("{courseId}")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)

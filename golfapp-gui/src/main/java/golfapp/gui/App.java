@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -21,5 +22,6 @@ public class App extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
     primaryStage.setTitle("Golf App");
+    primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("golf_ball.png")));
   }
 }
