@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public class Hole {
 
-  private double length;
-  private int par;
-  private double height;
+  private final double length;
+  private final int par;
+  private final double height;
 
   /**
    * Create a new Hole.
@@ -18,6 +18,13 @@ public class Hole {
    * @param height the hole's height
    */
   public Hole(double length, int par, double height) {
+    if (length <= 0) {
+      throw new IllegalArgumentException(
+          "The hole length can not be negative or 0, was : " + length);
+    }
+    if (par <= 0) {
+      throw new IllegalArgumentException("The hole par can not be negative or 0, was : " + par);
+    }
     this.length = length;
     this.par = par;
     this.height = height;
@@ -34,24 +41,12 @@ public class Hole {
     return length;
   }
 
-  public void setLength(double length) {
-    this.length = length;
-  }
-
   public int getPar() {
     return par;
   }
 
-  public void setPar(int par) {
-    this.par = par;
-  }
-
   public double getHeight() {
     return height;
-  }
-
-  public void setHeight(double height) {
-    this.height = height;
   }
 
   @Override
