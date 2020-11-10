@@ -19,6 +19,6 @@
     <Button fx:id="newUser" layoutX="194.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleNewUserButton" text="New User" />
     <Label layoutX="156.0" layoutY="238.0" prefHeight="27.0" prefWidth="38.0" text="e-mail" />
       <Label fx:id="nameLabel" layoutX="156.0" layoutY="200.0" prefHeight="27.0" prefWidth="38.0" text="Name:" />
-      <Label fx:id="status" layoutX="194.0" layoutY="176.0" prefHeight="17.0" prefWidth="149.0" text="Status: " textFill="RED" />
+      <Label fx:id="status" layoutX="194.0" layoutY="176.0" prefHeight="17.0" prefWidth="402.0" text="Status: " textFill="RED" />
   </children>
 </AnchorPane>

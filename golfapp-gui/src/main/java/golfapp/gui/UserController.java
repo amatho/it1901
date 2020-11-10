@@ -37,6 +37,8 @@ public class UserController {
   @FXML
   Label username;
   @FXML
+  Label email;
+  @FXML
   Button viewSelectedScorecard;
   @FXML
   Button logOut;
@@ -68,7 +70,8 @@ public class UserController {
 
   @FXML
   void initialize() {
-    username.setText("Name: " + user.getDisplayName());
+    username.setText(user.getDisplayName());
+    email.setText(user.getEmail());
 
     scorecardCourseColumn.setCellValueFactory(
         sc -> new ReadOnlyStringWrapper(sc.getValue().getCourse().getName()));

@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 public class LogInController {
 
   private final AppManager appManager;
-  private boolean newUserIsActive;
-
   @FXML
   Label nameLabel;
   @FXML
@@ -30,6 +28,7 @@ public class LogInController {
   Button logIn;
   @FXML
   Button newUser;
+  private boolean newUserIsActive;
 
   public LogInController() {
     this(new AppManager());
@@ -97,6 +96,15 @@ public class LogInController {
         status.setText("Please insert a valid email!");
         return;
       }
+
+      var result = appManager.getModelDao().getUsers().stream()
+          .filter(u -> u.getEmail().equalsIgnoreCase(user.getEmail())).findAny();
+      if (result.isPresent()) {
+        status.setVisible(true);
+        status.setText("A user with that email already exists!");
+        return;
+      }
+
       appManager.getModelDao().addUser(user);
     } else {
       var result = appManager.getModelDao().getUsers().stream()
