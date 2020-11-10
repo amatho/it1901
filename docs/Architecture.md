@@ -5,7 +5,9 @@ We have decided to split the files into three modules. One module consists of **
 and **persistence** (core). The other consists of the **user interface** (gui), and the **rest api** 
 (rest).
 
-## Diagram
-Our diagram was generated using the IntelliJ IDE.
+## Class diagram
+Our diagram was generated using the IntelliJ IDE. <br>
+A **dotted** line represents a class dependency. <br>
+A **solid** line represents a class aggregation. 
 
-![PlantUML](./img/plantUML.png "PlantUML")
+![PlantUML](./img/class_diagram.png "Class Diagram")
