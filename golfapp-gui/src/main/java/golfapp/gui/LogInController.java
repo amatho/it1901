@@ -82,6 +82,12 @@ public class LogInController {
     updateLogInButton();
   }
 
+  /**
+   * Handler for login button.
+   *
+   * @param event the javafx event
+   * @throws IOException if the e-mail is invalid
+   */
   @FXML
   void handleLogIn(ActionEvent event) throws IOException {
     User user;

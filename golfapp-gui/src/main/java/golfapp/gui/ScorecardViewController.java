@@ -74,6 +74,11 @@ public class ScorecardViewController {
     appManager.loadView("User.fxml", UserController::new);
   }
 
+  /**
+   * Creates the GUI player component.
+   *
+   * @return height of the setup
+   */
   private double playerSetup() {
     double heightPlayers = 0.0;
     Set<User> users = scorecard.getUsers();
@@ -109,6 +114,11 @@ public class ScorecardViewController {
     return heightPlayers;
   }
 
+  /**
+   * Creates the HBox GUI that contains the player information.
+   *
+   * @return height of the setup
+   */
   private double horizontalBoxSetup() {
     int i = 1;
     Label holeLengthLabel = new Label("Length:");
