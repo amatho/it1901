@@ -1,65 +1,230 @@
 [
   {
     "id": "048a45db-7c58-40aa-baf0-2d44e22b063c",
-    "name": "Oslo Golfklubb",
+    "name": "Oslo Golfklubb (18-hull)",
     "holes": [
       {
-        "length": 40,
+        "length": 120,
         "par": 3,
-        "height": 30
+        "height": 10
       },
       {
-        "length": 41,
+        "length": 300,
         "par": 4,
-        "height": 31
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 256,
+        "par": 4,
+        "height": 6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 410,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 120,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 300,
+        "par": 4,
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 256,
+        "par": 4,
+        "height": 6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 410,
+        "par": 5,
+        "height": 3
       }
     ]
   },
   {
     "id": "6b30f588-565d-4e95-b9e4-703b96a099c5",
-    "name": "Trondheim GK",
+    "name": "Trondheim GK (9-hull)",
     "holes": [
       {
-        "length": 40,
-        "par": 3,
-        "height": 30
+        "length": 410,
+        "par": 5,
+        "height": 3
       },
       {
-        "length": 41,
+        "length": 120,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 300,
         "par": 4,
-        "height": 31
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 256,
+        "par": 4,
+        "height": 6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
       }
     ]
   },
   {
     "id": "0aa45166-c137-42a1-b1d5-a560248d6b53",
-    "name": "Bærum Golfklubb",
+    "name": "Bærum Golfklubb (9-hull)",
     "holes": [
       {
-        "length": 40,
-        "par": 4,
-        "height": 30
+        "length": 410,
+        "par": 5,
+        "height": 3
       },
       {
-        "length": 41,
+        "length": 450,
+        "par": 5,
+        "height": 10
+      },
+      {
+        "length": 306,
+        "par": 4,
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 266,
+        "par": 4,
+        "height": -6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
         "par": 3,
-        "height": 31
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
       }
     ]
   },
   {
     "id": "ef9ca632-dcab-447f-8d7e-b8f3b170600d",
-    "name": "Alta GK",
+    "name": "Alta GK (5-hull)",
     "holes": [
       {
-        "length": 40,
-        "par": 3,
-        "height": 30
+        "length": 410,
+        "par": 5,
+        "height": 3
       },
       {
-        "length": 41,
+        "length": 140,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 300,
         "par": 4,
-        "height": 31
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 299,
+        "par": 4,
+        "height": -3
       }
     ]
   }
