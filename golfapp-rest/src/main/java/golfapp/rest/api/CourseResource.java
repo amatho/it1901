@@ -1,7 +1,7 @@
 package golfapp.rest.api;
 
 import golfapp.core.Course;
-import golfapp.core.GolfAppModel;
+import golfapp.data.GolfAppModelDao;
 import java.util.Set;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
@@ -9,15 +9,15 @@ import javax.ws.rs.core.MediaType;
 
 public class CourseResource {
 
-  private final GolfAppModel golfAppModel;
+  private final GolfAppModelDao persistenceModelDao;
 
-  public CourseResource(GolfAppModel golfAppModel) {
-    this.golfAppModel = golfAppModel;
+  public CourseResource(GolfAppModelDao persistenceModelDao) {
+    this.persistenceModelDao = persistenceModelDao;
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Set<Course> getCourses() {
-    return golfAppModel.getCourses();
+    return persistenceModelDao.getCourses();
   }
 }
