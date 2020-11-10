@@ -10,4 +10,14 @@ Our diagram was generated using the IntelliJ IDE. <br>
 A **dotted** line represents a class dependency. <br>
 A **solid** line represents a class aggregation. 
 
-![PlantUML](./img/class_diagram.png "Class Diagram")
+![ClassDiagram](./img/class_diagram.png "Class Diagram")
+
+## Sequence diagram
+Our sequence diagram shows the act of a user booking a course.
+
+![SequenceDiagram](./img/sequence_diagram.png "Sequence Diagram")
+
+## Package diagram
+Our package diagram shows the package structure and dependencies between packages.
+
+![PackageDiagram](./img/package_diagram.png "Package Diagram")
