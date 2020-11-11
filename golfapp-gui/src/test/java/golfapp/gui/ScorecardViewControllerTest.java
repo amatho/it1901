@@ -1,5 +1,7 @@
 package golfapp.gui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import golfapp.core.Course;
@@ -45,7 +47,7 @@ public class ScorecardViewControllerTest extends AbstractControllerTest<Scorecar
     List<Hole> holes = List.of(hull1, hull2, hull3, hull4, hull5,
         hull6, hull7, hull8, hull9);
 
-    Course course = new Course("Testbane GK", holes);
+    Course course = new Course("Test GK", holes);
 
     Scorecard scorecard = new Scorecard(course, users);
     Random rand = new Random();
@@ -63,4 +65,14 @@ public class ScorecardViewControllerTest extends AbstractControllerTest<Scorecar
   String fxmlName() {
     return "ScorecardView.fxml";
   }
+
+  @Test
+  void testOutput() {
+    assertEquals(240, controller.scrollPane.getHeight());
+    assertEquals(660, controller.scrollPane.getWidth());
+    assertEquals(6, controller.leftInfo.getChildren().size());
+    assertTrue(controller.scrollPane.isFitToHeight());
+  }
 }
+
+
