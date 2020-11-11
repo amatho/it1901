@@ -58,10 +58,10 @@ public class GolfAppModelServiceTestIT {
         .queryTableView().getItems().size();
 
     robot.clickOn("#bookingButton");
-    robot.clickOn("#courseChoiceBox").clickOn("Trondheim GK");
-    robot.clickOn("#dateChoiceBox").type(KeyCode.DOWN).type(KeyCode.ENTER);
+    robot.clickOn("#courseComboBox").clickOn("Trondheim GK (9-holes)");
+    robot.clickOn("#dateComboBox").type(KeyCode.DOWN).type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
-    robot.clickOn("#availableTimesChoiceBox").clickOn("09:00");
+    robot.clickOn("#availableTimesComboBox").clickOn("09:00");
     robot.clickOn("#confirmBooking");
 
     robot.clickOn("#userButton");

@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 
-class InMemoryGolfAppModelDao implements GolfAppModelDao {
+class StringGolfAppModelDao implements GolfAppModelDao {
 
   private static class StringFile extends FilesWrapper {
 
@@ -36,11 +36,11 @@ class InMemoryGolfAppModelDao implements GolfAppModelDao {
 
   private final LocalGolfAppModelDao fileModelDao;
 
-  InMemoryGolfAppModelDao() {
+  StringGolfAppModelDao() {
     this(true);
   }
 
-  InMemoryGolfAppModelDao(boolean throwIfFileContentsEmpty) {
+  StringGolfAppModelDao(boolean throwIfFileContentsEmpty) {
     var stringFile = new StringFile();
     stringFile.throwIfFileContentsEmpty = throwIfFileContentsEmpty;
     fileModelDao = new LocalGolfAppModelDao(stringFile);

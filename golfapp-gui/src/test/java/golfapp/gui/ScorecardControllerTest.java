@@ -47,7 +47,7 @@ public class ScorecardControllerTest {
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("Scorecard.fxml"));
     appManagerMock = mock(AppManager.class);
-    GolfAppModelDao golfAppModelDao = new InMemoryGolfAppModelDao();
+    GolfAppModelDao golfAppModelDao = new StringGolfAppModelDao();
     User user1 = new User("thisuser@email.com", "This User");
     User user2 = new User("bob@email.com", "Bob");
     User user3 = new User("phil@email.com", "Phil");
@@ -58,7 +58,8 @@ public class ScorecardControllerTest {
     golfAppModelDao.addUser(user4);
     when(appManagerMock.getModelDao()).thenReturn(golfAppModelDao);
     when(appManagerMock.getUser()).thenReturn((user1));
-    course = golfAppModelDao.getCourses().stream().findAny().orElseThrow();
+    course = golfAppModelDao.getCourses().stream().filter(c -> c.getCourseLength() < 10).findAny()
+        .orElseThrow();
     ObservableList<User> users = FXCollections.observableArrayList(user1, user2, user3, user4);
     loader.setControllerFactory(c -> new ScorecardController(appManagerMock, users, course));
     final Parent root = loader.load();
@@ -71,21 +72,22 @@ public class ScorecardControllerTest {
   @Test
   void updatePlayerInputs(FxRobot robot) {
     assertFalse(controller.finishButton.isVisible());
+    Hole hole1 = course.getHole(0);
     int i = 0;
     for (Node n : controller.playerInputs.getChildren()) {
       PlayerScoreInput psi = (PlayerScoreInput) n;
-      assertEquals(3, psi.getScore());
+      assertEquals(hole1.getPar(), psi.getScore());
       robot.clickOn((Node) robot.lookup("#playerInputs > *").nth(i).lookup("+").query());
       i++;
     }
-    robot.clickOn((Node) robot.lookup("#holes").lookup("2").query());
+    String lastHole = String.valueOf(course.getCourseLength());
+    robot.clickOn((Node) robot.lookup("#holes").lookup(lastHole).query());
     assertTrue(controller.finishButton.isVisible());
     robot.clickOn((Node) robot.lookup("#holes").lookup("1").query());
     assertFalse(controller.finishButton.isVisible());
-
     for (Node n : controller.playerInputs.getChildren()) {
       PlayerScoreInput psi = (PlayerScoreInput) n;
-      assertEquals(4, psi.getScore());
+      assertEquals(hole1.getPar() + 1, psi.getScore());
     }
   }
 

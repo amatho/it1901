@@ -1,6 +1,7 @@
 package golfapp.rest.api;
 
 import golfapp.core.GolfAppModel;
+import golfapp.data.GolfAppModelDao;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,34 +12,31 @@ import javax.ws.rs.core.MediaType;
 public class GolfAppModelService {
 
   public static final String PATH = "golfapp";
-  private final GolfAppModel golfAppModel;
+  private final GolfAppModelDao persistenceModelDao;
 
   @Inject
-  public GolfAppModelService(GolfAppModel golfAppModel) {
-    this.golfAppModel = golfAppModel;
+  public GolfAppModelService(GolfAppModelDao persistenceModelDao) {
+    this.persistenceModelDao = persistenceModelDao;
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GolfAppModel getGolfAppModel() {
-    return golfAppModel;
+    return persistenceModelDao.getModel();
   }
 
   @Path("users")
   public UserResource getUserResource() {
-    var model = getGolfAppModel();
-    return new UserResource(model);
+    return new UserResource(persistenceModelDao);
   }
 
   @Path("courses")
   public CourseResource getCourseResource() {
-    var model = getGolfAppModel();
-    return new CourseResource(model);
+    return new CourseResource(persistenceModelDao);
   }
 
   @Path("bookingsystems")
   public BookingSystemResource getBookingSystemResource() {
-    var model = getGolfAppModel();
-    return new BookingSystemResource(model);
+    return new BookingSystemResource(persistenceModelDao);
   }
 }

@@ -121,6 +121,6 @@ public class User {
 
   @Override
   public String toString() {
-    return displayName;
+    return displayName + " <" + email + "> (ID: " + id + ")";
   }
 }

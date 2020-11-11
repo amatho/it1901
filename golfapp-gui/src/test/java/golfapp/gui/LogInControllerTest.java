@@ -27,7 +27,7 @@ public class LogInControllerTest extends AbstractControllerTest<LogInController>
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-    GolfAppModelDao golfAppModelDao = new InMemoryGolfAppModelDao();
+    GolfAppModelDao golfAppModelDao = new StringGolfAppModelDao();
     User user1 = new User("foo@bar.baz", "foo bar");
     golfAppModelDao.addUser(user1);
     AppManager appManagerMock = mock(AppManager.class);
@@ -48,7 +48,7 @@ public class LogInControllerTest extends AbstractControllerTest<LogInController>
 
   @Override
   LogInController controllerFactory() {
-    return new LogInController(new AppManager(new InMemoryGolfAppModelDao()));
+    return new LogInController(new AppManager(new StringGolfAppModelDao()));
   }
 
   @Test
