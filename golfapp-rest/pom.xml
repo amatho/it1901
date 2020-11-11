@@ -136,6 +136,12 @@
             </goals>
             <configuration>
               <daemon>true</daemon>
+              <systemProperties>
+                <systemProperty>
+                  <name>maven.test.integration</name>
+                  <value>true</value>
+                </systemProperty>
+              </systemProperties>
             </configuration>
           </execution>
           <execution>

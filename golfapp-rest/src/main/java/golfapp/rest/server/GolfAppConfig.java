@@ -33,7 +33,7 @@ public class GolfAppConfig extends ResourceConfig {
   }
 
   private static GolfAppModelDao defaultGolfAppModelDao() {
-    if (System.getProperty("maven.test.integration").equalsIgnoreCase("true")) {
+    if (Boolean.getBoolean("maven.test.integration")) {
       return new InMemoryGolfAppModelDao();
     }
 
