@@ -7,16 +7,16 @@ import golfapp.core.User;
 import java.util.List;
 import java.util.Set;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -40,6 +40,10 @@ public class ScorecardViewController {
   HBox holePar;
   @FXML
   Label infoLabel;
+  @FXML
+  ScrollPane scrollPane;
+  @FXML
+  Pane pane;
 
   /**
    * Create a controller for ScorecardViewController.
@@ -56,20 +60,15 @@ public class ScorecardViewController {
 
   @FXML
   void initialize() {
-    double height = horizontalBoxSetup();
+    horizontalBoxSetup();
     leftInfo.setBorder(new Border(new BorderStroke(Color.BLACK,
         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-    leftInfo.setPrefHeight(height);
-    if (vboxPrefWidth > 700) {
-      vboxPrefWidth = 700;
-    }
+    leftInfo.setPrefHeight(scrollPane.getPrefHeight());
     leftInfo.setPrefWidth(vboxPrefWidth);
     infoLabel.setText("Name: " + course.getName()
         + "         Date: " + scorecard.getDate());
-    ScrollBar sc = new ScrollBar();
-    sc.setMin(0);
-    sc.setOrientation(Orientation.HORIZONTAL);
-    leftInfo.getChildren().add(sc);
+    scrollPane.setContent(leftInfo);
+    scrollPane.setFitToHeight(true);
   }
 
   @FXML
@@ -77,8 +76,13 @@ public class ScorecardViewController {
     appManager.loadView("User.fxml", UserController::new);
   }
 
-  private double playerSetup() {
-    double heightPlayers = 0.0;
+  /**
+   * Sets up the HBox for each user and for the par-HBox.
+   * Fills each HBox with labels.
+   * Fills each label with the respective score or the par for the hole(par-HBox).
+   * Adds each HBox to leftInfo.
+   */
+  private void playerSetup() {
     Set<User> users = scorecard.getUsers();
     for (User s : users) {
       Label label = new Label(s.getDisplayName());
@@ -97,19 +101,20 @@ public class ScorecardViewController {
       h.getChildren().add(totalPlayerScore);
 
       h.setStyle("-fx-font: 24 arial;");
-      h.setPrefHeight(80);
+      h.setPrefHeight(60);
       leftInfo.getChildren().add(h);
-      heightPlayers = heightPlayers + h.getHeight();
     }
 
     holePar = new HBox();
     holePar.setPrefHeight(60);
-    heightPlayers += holePar.getHeight();
     leftInfo.getChildren().add(holePar);
-    return heightPlayers;
   }
 
-  private double horizontalBoxSetup() {
+  /**
+   * Sets up all the HBoxes in order.
+   * Fills in HBox holeLength, holePar and holeIndex.
+   */
+  private void horizontalBoxSetup() {
     int i = 1;
     Label holeLengthLabel = new Label("Length:");
     styleLabel(holeLengthLabel, widthLeftLabel);
@@ -120,27 +125,28 @@ public class ScorecardViewController {
     holeIndex.getChildren().add(holeIndexLabel);
 
     vboxPrefWidth += widthLeftLabel;
-    double heightVbox = playerSetup();
-    heightVbox += holeIndex.getHeight() + holeLength.getHeight();
+    holeIndex.setPrefHeight(60);
+    holeLength.setPrefHeight(60);
+    playerSetup();
 
     Label holeParLabel = new Label("Par:");
     styleLabel(holeParLabel, widthLeftLabel);
     holePar.getChildren().add(holeParLabel);
 
     for (Hole h : holes) {
-      Label label1 = new Label(Double.toString(h.getLength()));
-      Label label2 = new Label(Integer.toString(h.getPar()));
-      Label label3 = new Label(Integer.toString(i));
+      Label length = new Label(Double.toString(h.getLength()));
+      Label par = new Label(Integer.toString(h.getPar()));
+      Label index = new Label(Integer.toString(i));
 
-      styleLabel(label1, widthOtherLabels);
-      styleLabel(label2, widthOtherLabels);
-      styleLabel(label3, widthOtherLabels);
+      styleLabel(length, widthOtherLabels);
+      styleLabel(par, widthOtherLabels);
+      styleLabel(index, widthOtherLabels);
 
-      holeLength.getChildren().add(label1);
-      holePar.getChildren().add(label2);
-      holeIndex.getChildren().add(label3);
+      holeLength.getChildren().add(length);
+      holePar.getChildren().add(par);
+      holeIndex.getChildren().add(index);
 
-      vboxPrefWidth += widthOtherLabels + 2; // +borderWidth
+      vboxPrefWidth += widthOtherLabels;
       i++;
     }
 
@@ -167,15 +173,21 @@ public class ScorecardViewController {
     holeIndex.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
     holeLength.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
     holePar.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
-
-    return heightVbox;
   }
 
+  /**
+   * Styles the label.
+   *
+   * @param l the label to be styled.
+   * @param width the preferred width of l.
+   */
   private void styleLabel(Label l, Double width) {
     l.setBorder(new Border(new BorderStroke(Color.BLACK,
         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
     l.setPrefWidth(width);
     l.setAlignment(Pos.CENTER);
+    int i = scorecard.getUsers().size() + 3;
+    l.setPrefHeight(scrollPane.getPrefHeight() / i);
 
   }
 }
