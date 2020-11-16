@@ -41,7 +41,7 @@ public class BookingSystemResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean updateBookingSystem(BookingSystem bookingSystem,
+  public Boolean updateBookingSystem(BookingSystem bookingSystem,
       @PathParam("courseId") UUID courseId) {
     var optional = persistenceModelDao.getCourses().stream()
         .filter(c -> c.getId().equals(courseId))

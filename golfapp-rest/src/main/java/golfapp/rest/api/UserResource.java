@@ -13,8 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 public class UserResource {
 
@@ -32,9 +30,9 @@ public class UserResource {
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response addUser(User user) {
-    persistenceModelDao.addUser(user);
-    return Response.ok().build();
+  @Produces(MediaType.APPLICATION_JSON)
+  public Boolean addUser(User user) {
+    return persistenceModelDao.addUser(user);
   }
 
   /**
@@ -48,15 +46,12 @@ public class UserResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateUser(User user, @PathParam("id") UUID id) {
-    var exists = persistenceModelDao.getUsers().stream().anyMatch(u -> u.getId().equals(id));
-
-    if (!exists) {
-      return Response.status(Status.NOT_FOUND).build();
+  public Boolean updateUser(User user, @PathParam("id") UUID id) {
+    if (persistenceModelDao.getUsers().stream().noneMatch(u -> u.getId().equals(id))) {
+      return false;
     }
 
-    var wasUpdated = persistenceModelDao.updateUser(user);
-    return Response.ok(wasUpdated).build();
+    return persistenceModelDao.updateUser(user);
   }
 
   /**
@@ -67,15 +62,15 @@ public class UserResource {
    */
   @Path("{id}")
   @DELETE
-  public Response deleteUser(@PathParam("id") UUID id) {
+  @Produces(MediaType.APPLICATION_JSON)
+  public Boolean deleteUser(@PathParam("id") UUID id) {
     var optional = persistenceModelDao.getUsers().stream().filter(u -> u.getId().equals(id))
         .findAny();
 
     if (optional.isEmpty()) {
-      return Response.status(Status.NOT_FOUND).build();
+      return false;
     }
 
-    persistenceModelDao.deleteUser(optional.orElseThrow());
-    return Response.ok().build();
+    return persistenceModelDao.deleteUser(optional.orElseThrow());
   }
 }
