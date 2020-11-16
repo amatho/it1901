@@ -8,6 +8,12 @@ import java.util.Map;
 abstract class AbstractListConverter<K, V> extends
     StdConverter<Map<K, V>, List<MapEntry<K, V>>> {
 
+  /**
+   * Converts a map to a list of {@link MapEntry}.
+   *
+   * @param map the map to convert into a list
+   * @return the converted list
+   */
   @Override
   public List<MapEntry<K, V>> convert(Map<K, V> map) {
     var entries = map.entrySet().stream().map(e -> {

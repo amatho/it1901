@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * A golf course.
+ */
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id", scope = Course.class)
 public class Course {
@@ -33,7 +36,14 @@ public class Course {
     this.holes = new ArrayList<>(holes);
   }
 
-  // Creator for Jackson
+  /**
+   * Create a new course. Meant as a creator for Jackson.
+   *
+   * @param id    course ID
+   * @param name  name of the course
+   * @param holes holes of the course
+   * @return a new course
+   */
   @JsonCreator
   public static Course createCourse(@JsonProperty("id") UUID id, @JsonProperty("name") String name,
       @JsonProperty("holes") List<Hole> holes) {
@@ -61,14 +71,32 @@ public class Course {
     return Collections.unmodifiableList(holes);
   }
 
+  /**
+   * Returns the hole with the given index.
+   *
+   * @param index the hole's index
+   * @return the hole
+   */
   public Hole getHole(int index) {
     return holes.get(index);
   }
 
+  /**
+   * Returns the index of the first occurrence of the given hole. Delegates to {@link
+   * List#indexOf(Object)}.
+   *
+   * @param hole the hole to find the index of
+   * @return index of the first occurrence, otherwise -1
+   */
   public int getHoleIndex(Hole hole) {
     return holes.indexOf(hole);
   }
 
+  /**
+   * Returns the number of holes in the course.
+   *
+   * @return number of holes in the course
+   */
   public int getCourseLength() {
     return holes.size();
   }

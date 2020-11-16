@@ -77,10 +77,8 @@ public class ScorecardViewController {
   }
 
   /**
-   * Sets up the HBox for each user and for the par-HBox.
-   * Fills each HBox with labels.
-   * Fills each label with the respective score or the par for the hole(par-HBox).
-   * Adds each HBox to leftInfo.
+   * Sets up the HBox for each user and for the par-HBox. Fills each HBox with labels. Fills each
+   * label with the respective score or the par for the hole(par-HBox). Adds each HBox to leftInfo.
    */
   private void playerSetup() {
     Set<User> users = scorecard.getUsers();
@@ -111,8 +109,7 @@ public class ScorecardViewController {
   }
 
   /**
-   * Sets up all the HBoxes in order.
-   * Fills in HBox holeLength, holePar and holeIndex.
+   * Sets up all the HBoxes in order. Fills in HBox holeLength, holePar and holeIndex.
    */
   private void horizontalBoxSetup() {
     int i = 1;
@@ -178,7 +175,7 @@ public class ScorecardViewController {
   /**
    * Styles the label.
    *
-   * @param l the label to be styled.
+   * @param l     the label to be styled.
    * @param width the preferred width of l.
    */
   private void styleLabel(Label l, Double width) {
@@ -188,6 +185,5 @@ public class ScorecardViewController {
     l.setAlignment(Pos.CENTER);
     int i = scorecard.getUsers().size() + 3;
     l.setPrefHeight(scrollPane.getPrefHeight() / i);
-
   }
 }

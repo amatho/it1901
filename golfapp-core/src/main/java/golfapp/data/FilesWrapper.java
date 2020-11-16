@@ -7,6 +7,9 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
 
+/**
+ * A wrapper for {@link Files}. Intended for use in testing.
+ */
 public class FilesWrapper {
 
   /**

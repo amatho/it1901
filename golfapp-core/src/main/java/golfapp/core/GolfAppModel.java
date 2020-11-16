@@ -20,6 +20,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The data model for the Golf App.
+ */
 public class GolfAppModel {
 
   private final Set<User> users;
@@ -43,7 +46,14 @@ public class GolfAppModel {
     this.bookingSystems = new HashMap<>(bookingSystems);
   }
 
-  // Creator for Jackson
+  /**
+   * Create a new Golf App model. Meant as a creator for Jackson.
+   *
+   * @param users          set of users
+   * @param courses        set of courses
+   * @param bookingSystems map of booking systems
+   * @return a new Golf App model
+   */
   @JsonCreator
   public static GolfAppModel createGolfAppModel(@JsonProperty("users") Set<User> users,
       @JsonProperty("courses") Set<Course> courses,
