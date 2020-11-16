@@ -76,6 +76,7 @@ public class BookingController {
     showBooking(false);
     confirmedBookingLabel.setVisible(false);
     availableTimesComboBox.setVisible(false);
+    outputLabel.setVisible(false);
     showCourse();
     showDate();
   }
@@ -102,7 +103,7 @@ public class BookingController {
     outputLabel.setVisible(true);
 
     if (courseComboBox.getValue() == null) {
-      outputLabel.setText("You must choose a course to see available times.");
+      outputLabel.setText("Please select a course.");
     } else {
       availableTimesComboBox.setValue(null);
       yourTimeText.setText("");

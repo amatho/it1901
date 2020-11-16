@@ -48,29 +48,32 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
     assertEquals(LocalDate.now(), controller.dateComboBox.getValue());
     assertNull(controller.courseComboBox.getValue());
     assertFalse(controller.confirmedBookingLabel.isVisible());
+    assertFalse(controller.outputLabel.isVisible());
+    assertFalse(controller.availableTimesComboBox.isVisible());
   }
 
   @Test
   void when_showAvailableTimes_isClicked(FxRobot robot) {
     robot.clickOn("#showAvailableTimes");
     assertFalse(controller.availableTimesComboBox.isVisible());
+    assertTrue(controller.outputLabel.isVisible());
+    assertEquals(controller.outputLabel.getText(), "Please select a course.");
     robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
     assertTrue(controller.availableTimesComboBox.isVisible());
+    assertEquals(controller.outputLabel.getText(), "Choose a time:");
   }
 
   @Test
-  void when_confirmBooking_isClicked_And_availableTimesComboBox_isNull(FxRobot robot) {
+  void when_availableTimesComboBox_isNull_confirmBooking_notVisible(FxRobot robot) {
     robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
     assertNull(controller.availableTimesComboBox.getValue());
-    robot.clickOn("#confirmBooking");
-    assertEquals("Your chosen time was not valid.",
-        controller.confirmedBookingLabel.getText());
+    assertFalse(controller.confirmBooking.isVisible());
   }
 
   @Test
@@ -80,6 +83,8 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
     robot.type(KeyCode.ENTER);
     robot.clickOn("#showAvailableTimes");
     assertNull(controller.availableTimesComboBox.getValue());
+    assertTrue(controller.availableTimesComboBox.isVisible());
+    assertTrue(controller.outputLabel.isVisible());
     robot.clickOn("#availableTimesComboBox").clickOn("09:00");
     assertEquals(LocalTime.of(9, 0), controller.availableTimesComboBox.getValue());
   }
@@ -93,6 +98,8 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
     robot.clickOn("#availableTimesComboBox").clickOn("08:45");
     robot.clickOn("#confirmBooking");
     assertEquals("Booking confirmed", controller.confirmedBookingLabel.getText());
+    assertFalse(controller.availableTimesComboBox.isVisible());
+    assertFalse(controller.outputLabel.isVisible());
   }
 
   @Test
