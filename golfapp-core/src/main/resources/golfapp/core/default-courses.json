@@ -4,14 +4,94 @@
     "name": "Oslo Golfklubb",
     "holes": [
       {
-        "length": 40,
+        "length": 120,
         "par": 3,
-        "height": 30
+        "height": 10
       },
       {
-        "length": 41,
+        "length": 300,
         "par": 4,
-        "height": 31
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 256,
+        "par": 4,
+        "height": 6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 410,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 120,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 300,
+        "par": 4,
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 256,
+        "par": 4,
+        "height": 6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 410,
+        "par": 5,
+        "height": 3
       }
     ]
   },
@@ -20,14 +100,49 @@
     "name": "Trondheim GK",
     "holes": [
       {
-        "length": 40,
-        "par": 3,
-        "height": 30
+        "length": 410,
+        "par": 5,
+        "height": 3
       },
       {
-        "length": 41,
+        "length": 120,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 300,
         "par": 4,
-        "height": 31
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 256,
+        "par": 4,
+        "height": 6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
       }
     ]
   },
@@ -36,14 +151,49 @@
     "name": "Bærum Golfklubb",
     "holes": [
       {
-        "length": 40,
-        "par": 4,
-        "height": 30
+        "length": 410,
+        "par": 5,
+        "height": 3
       },
       {
-        "length": 41,
+        "length": 450,
+        "par": 5,
+        "height": 10
+      },
+      {
+        "length": 306,
+        "par": 4,
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 230,
+        "par": 4,
+        "height": -1
+      },
+      {
+        "length": 266,
+        "par": 4,
+        "height": -6
+      },
+      {
+        "length": 420,
+        "par": 5,
+        "height": 3
+      },
+      {
+        "length": 143,
         "par": 3,
-        "height": 31
+        "height": 10
+      },
+      {
+        "length": 340,
+        "par": 5,
+        "height": -8
       }
     ]
   },
@@ -52,14 +202,29 @@
     "name": "Alta GK",
     "holes": [
       {
-        "length": 40,
-        "par": 3,
-        "height": 30
+        "length": 410,
+        "par": 5,
+        "height": 3
       },
       {
-        "length": 41,
+        "length": 140,
+        "par": 3,
+        "height": 10
+      },
+      {
+        "length": 300,
         "par": 4,
-        "height": 31
+        "height": 9
+      },
+      {
+        "length": 432,
+        "par": 5,
+        "height": -8
+      },
+      {
+        "length": 299,
+        "par": 4,
+        "height": -3
       }
     ]
   }

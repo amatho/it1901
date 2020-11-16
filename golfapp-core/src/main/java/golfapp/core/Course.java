@@ -122,6 +122,6 @@ public class Course {
 
   @Override
   public String toString() {
-    return name;
+    return name + " (ID: " + id + ")";
   }
 }

@@ -2,8 +2,8 @@ package golfapp.rest.api;
 
 import golfapp.core.BookingSystem;
 import golfapp.core.Course;
-import golfapp.core.GolfAppModel;
 import golfapp.data.BookingSystemsListConverter;
+import golfapp.data.GolfAppModelDao;
 import golfapp.data.MapEntry;
 import java.util.List;
 import java.util.UUID;
@@ -17,17 +17,17 @@ import javax.ws.rs.core.MediaType;
 
 public class BookingSystemResource {
 
-  private final GolfAppModel golfAppModel;
+  private final GolfAppModelDao persistenceModelDao;
 
-  public BookingSystemResource(GolfAppModel golfAppModel) {
-    this.golfAppModel = golfAppModel;
+  public BookingSystemResource(GolfAppModelDao persistenceModelDao) {
+    this.persistenceModelDao = persistenceModelDao;
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<MapEntry<Course, BookingSystem>> getBookingSystems() {
     var converter = new BookingSystemsListConverter();
-    return converter.convert(golfAppModel.getBookingSystems());
+    return converter.convert(persistenceModelDao.getBookingSystems());
   }
 
   /**
@@ -43,7 +43,7 @@ public class BookingSystemResource {
   @Produces(MediaType.APPLICATION_JSON)
   public boolean updateBookingSystem(BookingSystem bookingSystem,
       @PathParam("courseId") UUID courseId) {
-    var optional = golfAppModel.getCourses().stream()
+    var optional = persistenceModelDao.getCourses().stream()
         .filter(c -> c.getId().equals(courseId))
         .findAny();
 
@@ -52,7 +52,7 @@ public class BookingSystemResource {
     }
 
     var course = optional.orElseThrow();
-    golfAppModel.updateBookingSystem(course, bookingSystem);
+    persistenceModelDao.updateBookingSystem(course, bookingSystem);
     return true;
   }
 }

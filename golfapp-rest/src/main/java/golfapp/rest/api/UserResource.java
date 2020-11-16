@@ -1,7 +1,7 @@
 package golfapp.rest.api;
 
-import golfapp.core.GolfAppModel;
 import golfapp.core.User;
+import golfapp.data.GolfAppModelDao;
 import java.util.Set;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
@@ -18,22 +18,22 @@ import javax.ws.rs.core.Response.Status;
 
 public class UserResource {
 
-  private final GolfAppModel golfAppModel;
+  private final GolfAppModelDao persistenceModelDao;
 
-  public UserResource(GolfAppModel golfAppModel) {
-    this.golfAppModel = golfAppModel;
+  public UserResource(GolfAppModelDao persistenceModelDao) {
+    this.persistenceModelDao = persistenceModelDao;
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Set<User> getUsers() {
-    return golfAppModel.getUsers();
+    return persistenceModelDao.getUsers();
   }
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   public Response addUser(User user) {
-    golfAppModel.addUser(user);
+    persistenceModelDao.addUser(user);
     return Response.ok().build();
   }
 
@@ -49,13 +49,13 @@ public class UserResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response updateUser(User user, @PathParam("id") UUID id) {
-    var exists = golfAppModel.getUsers().stream().anyMatch(u -> u.getId().equals(id));
+    var exists = persistenceModelDao.getUsers().stream().anyMatch(u -> u.getId().equals(id));
 
     if (!exists) {
       return Response.status(Status.NOT_FOUND).build();
     }
 
-    var wasUpdated = golfAppModel.updateUser(user);
+    var wasUpdated = persistenceModelDao.updateUser(user);
     return Response.ok(wasUpdated).build();
   }
 
@@ -68,13 +68,14 @@ public class UserResource {
   @Path("{id}")
   @DELETE
   public Response deleteUser(@PathParam("id") UUID id) {
-    var optional = golfAppModel.getUsers().stream().filter(u -> u.getId().equals(id)).findAny();
+    var optional = persistenceModelDao.getUsers().stream().filter(u -> u.getId().equals(id))
+        .findAny();
 
     if (optional.isEmpty()) {
       return Response.status(Status.NOT_FOUND).build();
     }
 
-    golfAppModel.deleteUser(optional.orElseThrow());
+    persistenceModelDao.deleteUser(optional.orElseThrow());
     return Response.ok().build();
   }
 }

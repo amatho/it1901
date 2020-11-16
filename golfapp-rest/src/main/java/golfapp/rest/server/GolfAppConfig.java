@@ -1,6 +1,8 @@
 package golfapp.rest.server;
 
-import golfapp.core.GolfAppModel;
+import golfapp.data.GolfAppModelDao;
+import golfapp.data.InMemoryGolfAppModelDao;
+import golfapp.data.LocalGolfAppModelDao;
 import golfapp.rest.api.GolfAppModelService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -8,35 +10,33 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 public class GolfAppConfig extends ResourceConfig {
 
-  private GolfAppModel golfAppModel;
-
   /**
-   * Create a Golf App config with the given model.
+   * Create a Golf App config with the given model DAO.
    *
-   * @param golfAppModel the Golf App model to use
+   * @param persistenceModelDao the {@link GolfAppModelDao} to use for persistence
    */
-  public GolfAppConfig(GolfAppModel golfAppModel) {
-    setGolfAppModel(golfAppModel);
-    register(GolfAppModelService.class);
-    register(ObjectMapperProvider.class);
-    register(JacksonFeature.class);
+  public GolfAppConfig(GolfAppModelDao persistenceModelDao) {
     register(new AbstractBinder() {
       @Override
       protected void configure() {
-        bind(GolfAppConfig.this.golfAppModel);
+        bind(persistenceModelDao).to(GolfAppModelDao.class);
       }
     });
+
+    register(GolfAppModelService.class);
+    register(ObjectMapperProvider.class);
+    register(JacksonFeature.class);
   }
 
   public GolfAppConfig() {
-    this(GolfAppModel.createDefaultModel());
+    this(defaultGolfAppModelDao());
   }
 
-  public GolfAppModel getGolfAppModel() {
-    return golfAppModel;
-  }
+  private static GolfAppModelDao defaultGolfAppModelDao() {
+    if (Boolean.getBoolean("maven.test.integration")) {
+      return new InMemoryGolfAppModelDao();
+    }
 
-  public void setGolfAppModel(GolfAppModel golfAppModel) {
-    this.golfAppModel = golfAppModel;
+    return new LocalGolfAppModelDao();
   }
 }

@@ -76,6 +76,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.testfx</groupId>
       <artifactId>testfx-junit5</artifactId>
       <scope>test</scope>
@@ -131,6 +136,12 @@
             </goals>
             <configuration>
               <daemon>true</daemon>
+              <systemProperties>
+                <systemProperty>
+                  <name>maven.test.integration</name>
+                  <value>true</value>
+                </systemProperty>
+              </systemProperties>
             </configuration>
           </execution>
           <execution>
@@ -145,6 +156,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <maven.test.integration>true</maven.test.integration>
+          </systemPropertyVariables>
+        </configuration>
         <executions>
           <execution>
             <id>integration-test</id>
