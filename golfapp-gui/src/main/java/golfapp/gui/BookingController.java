@@ -18,15 +18,13 @@ import javafx.scene.control.Label;
 
 public class BookingController {
 
-  private final AppManager appManager;
+  final AppManager appManager;
   private final Map<Course, BookingSystem> bookingSystems;
 
   @FXML
   ComboBox<LocalDate> dateComboBox;
   @FXML
   ComboBox<Course> courseComboBox;
-  @FXML
-  Button showAvailableTimes;
   @FXML
   Label outputLabel;
   @FXML
@@ -73,16 +71,54 @@ public class BookingController {
     availableTimesComboBox.setCellFactory(l -> new LocalTimeCell());
     availableTimesComboBox.setButtonCell(new LocalTimeCell());
 
-    showBooking(false);
+    availableTimesComboBox.getSelectionModel().selectedItemProperty()
+        .addListener((availableTimesComboBox,
+            oldValue, newValue) -> {
+          if (newValue == null) {
+            yourTimeText.setText("");
+            confirmBooking.setVisible(false);
+          } else {
+            yourTimeText
+                .setText(newValue.format(DateTimeFormatter.ofPattern("HH:mm")));
+            confirmedBookingLabel.setText("");
+            confirmBooking.setVisible(true);
+          }
+        });
+
+    dateComboBox.getSelectionModel().selectedItemProperty()
+        .addListener((dateComboBox,
+            oldValue, newValue) -> {
+          if (newValue == null) {
+            yourDateText.setText("");
+          } else {
+            yourDateText
+                .setText(newValue.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            updateAvailableTimes();
+          }
+        });
+
+    courseComboBox.getSelectionModel().selectedItemProperty()
+        .addListener((courseComboBox,
+            oldValue, newValue) -> {
+          if (newValue == null) {
+            yourCourseText.setText("");
+          } else {
+            yourCourseText.setText(newValue.getName());
+            updateAvailableTimes();
+          }
+        });
+
+    showBooking(true);
     confirmedBookingLabel.setVisible(false);
-    availableTimesComboBox.setVisible(false);
-    outputLabel.setVisible(false);
-    showCourse();
-    showDate();
+    confirmBooking.setVisible(false);
+    availableTimesComboBox.setVisible(true);
+    outputLabel.setVisible(true);
+    updateCourses();
+    yourMailText.setText(appManager.getUser().getEmail());
+    updateDates();
   }
 
-  @FXML
-  void showDate() {
+  void updateDates() {
     var dateChoiceBoxItems = dateComboBox.getItems();
     bookingSystems.values().stream().flatMap(BookingSystem::getAvailableDates).distinct()
         .forEach(dateChoiceBoxItems::add);
@@ -90,82 +126,46 @@ public class BookingController {
     dateComboBox.getSelectionModel().selectFirst();
   }
 
-  @FXML
-  void showCourse() {
+  void updateCourses() {
     courseComboBox.getItems().addAll(bookingSystems.keySet());
   }
 
-  @FXML
-  void showAvailableTimes() {
-    availableTimesComboBox.getItems().clear();
-    confirmedBookingLabel.setVisible(false);
-    showBooking(false);
-    outputLabel.setVisible(true);
+  void updateAvailableTimes() {
+    Course selectedCourse = courseComboBox.getValue();
+    LocalDate selectedDate = dateComboBox.getValue();
 
-    if (courseComboBox.getValue() == null) {
-      outputLabel.setText("Please select a course.");
-    } else {
-      availableTimesComboBox.setValue(null);
-      yourTimeText.setText("");
-
-      Course selectedCourse = courseComboBox.getValue();
-      LocalDate selectedDate = dateComboBox.getValue();
-      var availableTimesComboBoxItems = availableTimesComboBox.getItems();
-
-      bookingSystems.get(selectedCourse).getAvailableTimes(selectedDate)
-          .map(LocalDateTime::toLocalTime)
-          .forEach(availableTimesComboBoxItems::add);
-
-      outputLabel.setText("Choose a time:");
-      availableTimesComboBox.setVisible(true);
-
-      yourCourseText.setText(courseComboBox.getValue().getName());
-      yourDateText.setText(dateComboBox.getValue().format(DateTimeFormatter.ISO_DATE));
-      dateComboBox.getValue();
-      yourMailText.setText(appManager.getUser().getEmail());
-      availableTimesComboBox.getSelectionModel().selectedItemProperty()
-          .addListener((availableTimesComboBox,
-              oldValue, newValue) -> {
-            if (newValue == null) {
-              yourTimeText.setText("");
-            } else {
-              yourTimeText
-                  .setText(newValue.format(DateTimeFormatter.ofPattern("HH:mm")));
-              showBooking(true);
-
-            }
-          });
+    if (selectedCourse == null || selectedDate == null) {
+      availableTimesComboBox.setVisible(false);
+      outputLabel.setVisible(false);
+      return;
     }
-  }
 
-  @FXML
-  void cleanBooking() {
-    availableTimesComboBox.setValue(null);
-    yourTimeText.setText("");
+    availableTimesComboBox.setVisible(true);
+    outputLabel.setVisible(true);
+    var availableTimesComboBoxItems = availableTimesComboBox.getItems();
+
+    availableTimesComboBoxItems.clear();
+    bookingSystems.get(selectedCourse).getAvailableTimes(selectedDate)
+        .map(LocalDateTime::toLocalTime)
+        .forEach(availableTimesComboBoxItems::add);
+
+    yourCourseText.setText(courseComboBox.getValue().getName());
+    yourDateText.setText(dateComboBox.getValue().format(DateTimeFormatter.ISO_DATE));
   }
 
   @FXML
   void confirmBooking() {
     confirmedBookingLabel.setVisible(true);
-    confirmedBookingLabel.setText("");
-    if (availableTimesComboBox.getValue() == null) {
-      confirmedBookingLabel.setText("Your chosen time was not valid.");
-    } else {
-      confirmedBookingLabel.setText("Booking confirmed");
+    confirmedBookingLabel.setText("Booking confirmed");
 
-      Course selectedCourse = courseComboBox.getValue();
-      LocalDateTime bookingTime = dateComboBox.getValue()
-          .atTime(availableTimesComboBox.getValue());
+    Course selectedCourse = courseComboBox.getValue();
+    LocalDateTime bookingTime = dateComboBox.getValue()
+        .atTime(availableTimesComboBox.getValue());
 
-      var bookingSystem = bookingSystems.get(selectedCourse);
-      bookingSystem.addBooking(new Booking(appManager.getUser(), bookingTime));
-      appManager.getModelDao().updateBookingSystem(selectedCourse, bookingSystem);
-
-      cleanBooking();
-      showBooking(false);
-      availableTimesComboBox.setVisible(false);
-      outputLabel.setVisible(false);
-    }
+    var bookingSystem = bookingSystems.get(selectedCourse);
+    bookingSystem.addBooking(new Booking(appManager.getUser(), bookingTime));
+    appManager.getModelDao().updateBookingSystem(selectedCourse, bookingSystem);
+    updateAvailableTimes();
   }
 
   @FXML
@@ -181,5 +181,4 @@ public class BookingController {
     yourMailText.setVisible(b);
     yourTimeText.setVisible(b);
   }
-
 }

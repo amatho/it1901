@@ -47,33 +47,19 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
   void testInitialize() {
     assertEquals(LocalDate.now(), controller.dateComboBox.getValue());
     assertNull(controller.courseComboBox.getValue());
-    assertFalse(controller.confirmedBookingLabel.isVisible());
-    assertFalse(controller.outputLabel.isVisible());
-    assertFalse(controller.availableTimesComboBox.isVisible());
+    assertNull(controller.availableTimesComboBox.getValue());
+    assertEquals(controller.yourMailText.getText(), controller.appManager.getUser().getEmail());
   }
 
   @Test
-  void when_showAvailableTimes_isClicked(FxRobot robot) {
-    robot.clickOn("#showAvailableTimes");
-    assertFalse(controller.availableTimesComboBox.isVisible());
-    assertTrue(controller.outputLabel.isVisible());
-    assertEquals(controller.outputLabel.getText(), "Please select a course.");
+  void confirmBooking_notVisible_unlessAllSelected(FxRobot robot) {
     robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
-    robot.clickOn("#showAvailableTimes");
-    assertTrue(controller.availableTimesComboBox.isVisible());
-    assertEquals(controller.outputLabel.getText(), "Choose a time:");
-  }
-
-  @Test
-  void when_availableTimesComboBox_isNull_confirmBooking_notVisible(FxRobot robot) {
-    robot.clickOn("#courseComboBox");
-    robot.type(KeyCode.DOWN);
-    robot.type(KeyCode.ENTER);
-    robot.clickOn("#showAvailableTimes");
     assertNull(controller.availableTimesComboBox.getValue());
     assertFalse(controller.confirmBooking.isVisible());
+    robot.clickOn("#availableTimesComboBox").clickOn("09:00");
+    assertTrue(controller.confirmBooking.isVisible());
   }
 
   @Test
@@ -81,12 +67,10 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
     robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
-    robot.clickOn("#showAvailableTimes");
     assertNull(controller.availableTimesComboBox.getValue());
-    assertTrue(controller.availableTimesComboBox.isVisible());
-    assertTrue(controller.outputLabel.isVisible());
     robot.clickOn("#availableTimesComboBox").clickOn("09:00");
     assertEquals(LocalTime.of(9, 0), controller.availableTimesComboBox.getValue());
+    assertEquals(controller.yourTimeText.getText(), "09:00");
   }
 
   @Test
@@ -94,17 +78,39 @@ public class BookingControllerTest extends AbstractControllerTest<BookingControl
     robot.clickOn("#courseComboBox");
     robot.type(KeyCode.DOWN);
     robot.type(KeyCode.ENTER);
-    robot.clickOn("#showAvailableTimes");
     robot.clickOn("#availableTimesComboBox").clickOn("08:45");
+    assertTrue(controller.confirmBooking.isVisible());
     robot.clickOn("#confirmBooking");
     assertEquals("Booking confirmed", controller.confirmedBookingLabel.getText());
-    assertFalse(controller.availableTimesComboBox.isVisible());
-    assertFalse(controller.outputLabel.isVisible());
   }
 
   @Test
-  void test_cleanBooking() {
+  void test_updateAvailableTimes(FxRobot robot) {
+    robot.clickOn("#courseComboBox");
+    robot.type(KeyCode.DOWN);
+    robot.type(KeyCode.ENTER);
+    robot.clickOn("#availableTimesComboBox").clickOn("08:45");
+    robot.clickOn("#confirmBooking");
     assertNull(controller.availableTimesComboBox.getValue());
-    assertEquals("", controller.yourTimeText.getText());
+    robot.clickOn("#availableTimesComboBox").clickOn("09:00");
+    assertTrue(controller.confirmedBookingLabel.getText().isEmpty());
+  }
+
+  @Test
+  void test_Listeners(FxRobot robot) {
+    robot.clickOn("#courseComboBox");
+    robot.type(KeyCode.DOWN);
+    robot.type(KeyCode.ENTER);
+    robot.clickOn("#availableTimesComboBox").clickOn("08:45");
+    robot.clickOn("#courseComboBox");
+    robot.type(KeyCode.DOWN);
+    robot.type(KeyCode.DOWN);
+    robot.type(KeyCode.ENTER);
+    assertNull(controller.availableTimesComboBox.getValue());
+    robot.clickOn("#availableTimesComboBox").clickOn("09:00");
+    robot.clickOn("#dateComboBox");
+    robot.type(KeyCode.DOWN);
+    robot.type(KeyCode.ENTER);
+    assertNull(controller.availableTimesComboBox.getValue());
   }
 }

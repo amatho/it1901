@@ -12,29 +12,24 @@
          <font>
             <Font name="System Bold" size="40.0" />
          </font></Label>
-      <Label layoutX="45.0" layoutY="171.0" text="Course:">
+      <Label layoutX="50.0" layoutY="120.0" text="Course:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="courseComboBox" layoutX="45.0" layoutY="199.0" prefHeight="25.0" prefWidth="176.0" />
-      <Label layoutX="45.0" layoutY="239.0" prefHeight="18.0" prefWidth="131.0" text="Date:">
+      <ComboBox fx:id="courseComboBox" layoutX="50.0" layoutY="150.0" prefHeight="25.0" prefWidth="198.0" />
+      <Label layoutX="300.0" layoutY="120.0" prefHeight="18.0" prefWidth="131.0" text="Date:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="dateComboBox" layoutX="45.0" layoutY="264.0" prefHeight="25.0" prefWidth="176.0" />
-      <Button fx:id="showAvailableTimes" layoutX="45.0" layoutY="334.0" mnemonicParsing="false" onAction="#showAvailableTimes" prefHeight="37.0" prefWidth="176.0" text="Search for available times">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <Label fx:id="outputLabel" layoutX="305.0" layoutY="171.0" prefHeight="37.0" prefWidth="220.0">
+      <ComboBox fx:id="dateComboBox" layoutX="300.0" layoutY="150.0" prefHeight="25.0" prefWidth="176.0" />
+      <Label fx:id="outputLabel" layoutX="550.0" layoutY="120.0" prefHeight="37.0" prefWidth="220.0" text="Choose a time:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="yourBooking" layoutX="535.0" layoutY="171.0" prefHeight="37.0" prefWidth="198.0" text="Booking:">
+      <Label fx:id="yourBooking" layoutX="50.0" layoutY="270.0" prefHeight="37.0" prefWidth="198.0" text="Booking:">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -44,42 +39,42 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="yourCourseLabel" layoutX="535.0" layoutY="221.0" prefHeight="25.0" prefWidth="119.0" text="Course:">
+      <Label fx:id="yourCourseLabel" layoutX="50.0" layoutY="327.0" prefHeight="25.0" prefWidth="119.0" text="Course:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourDateLabel" layoutX="535.0" layoutY="257.0" prefHeight="25.0" prefWidth="119.0" text="Date:">
+      <Label fx:id="yourDateLabel" layoutX="50.0" layoutY="362.0" prefHeight="25.0" prefWidth="119.0" text="Date:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourTimeLabel" layoutX="535.0" layoutY="294.0" prefHeight="25.0" prefWidth="119.0" text="Time:">
+      <Label fx:id="yourTimeLabel" layoutX="50.0" layoutY="397.0" prefHeight="25.0" prefWidth="119.0" text="Time:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourCourseText" layoutX="600.0" layoutY="221.0" prefHeight="25.0" prefWidth="141.0">
+      <Label fx:id="yourCourseText" layoutX="110.0" layoutY="327.0" prefHeight="25.0" prefWidth="141.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourDateText" layoutX="600.0" layoutY="257.0" prefHeight="25.0" prefWidth="141.0">
+      <Label fx:id="yourDateText" layoutX="110.0" layoutY="362.0" prefHeight="25.0" prefWidth="141.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourTimeText" layoutX="600.0" layoutY="294.0" prefHeight="25.0" prefWidth="141.0">
+      <Label fx:id="yourTimeText" layoutX="110.0" layoutY="397.0" prefHeight="25.0" prefWidth="141.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourMailText" layoutX="600.0" layoutY="333.0" prefHeight="25.0" prefWidth="170.0">
+      <Label fx:id="yourMailText" layoutX="110.0" layoutY="433.0" prefHeight="25.0" prefWidth="170.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="yourMailLabel" layoutX="535.0" layoutY="333.0" prefHeight="25.0" prefWidth="119.0" text="Mail:">
+      <Label fx:id="yourMailLabel" layoutX="50.0" layoutY="433.0" prefHeight="25.0" prefWidth="119.0" text="Mail:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -89,6 +84,6 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="availableTimesComboBox" layoutX="305.0" layoutY="199.0" prefWidth="150.0" />
+      <ComboBox fx:id="availableTimesComboBox" layoutX="550.0" layoutY="150.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
