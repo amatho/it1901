@@ -1,15 +1,17 @@
 # Developer documentation
-Our focus have been to implement a simple golf app with a functional schedule for booking.
-A user should be able to track his score while playing, and should also be able to create an account.
 
 ## User stories
-The user stories contains a screenshot section. This section includes both a screenshot of the app 
-we used for inspiration, and our actual implementation. They are not supposed to look identical.
 
-* [First user story](./U1.md "User story 1")
-* [Second user story](./U2.md "User story 2")
-* [Third user story](./U3.md "User story 3")
-* [Fourth user story](./U4.md "User story 4")
+The user stories for the app. Each user story contains a screenshot section. This section includes
+both a screenshot of our inspiration for the feature, and our actual implementation. The inspiration
+and implementation may differ in appearance to various degrees, and are not meant to look identical.
 
-## Structure
-To see the project structure, visit [Architecture](./Architecture.md "Structure")
+* [First user story](./U1.md)
+* [Second user story](./U2.md)
+* [Third user story](./U3.md)
+* [Fourth user story](./U4.md)
+
+## Architecture
+
+[See here](./Architecture.md) for the app's architecture together with package, class, and sequence
+diagrams.

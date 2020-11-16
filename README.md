@@ -2,6 +2,9 @@
 
 # Golf App
 
+A simple golf app with a booking system, scorecard creation, and user profile - inspired by existing
+golf apps for mobile phones.
+
 ## Build and run
 
 All Maven commands should be ran from the **project root** since some sub-modules depend on others.
@@ -30,4 +33,5 @@ location is as follows:
 * On Windows, `%LOCALAPPDATA%\GolfApp`
 
 ## Further documentation
+
 For further documentation, visit the [developer documentation](./docs/README.md).
