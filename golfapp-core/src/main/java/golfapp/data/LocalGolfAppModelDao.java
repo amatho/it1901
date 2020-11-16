@@ -107,10 +107,12 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
    * {@inheritDoc}
    */
   @Override
-  public void addUser(User u) {
+  public boolean addUser(User u) {
     var model = readModel();
-    model.addUser(u);
+    var wasAdded = model.addUser(u);
     writeModel(model);
+
+    return wasAdded;
   }
 
   /**
@@ -129,10 +131,12 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
    * {@inheritDoc}
    */
   @Override
-  public void deleteUser(User u) {
+  public boolean deleteUser(User u) {
     var model = readModel();
-    model.deleteUser(u);
+    var wasDeleted = model.deleteUser(u);
     writeModel(model);
+
+    return wasDeleted;
   }
 
   /**
@@ -157,9 +161,11 @@ public class LocalGolfAppModelDao implements GolfAppModelDao {
    * {@inheritDoc}
    */
   @Override
-  public void updateBookingSystem(Course c, BookingSystem b) {
+  public boolean updateBookingSystem(Course c, BookingSystem b) {
     var model = readModel();
-    model.updateBookingSystem(c, b);
+    var wasUpdated = model.updateBookingSystem(c, b);
     writeModel(model);
+
+    return wasUpdated;
   }
 }

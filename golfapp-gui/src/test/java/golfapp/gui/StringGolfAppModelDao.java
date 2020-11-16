@@ -57,8 +57,8 @@ class StringGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void addUser(User u) {
-    fileModelDao.addUser(u);
+  public boolean addUser(User u) {
+    return fileModelDao.addUser(u);
   }
 
   @Override
@@ -67,8 +67,8 @@ class StringGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void deleteUser(User u) {
-    fileModelDao.deleteUser(u);
+  public boolean deleteUser(User u) {
+    return fileModelDao.deleteUser(u);
   }
 
   @Override
@@ -82,7 +82,7 @@ class StringGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void updateBookingSystem(Course c, BookingSystem b) {
-    fileModelDao.updateBookingSystem(c, b);
+  public boolean updateBookingSystem(Course c, BookingSystem b) {
+    return fileModelDao.updateBookingSystem(c, b);
   }
 }

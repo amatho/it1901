@@ -82,8 +82,8 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
    * {@inheritDoc}
    */
   @Override
-  public void addUser(User u) {
-    put("users", u, mapper.reader());
+  public boolean addUser(User u) {
+    return this.<Boolean, User>put("users", u, mapper.readerFor(Boolean.class)).body();
   }
 
   /**
@@ -99,8 +99,9 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
    * {@inheritDoc}
    */
   @Override
-  public void deleteUser(User u) {
-    delete("users/" + uriEncode(u.getId().toString()), mapper.reader());
+  public boolean deleteUser(User u) {
+    return this.<Boolean>delete("users/" + uriEncode(u.getId().toString()),
+        mapper.readerFor(Boolean.class)).body();
   }
 
   /**
@@ -129,9 +130,9 @@ public class RemoteGolfAppModelDao implements GolfAppModelDao {
    * {@inheritDoc}
    */
   @Override
-  public void updateBookingSystem(Course c, BookingSystem b) {
-    post("bookingsystems/" + uriEncode(c.getId().toString()), b,
-        mapper.readerFor(Boolean.class));
+  public boolean updateBookingSystem(Course c, BookingSystem b) {
+    return this.<Boolean, BookingSystem>post("bookingsystems/" + uriEncode(c.getId().toString()), b,
+        mapper.readerFor(Boolean.class)).body();
   }
 
   private <R> HttpResponse<R> get(String path, ObjectReader objectReader) {

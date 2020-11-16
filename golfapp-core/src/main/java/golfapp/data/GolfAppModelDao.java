@@ -30,14 +30,15 @@ public interface GolfAppModelDao {
    * Add a new user.
    *
    * @param u the user to add
+   * @return true if the user was added
    */
-  void addUser(User u);
+  boolean addUser(User u);
 
   /**
    * Update an existing user. Uses the given user's ID to find the user to update.
    *
    * @param u the updated user
-   * @return true if the user was updated, false otherwise
+   * @return true if the user was updated
    */
   boolean updateUser(User u);
 
@@ -45,8 +46,9 @@ public interface GolfAppModelDao {
    * Delete a user.
    *
    * @param u the user to delete
+   * @return true if the user was deleted
    */
-  void deleteUser(User u);
+  boolean deleteUser(User u);
 
   /**
    * Get the courses.
@@ -67,6 +69,7 @@ public interface GolfAppModelDao {
    *
    * @param c the belonging course
    * @param b the updated booking system
+   * @return true if the booking system was updated
    */
-  void updateBookingSystem(Course c, BookingSystem b);
+  boolean updateBookingSystem(Course c, BookingSystem b);
 }

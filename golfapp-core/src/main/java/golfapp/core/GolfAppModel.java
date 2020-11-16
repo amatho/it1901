@@ -71,21 +71,23 @@ public class GolfAppModel {
   }
 
   /**
-   * Adds a new user.
+   * Add a user.
    *
    * @param user user to add
+   * @return true if the user was added
    */
-  public void addUser(User user) {
-    users.add(user);
+  public boolean addUser(User user) {
+    return users.add(user);
   }
 
   /**
-   * Removes the given user.
+   * Delete a user.
    *
-   * @param user user to remove
+   * @param user user to delete
+   * @return true if the user was deleted
    */
-  public void deleteUser(User user) {
-    users.remove(user);
+  public boolean deleteUser(User user) {
+    return users.remove(user);
   }
 
   /**
@@ -122,14 +124,15 @@ public class GolfAppModel {
   }
 
   /**
-   * Updates the mapping for the given course, if present, with the given booking system as the new
-   * value.
+   * Updates the booking system belonging to the given course.
    *
-   * @param course        the course for the booking system
+   * @param course        the belonging course
    * @param bookingSystem the updated booking system
+   * @return true if the booking system was updated
    */
-  public void updateBookingSystem(Course course, BookingSystem bookingSystem) {
-    bookingSystems.computeIfPresent(course, (c, bs) -> bookingSystem);
+  public boolean updateBookingSystem(Course course, BookingSystem bookingSystem) {
+    var newVal = bookingSystems.computeIfPresent(course, (c, bs) -> bookingSystem);
+    return newVal != null;
   }
 
   /**
