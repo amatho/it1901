@@ -75,6 +75,7 @@ public class BookingController {
 
     showBooking(false);
     confirmedBookingLabel.setVisible(false);
+    availableTimesComboBox.setVisible(false);
     showCourse();
     showDate();
   }
@@ -97,6 +98,9 @@ public class BookingController {
   void showAvailableTimes() {
     availableTimesComboBox.getItems().clear();
     confirmedBookingLabel.setVisible(false);
+    showBooking(false);
+    outputLabel.setVisible(true);
+
     if (courseComboBox.getValue() == null) {
       outputLabel.setText("You must choose a course to see available times.");
     } else {
@@ -111,8 +115,8 @@ public class BookingController {
           .map(LocalDateTime::toLocalTime)
           .forEach(availableTimesComboBoxItems::add);
 
-      outputLabel.setText("Choose an available time");
-      showBooking(true);
+      outputLabel.setText("Choose a time:");
+      availableTimesComboBox.setVisible(true);
 
       yourCourseText.setText(courseComboBox.getValue().getName());
       yourDateText.setText(dateComboBox.getValue().format(DateTimeFormatter.ISO_DATE));
@@ -126,6 +130,8 @@ public class BookingController {
             } else {
               yourTimeText
                   .setText(newValue.format(DateTimeFormatter.ofPattern("HH:mm")));
+              showBooking(true);
+
             }
           });
     }
@@ -156,12 +162,13 @@ public class BookingController {
 
       cleanBooking();
       showBooking(false);
+      availableTimesComboBox.setVisible(false);
+      outputLabel.setVisible(false);
     }
   }
 
   @FXML
   void showBooking(Boolean b) {
-    availableTimesComboBox.setVisible(b);
     yourBooking.setVisible(b);
     confirmBooking.setVisible(b);
     yourCourseLabel.setVisible(b);
