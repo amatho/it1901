@@ -60,12 +60,24 @@ public class GolfAppModel {
     return Collections.unmodifiableSet(users);
   }
 
-  public void addUser(User user) {
-    users.add(user);
+  /**
+   * Add a user.
+   *
+   * @param user user to add
+   * @return true if the user was added
+   */
+  public boolean addUser(User user) {
+    return users.add(user);
   }
 
-  public void deleteUser(User user) {
-    users.remove(user);
+  /**
+   * Delete a user.
+   *
+   * @param user user to delete
+   * @return true if the user was deleted
+   */
+  public boolean deleteUser(User user) {
+    return users.remove(user);
   }
 
   /**
@@ -101,8 +113,16 @@ public class GolfAppModel {
     return Collections.unmodifiableMap(bookingSystems);
   }
 
-  public void updateBookingSystem(Course course, BookingSystem bookingSystem) {
-    bookingSystems.computeIfPresent(course, (c, bs) -> bookingSystem);
+  /**
+   * Updates the booking system belonging to the given course.
+   *
+   * @param course        the belonging course
+   * @param bookingSystem the updated booking system
+   * @return true if the booking system was updated
+   */
+  public boolean updateBookingSystem(Course course, BookingSystem bookingSystem) {
+    var newVal = bookingSystems.computeIfPresent(course, (c, bs) -> bookingSystem);
+    return newVal != null;
   }
 
   /**

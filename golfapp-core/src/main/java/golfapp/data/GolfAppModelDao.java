@@ -13,15 +13,15 @@ public interface GolfAppModelDao {
 
   Set<User> getUsers();
 
-  void addUser(User u);
+  boolean addUser(User u);
 
   boolean updateUser(User u);
 
-  void deleteUser(User u);
+  boolean deleteUser(User u);
 
   Set<Course> getCourses();
 
   Map<Course, BookingSystem> getBookingSystems();
 
-  void updateBookingSystem(Course c, BookingSystem b);
+  boolean updateBookingSystem(Course c, BookingSystem b);
 }

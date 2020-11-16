@@ -22,8 +22,8 @@ public class InMemoryGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void addUser(User u) {
-    model.addUser(u);
+  public boolean addUser(User u) {
+    return model.addUser(u);
   }
 
   @Override
@@ -32,8 +32,8 @@ public class InMemoryGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void deleteUser(User u) {
-    model.deleteUser(u);
+  public boolean deleteUser(User u) {
+    return model.deleteUser(u);
   }
 
   @Override
@@ -47,7 +47,7 @@ public class InMemoryGolfAppModelDao implements GolfAppModelDao {
   }
 
   @Override
-  public void updateBookingSystem(Course c, BookingSystem b) {
-    model.updateBookingSystem(c, b);
+  public boolean updateBookingSystem(Course c, BookingSystem b) {
+    return model.updateBookingSystem(c, b);
   }
 }
