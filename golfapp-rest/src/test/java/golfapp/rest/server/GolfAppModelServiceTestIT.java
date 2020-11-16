@@ -60,7 +60,6 @@ public class GolfAppModelServiceTestIT {
     robot.clickOn("#bookingButton");
     robot.clickOn("#courseComboBox").clickOn("Trondheim GK (9-holes)");
     robot.clickOn("#dateComboBox").type(KeyCode.DOWN).type(KeyCode.ENTER);
-    robot.clickOn("#showAvailableTimes");
     robot.clickOn("#availableTimesComboBox").clickOn("09:00");
     robot.clickOn("#confirmBooking");
 
