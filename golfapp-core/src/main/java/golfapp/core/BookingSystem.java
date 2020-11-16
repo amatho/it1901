@@ -51,7 +51,8 @@ public class BookingSystem {
     var bs = new BookingSystem();
 
     if (bookings != null) {
-      bookings.forEach(bs::addBooking);
+      bookings.stream().filter(b -> !b.getDateTime().toLocalDate().isBefore(LocalDate.now()))
+          .forEach(bs::addBooking);
     }
 
     return bs;
