@@ -9,16 +9,16 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golfapp.gui.LogInController">
   <children>
     <TextField fx:id="email" layoutX="194.0" layoutY="238.0" />
-    <Label layoutX="74.0" layoutY="25.0" prefHeight="137.0" prefWidth="453.0" text="THE BEST GOLF APP">
+    <Label layoutX="74.0" layoutY="50.0" text="THE BEST GOLF APP">
       <font>
         <Font size="48.0" />
       </font>
     </Label>
-    <Button fx:id="logIn" layoutX="355.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleLogIn" text="Log in" />
+    <Button fx:id="logIn" layoutX="360.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleLogIn" text="Log in" />
     <TextField fx:id="nameField" layoutX="194.0" layoutY="200.0" />
     <Button fx:id="newUser" layoutX="194.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleNewUserButton" text="New User" />
-    <Label layoutX="156.0" layoutY="238.0" prefHeight="27.0" prefWidth="38.0" text="e-mail" />
-      <Label fx:id="nameLabel" layoutX="156.0" layoutY="200.0" prefHeight="27.0" prefWidth="38.0" text="Name:" />
-      <Label fx:id="status" layoutX="194.0" layoutY="176.0" prefHeight="17.0" prefWidth="402.0" text="Status: " textFill="RED" />
+    <Label layoutX="150.0" layoutY="243.0" text="E-mail:" />
+      <Label fx:id="nameLabel" layoutX="151.0" layoutY="205.0" text="Name:" />
+      <Label fx:id="status" alignment="TOP_LEFT" layoutX="194.0" layoutY="159.0" prefHeight="35.0" prefWidth="212.0" text="Status: " textFill="RED" />
   </children>
 </AnchorPane>
