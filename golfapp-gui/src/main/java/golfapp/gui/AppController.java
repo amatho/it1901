@@ -44,6 +44,12 @@ public class AppController implements ViewChangeRequestListener {
     appManager.loadView("User.fxml", UserController::new);
   }
 
+  /**
+   * Changes the current view that the user sees.
+   *
+   * @param fxmlName          name of FXML file with file extension
+   * @param controllerFactory controllerFactory for this FXML
+   */
   @Override
   public void viewChangeRequested(String fxmlName, Function<AppManager, Object> controllerFactory) {
     var loader = new FXMLLoader(getClass().getResource(fxmlName));

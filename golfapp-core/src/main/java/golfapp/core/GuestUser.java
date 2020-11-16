@@ -1,5 +1,8 @@
 package golfapp.core;
 
+/**
+ * A guest user. Guest users will have their email set to "Guest", and cannot change their email.
+ */
 public class GuestUser extends User {
 
   /**

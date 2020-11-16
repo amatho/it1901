@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * A scorecard for keeping track of score on a golf course.
+ */
 public class Scorecard {
 
   private final Course course;
@@ -118,7 +121,7 @@ public class Scorecard {
   }
 
   public Set<User> getUsers() {
-    return scorecard.keySet();
+    return Collections.unmodifiableSet(scorecard.keySet());
   }
 
   @Override
