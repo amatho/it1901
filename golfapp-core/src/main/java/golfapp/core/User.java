@@ -95,6 +95,12 @@ public class User {
     return displayName;
   }
 
+  /**
+   * Sets the display name.
+   *
+   * @param displayName the new display name
+   * @throws DisplayNameException if given display name is blank
+   */
   public void setDisplayName(String displayName) {
     if (displayName.isBlank()) {
       throw new DisplayNameException(displayName);
