@@ -2,7 +2,9 @@ package golfapp.gui;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import golfapp.core.User;
@@ -24,13 +26,15 @@ import org.testfx.framework.junit5.Start;
 @ExtendWith(ApplicationExtension.class)
 public class LogInControllerTest extends AbstractControllerTest<LogInController> {
 
+  private AppManager appManagerMock;
+
   @Start
   void start(final Stage stage) throws IOException {
     final var loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
     GolfAppModelDao golfAppModelDao = new StringGolfAppModelDao();
     User user1 = new User("foo@bar.baz", "foo bar");
     golfAppModelDao.addUser(user1);
-    AppManager appManagerMock = mock(AppManager.class);
+    appManagerMock = mock(AppManager.class);
     when(appManagerMock.getModelDao()).thenReturn(golfAppModelDao);
 
     loader.setControllerFactory(c -> new LogInController(appManagerMock));
@@ -54,19 +58,40 @@ public class LogInControllerTest extends AbstractControllerTest<LogInController>
   @Test
   void handleLogIn_givesFeedbackIfEmailIsNotValid(FxRobot robot) {
     assertTrue(controller.status.getText().isBlank());
+
+    robot.clickOn("#email").write("foobar.baz");
+    robot.clickOn("#logIn");
+    assertFalse(controller.status.getText().isBlank());
+
+    controller.email.clear();
+
     robot.clickOn("#email").write("foo@bar.b");
     robot.clickOn("#newUser");
     robot.clickOn("#nameField").write("foo Bar");
     robot.clickOn("#logIn");
     assertFalse(controller.status.getText().isBlank());
-    controller.email.clear();
-    robot.clickOn("#email").write("foobar.baz");
+
+    robot.clickOn("#email").write("om");
+    robot.clickOn("#logIn");
+    verify(appManagerMock).setUser(any(User.class));
+  }
+
+  @Test
+  void handleLogIn_givesFeedbackIfDisplayNameIsNotValid(FxRobot robot) {
+    assertTrue(controller.status.getText().isBlank());
+    robot.clickOn("#newUser");
+    robot.clickOn("#email").write("foo@example.com");
+
     robot.clickOn("#logIn");
     assertFalse(controller.status.getText().isBlank());
-    controller.email.clear();
-    robot.clickOn("#email").write("foobar.baz");
+
+    robot.clickOn("#nameField").write("     ");
     robot.clickOn("#logIn");
     assertFalse(controller.status.getText().isBlank());
+
+    robot.clickOn("#nameField").write("Foo");
+    robot.clickOn("#logIn");
+    verify(appManagerMock).setUser(any(User.class));
   }
 
   @Test
@@ -80,17 +105,18 @@ public class LogInControllerTest extends AbstractControllerTest<LogInController>
   }
 
   @Test
-  void updateButton_disabledWhenEmailAndNameIsBlank(FxRobot robot) {
+  void updateButton_disabledWhenEmailIsBlank(FxRobot robot) {
     Button logInButton = robot.lookup("#logIn").queryButton();
+
     assertTrue(logInButton.isDisable());
-    robot.clickOn("#email").write("ama@example.com");
-    logInButton = robot.lookup("#logIn").queryButton();
-    assertFalse(logInButton.isDisable());
+
     robot.clickOn("#newUser");
-    logInButton = robot.lookup("#logIn").queryButton();
     assertTrue(logInButton.isDisable());
+
     robot.clickOn("#nameField").write("Amandus");
-    logInButton = robot.lookup("#logIn").queryButton();
+    assertTrue(logInButton.isDisable());
+
+    robot.clickOn("#email").write("ama@example.com");
     assertFalse(logInButton.isDisable());
   }
 

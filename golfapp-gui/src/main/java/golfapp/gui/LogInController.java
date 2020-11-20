@@ -44,22 +44,16 @@ public class LogInController {
     nameField.setPromptText("Name ...");
     status.setText("");
     logIn.setDisable(true);
-    nameField.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
-    email.textProperty().addListener((observable, oldValue, newValue) -> updateLogInButton());
+    email.textProperty()
+        .addListener((observable, oldValue, newValue) -> updateLogInButton(newValue));
     nameField.setVisible(false);
     nameLabel.setVisible(false);
     status.setVisible(true);
     newUserIsActive = false;
   }
 
-  private void updateLogInButton() {
-    boolean disable;
-    if (newUserIsActive) {
-      disable = email.getText().isBlank() || nameField.getText().isBlank();
-    } else {
-      disable = email.getText().isBlank();
-    }
-    logIn.setDisable(disable);
+  private void updateLogInButton(String text) {
+    logIn.setDisable(text.isBlank());
   }
 
   @FXML
@@ -78,7 +72,6 @@ public class LogInController {
       logIn.setText("Create User");
     }
     newUserIsActive = !newUserIsActive;
-    updateLogInButton();
   }
 
   /**
@@ -89,15 +82,17 @@ public class LogInController {
    */
   @FXML
   void handleLogIn(ActionEvent event) throws IOException {
+    status.setVisible(false);
+
     User user;
     if (newUserIsActive) {
-      if (email.getText().isBlank() || nameField.getText().isBlank()) {
-        return;
-      }
-
       try {
         user = new User(email.getText(), nameField.getText());
-      } catch (IllegalArgumentException e) {
+      } catch (User.DisplayNameException e) {
+        status.setVisible(true);
+        status.setText("Display name cannot be blank");
+        return;
+      } catch (User.EmailException e) {
         status.setVisible(true);
         status.setText("Please insert a valid email!");
         return;
@@ -113,6 +108,12 @@ public class LogInController {
 
       appManager.getModelDao().addUser(user);
     } else {
+      if (!User.isValidEmail(email.getText())) {
+        status.setVisible(true);
+        status.setText("Please insert a valid email!");
+        return;
+      }
+
       var result = appManager.getModelDao().getUsers().stream()
           .filter(u -> u.getEmail().equalsIgnoreCase(email.getText())).findAny();
 
@@ -126,12 +127,7 @@ public class LogInController {
 
     appManager.setUser(user);
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
-    loader.setControllerFactory(c -> new AppController(appManager));
-    Parent parent = loader.load();
-    Scene scene = new Scene(parent);
     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    window.setScene(scene);
-    window.show();
+    appManager.loadAppContainer(window);
   }
 }
