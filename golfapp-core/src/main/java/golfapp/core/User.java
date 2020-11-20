@@ -12,6 +12,20 @@ import java.util.regex.Pattern;
     property = "id", scope = User.class)
 public class User {
 
+  public static class EmailException extends IllegalArgumentException {
+
+    private EmailException(String email) {
+      super("Invalid email `" + email + "`");
+    }
+  }
+
+  public static class DisplayNameException extends IllegalArgumentException {
+
+    private DisplayNameException(String displayName) {
+      super("Invalid display name `" + displayName + "`");
+    }
+  }
+
   private static final Pattern EMAIL_REGEX = Pattern
       .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -51,6 +65,10 @@ public class User {
     scorecardHistory = new HashSet<>();
   }
 
+  public static boolean isValidEmail(String s) {
+    return EMAIL_REGEX.matcher(s).matches();
+  }
+
   public UUID getId() {
     return id;
   }
@@ -66,12 +84,11 @@ public class User {
    * @throws IllegalArgumentException if the given email was invalid
    */
   public void setEmail(String email) {
-    var matcher = EMAIL_REGEX.matcher(email);
-    if (matcher.find()) {
-      this.email = email;
-    } else {
-      throw new IllegalArgumentException("Invalid e-mail input: " + this.email);
+    if (!EMAIL_REGEX.matcher(email).matches()) {
+      throw new EmailException(email);
     }
+
+    this.email = email;
   }
 
   public String getDisplayName() {
@@ -79,6 +96,10 @@ public class User {
   }
 
   public void setDisplayName(String displayName) {
+    if (displayName.isBlank()) {
+      throw new DisplayNameException(displayName);
+    }
+
     this.displayName = displayName;
   }
 
